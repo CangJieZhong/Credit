@@ -9,7 +9,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  *
  */
 public class UserContext {
-	private static String USER_IN_SESSION = "current";
 	/**
 	 * 获取HttpSession的方法
 	 */
@@ -17,10 +16,10 @@ public class UserContext {
 		return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getSession();
 	}
 	
-	public static  Object  getCurrent(){
-		return (Object) getHttpSession().getAttribute(USER_IN_SESSION);
+	public static  Object  getCurrent(String key){
+		return (Object) getHttpSession().getAttribute(key);
 	}
-	public static void setCurrent(Object logininfo){
-		getHttpSession().setAttribute(USER_IN_SESSION, logininfo);
+	public static void setCurrent(String key,Object logininfo){
+		getHttpSession().setAttribute(key, logininfo);
 	}
 }

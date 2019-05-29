@@ -10,6 +10,7 @@
 	</parent>
 	<artifactId>credit-core</artifactId>
 	<name>credit-core</name>
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
