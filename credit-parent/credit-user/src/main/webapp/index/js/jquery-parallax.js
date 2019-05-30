@@ -1,0 +1,1 @@
+$.fn.parallax=function(b,a){$el=$(this);TweenLite.to($el,0.2,{x:-((a.clientX-(window.innerWidth/2))/b),y:-((a.clientY-(window.innerHeight/2))/b)})};
