@@ -108,5 +108,8 @@
 	</build>
 	<modules>
 		<module>credit-core</module>
+		<module>credit-user</module>
+		<module>credit-examiner</module>
+		<module>credit-granter</module>
 	</modules>
 </project>
