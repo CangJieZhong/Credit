@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>发放后台系统</title>
+	<title>发放-后台系统</title>
 	<link href="style/authority/main_css.css" rel="stylesheet" type="text/css" />
 	<link href="style/authority/zTreeStyle.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
@@ -27,9 +27,7 @@
 			}
 			document.getElementById("yue_fen").innerHTML =  myYear + "." + myMonth;
 			document.getElementById("day_day").innerHTML =  myYear + "." + myMonth + "." + myDay;
-		}
-		
-		
+		} 
 	</script>
 	<script type="text/javascript">
 		/* zTree插件加载目录的处理  */
@@ -53,8 +51,6 @@
 					}
 				},
 				callback: {
-	// 				beforeExpand: beforeExpand,
-	// 				onExpand: onExpand,
 					onClick: zTreeOnClick			
 				}
 		};
@@ -149,6 +145,28 @@
 		    }
 		};
 		
+		/* 上方菜单 */
+		function switchTab(tabpage,tabid){
+		var oItem = document.getElementById(tabpage).getElementsByTagName("li"); 
+		    for(var i=0; i<oItem.length; i++){
+		        var x = oItem[i];    
+		        x.className = "";
+			}
+			if('left_tab1' == tabid){
+				$(document).ajaxStart(onStart).ajaxSuccess(onStop);
+				// 异步加载"业务模块"下的菜单
+			  	loadMenu('YEWUMOKUAI', 'dleft_tab1');
+			}else  if('left_tab2' == tabid){
+				$(document).ajaxStart(onStart).ajaxSuccess(onStop);
+				// 异步加载"系统管理"下的菜单
+				loadMenu('XITONGMOKUAI', 'dleft_tab1');
+			}else  if('left_tab3' == tabid){
+				$(document).ajaxStart(onStart).ajaxSuccess(onStop);
+				// 异步加载"其他"下的菜单
+				loadMenu('QITAMOKUAI', 'dleft_tab1');
+			} 
+		}
+		
 		
 		$(document).ready(function(){
 			$(document).ajaxStart(onStart).ajaxSuccess(onStop);
@@ -162,12 +180,10 @@
 		});
 		
 		function loadMenu(resourceType, treeObj){
-            data = [{"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":3,"resourceName":"发放管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":2,"resourceName":"还款管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":16,"resourceName":"客户管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"grantLoans_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":0,"resourceName":"发放贷款","resourceOrder":0,"resourceType":""},
-            {"accessPath":"recoveryLoans_list.html","checked":false,"delFlag":0,"parentID":2,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":0,"resourceName":"回收贷款","resourceOrder":0,"resourceType":""},
-            {"accessPath":"returnMoneyRecord.html","checked":false,"delFlag":0,"parentID":16,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":0,"resourceName":"评价信誉度","resourceOrder":0,"resourceType":""}];
+            data = [{"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":3,"resourceName":"功能管理","resourceOrder":0,"resourceType":""},
+            {"accessPath":"personal_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"个人贷款管理","resourceOrder":0,"resourceType":""},
+            {"accessPath":"business_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"企业贷款管理","resourceOrder":0,"resourceType":""},
+            {"accessPath":"returnLoan_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"还款管理","resourceOrder":0,"resourceType":""}];
             // 如果返回数据不为空，加载"业务模块"目录
             if(data != null){
                 // 将返回的数据赋给zTree
@@ -280,7 +296,7 @@
 		        	$('#main').css({left:'60px'});
 		        	$("#show_hide_btn").find('img').attr('src', 'images/common/nav_show.png');
 		        } else {
-					left_menu_cnt.show(500, 'linear');
+					left_menu_cnt.show(0, 'linear');
 					side.css({width:'280px'});
 					$('#top_nav').css({width:'77%', left:'304px', 'padding-left':'0px'});
 		        	$('#main').css({left:'280px'});
@@ -291,10 +307,10 @@
 	</script>
     <!-- side menu start -->
     <div id="top_nav">
-	 	<span id="here_area">当前位置：系统&nbsp;>&nbsp;系统介绍</span>
+	 	<span id="here_area">当前位置：系统&nbsp;>&nbsp;贷款管理</span>
 	</div>
     <div id="main">
-      	<iframe name="right" id="rightMain" src="introduce.html" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"/>
+      	<iframe name="right" id="rightMain" src="loan_list.html" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"/>
     </div>
 </body>
 </html>

@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zl.credit.creditcore.dao.UserMapper">
 <select id="queryByNameAndPwd" resultType="User">
-select * from car_user
+    select * from credit_user where username = #{username} and password = #{password}
 </select>
-
-
 </mapper>

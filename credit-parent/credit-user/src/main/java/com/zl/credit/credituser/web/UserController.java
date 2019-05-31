@@ -17,10 +17,17 @@ public class UserController {
 	@ResponseBody
 	public JsonResult login(String username,String password){
 		User user = userService.login(username,password);
-		
-		
 		JsonResult json = new JsonResult();
+		if(user!=null) {
+		//获取角色
+		int rolo = user.getRole_id();
+		//判断角色
 		json.setSuccess(true);
+		}else {
+			json.setSuccess(true);
+			json.setMsg("用户名或密码错误!!!");
+			
+		}
 		return json;
 	}
 }

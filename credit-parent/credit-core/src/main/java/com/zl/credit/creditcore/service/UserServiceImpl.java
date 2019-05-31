@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.zl.credit.creditcore.dao.UserMapper;
 import com.zl.credit.creditcore.pojo.User;
+import com.zl.credit.creditcore.util.UserContext;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -12,7 +13,9 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	@Override
 	public User login(String username, String password) {
-		return userMapper.queryByNameAndPwd(username,password);
+		User user = userMapper.queryByNameAndPwd(username,password);
+		UserContext.setCurrent("user", user);
+		return user;
 	}
 
 }
