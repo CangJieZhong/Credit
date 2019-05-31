@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>放款管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+<link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery-1.4.4.min.js"></script>
+<script src="scripts/My97DatePicker/WdatePicker.js" type="text/javascript" defer="defer"></script>
+<script type="text/javascript" src="scripts/artDialog/artDialog.js?skin=default"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	/** 表单验证  **/
+	function validateForm(){
+		if($("#fyXqName").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源小区', ok:true,});
+			return false;
+		}
+		if($("#fyDh").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源栋号', ok:true,});
+			return false;
+		}
+		if($("#fyCh").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源层号', ok:true,});
+			return false;
+		}
+		if($("#fyFh").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源房号', ok:true,});
+			return false;
+		}
+		if($("#fyZongMj").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源面积', ok:true,});
+			return false;
+		}
+		if($("#fyJizuMj").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写计租面积', ok:true,});
+			return false;
+		}
+		if($("#fyZldz").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源座落地址', ok:true,});
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+<form id="submitForm" name="submitForm" action="" method="post">
+	<input type="hidden" name="fyID" value="14458625716623" id="fyID"/>
+	<div id="container">
+		<div id="nav_links">
+			当前位置：发放管理&nbsp;>&nbsp;<span style="color: #1A5CC6;">放款</span>
+		</div>
+		<div class="ui_content">
+			<table  cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
+				<tr>
+					<td class="ui_text_rt" width="80">贷款类型</td>
+					<td class="ui_text_lt">
+						<select name="loanType" id="loanType" class="ui_select01">
+                            <option value="">--请选择--</option>
+                            <option value="" selected="selected">企业贷</option>
+                            <option value="">个人贷</option>
+                        </select>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审批状态</td>
+					<td class="ui_text_lt">
+						<select name="status" id="status" class="ui_select01">
+                            <option value="">已通过</option>
+                            <option value="">未通过</option>
+                        </select>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款单号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanId" name="loanId" value="201905301740"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款人</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanName" name="loanName" value="张三"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">金额</td>
+					<td class="ui_text_lt">
+						<input type="text" id="money" name="money" value="10000"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款时间</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanTime" name="loanTime" value="2019/05/30"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">还款方式</td>
+					<td class="ui_text_lt">
+						<input type="text" id="returnType" name="returnType" value="等额本息"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td class="ui_text_lt">
+						&nbsp;<input id="submit" type="button" value="放款" class="ui_input_btn01"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>
+</body>
+</html>
