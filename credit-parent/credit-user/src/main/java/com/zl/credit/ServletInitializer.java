@@ -1,4 +1,4 @@
-package com.zl.credit.credituser;
+package com.zl.credit;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
