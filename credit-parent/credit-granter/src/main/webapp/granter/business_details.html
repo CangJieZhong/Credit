@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>个人审核管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+<link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/artDialog/artDialog.js"></script>
+<style>
+.idCardItem{
+	width: 160px;
+	height: 100px;
+	float:left;
+	margin-left:5px;
+	border: 1px solid #e3e3e3;
+	text-align: center;
+	padding: 5px;
+			}
+.uploadImg{
+	width: 120px;
+	height: 100px;
+	margin-top: 5px;
+			}
+hr{
+	border: 1px dashed grey;
+}
+</style>
+</head>
+<body style="background-color: #F6F6E6;">
+<form id="submitForm" name="submitForm" action="" method="post">
+	<div id="container">
+		<div id="nav_links">
+			当前位置：个人贷款审核管理&nbsp;>&nbsp;<span style="color: #1A5CC6;">企业贷详情</span>
+		</div>
+		<div class="ui_content">
+			<table  cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
+				<tr>
+					<td class="ui_text_rt">客户类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="customerType" name="customerType" value="个人贷"  class="ui_input_txt02" readonly="readonly"/>
+					</td>
+					<td class="ui_text_rt">分期类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="fenQiType" name="fenQiType" value="6+12"  class="ui_input_txt02" readonly="readonly"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款用途</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanPurpose" name="loanPurpose" value="买车" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">银行卡号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="bankCard" name="bankCard" value="662298764321811" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">企业名称</td>
+					<td class="ui_text_lt">
+						<input type="text" id="businessName" name="businessName" value="葫芦公司" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">企业类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="businessType" name="businessType" value="私营" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">注册资金</td>
+					<td class="ui_text_lt">
+						<input type="text" id="regMoney" name="regMoney" value="500000" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">注册时间</td>
+					<td class="ui_text_lt">
+						<input type="text" id="regTime" name="regTime" value="2010/06/01" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">营业执照</td>
+					<td class="ui_text_lt">
+						<div class="idCardItem">
+							<img alt="营业执照" src="images/authority/ajax-loading.gif" class="uploadImg" />
+					    </div>
+					</td>
+					<td class="ui_text_rt">抵押资产</td>
+					<td class="ui_text_lt">
+						<div class="idCardItem">
+							<img alt="抵押资产" src="images/authority/ajax-loading.gif" class="uploadImg" />
+					    </div>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">公司规模</td>
+					<td class="ui_text_lt">
+						<input type="text" id="companySize" name="companySize" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">法人代表</td>
+					<td class="ui_text_lt">
+						<input type="text" id="legalPerson" name="legalPerson" value="刘峰" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+				<td class="ui_text_rt">征信记录</td>
+					<td class="ui_text_lt">
+						<input type="text" id="creditRecord" name="creditRecord" value="良好" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">反欺诈</td>
+					<td class="ui_text_lt">
+						<input type="text" id="antiFraud" name="antiFraud" value="无欺诈行为" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr><td colspan="5"><hr/></td></tr>
+				<tr>
+					<td class="ui_text_rt">审核人1</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHePeople1" name="shenHePeople1" value="审核人1" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审核意见</td>
+					<td class="ui_text_lt">
+					<input type="text" id="shenHeOpinion1" name="shenHeOpinion1" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">审核评分</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeScore1" name="shenHeScore1" value="4" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审查结果</td>
+					<td class="ui_text_lt">&nbsp;
+						<input type="radio" name="shenHeResult1" value="0" />不通过&nbsp;
+						<input type="radio" name="shenHeResult1" value="1" checked/>通过
+					</td>
+					<td class="ui_text_rt">审查日期</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeDate1" name="shenHeDate1" value="2019/06/01" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr><td colspan="5"><hr/></td></tr>
+				<tr>
+					<td class="ui_text_rt">审核人2</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHePeople2" name="shenHePeople2" value="审核人2" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审核意见</td>
+					<td class="ui_text_lt">
+					<input type="text" id="shenHeOpinion2" name="shenHeOpinion2" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">审核评分</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeScore2" name="shenHeScore2" value="5" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审查结果</td>
+					<td class="ui_text_lt">&nbsp;
+						<input type="radio" name="shenHeResult2" value="0" />不通过&nbsp;
+						<input type="radio" name="shenHeResult2" value="1" checked/>通过
+					</td>
+					<td class="ui_text_rt">审查日期</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeDate2" name="shenHeDate2" value="2019/06/01" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr><td colspan="5"><hr/></td></tr>
+				<tr>
+					<td class="ui_text_rt">终审人</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHePeople3" name="shenHePeople3" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审核意见</td>
+					<td class="ui_text_lt">
+					<input type="text" id="shenHeOpinion3" name="shenHeOpinion3" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">审核评分</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeScore3" name="shenHeScore3" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审查结果</td>
+					<td class="ui_text_lt">&nbsp;
+						<input type="radio" name="shenHeResult3" value="0" />不通过&nbsp;
+						<input type="radio" name="shenHeResult3" value="1" checked/>通过
+					</td>
+					<td class="ui_text_rt">审查日期</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeDate3" name="shenHeDate3" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>
+</body>
+</html>

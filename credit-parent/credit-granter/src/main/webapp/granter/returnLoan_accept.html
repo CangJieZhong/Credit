@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>放款管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+<link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/artDialog/artDialog.js"></script>
+</head>
+<body style="background-color: #F6F6E6;">
+<form id="submitForm" name="submitForm" action="" method="post">
+	<input type="hidden" name="fyID" value="14458625716623" id="fyID"/>
+	<div id="container">
+		<div id="nav_links">
+			当前位置：还款管理&nbsp;>&nbsp;<span style="color: #1A5CC6;">收款</span>
+		</div>
+		<div class="ui_content">
+			<table  cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
+				<tr>
+					<td class="ui_text_rt" width="80">贷款类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanType" name="loanType" value="个人贷"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">贷款单号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanId" name="loanId" value="201905301740"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款人</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanName" name="loanName" value="张三1"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">金额</td>
+					<td class="ui_text_lt">
+						<input type="text" id="money" name="money" value="10000"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">本期还款截止时间</td>
+					<td class="ui_text_lt">
+						<input type="text" id="endTime" name="endTime" value="2019/05/30"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">分期状态</td>
+					<td class="ui_text_lt">
+						<input type="text" id="fenQiSate" name="fenQiSate" value="3期免息"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">还款状态</td>
+					<td class="ui_text_lt">
+						<input type="text" id="state" name="state" value="未还款"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">&emsp;</td>
+					<td class="ui_text_lt">
+						<div style="margin-left: 240px;">
+							<input id="submit" type="button" value="收款" class="ui_input_btn01"/>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>
+</body>
+</html>

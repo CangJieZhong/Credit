@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>贷款活动审核管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+<link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/artDialog/artDialog.js"></script>
+</head>
+<body style="background-color: #F6F6E6;">
+<form id="submitForm" name="submitForm" action="" method="post">
+	<div id="container">
+		<div id="nav_links">
+			当前位置：贷款活动审核管理&nbsp;>&nbsp;<span style="color: #1A5CC6;">贷款活动详情</span>
+		</div>
+		<div class="ui_content">
+			<table  cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
+				<tr>
+					<td class="ui_text_rt">贷款类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanType" name="loanType" value="个人贷"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">贷款单号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanId" name="loanId" value="201905301740"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款人姓名</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanName" name="loanName" value="张三"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">还款方式</td>
+					<td class="ui_text_lt">
+						<input type="text" id="returnMethod" name="returnMethod" value="先息后本"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">开始时间</td>
+					<td class="ui_text_lt">
+						<input type="text" id="startTime" name="startTime" value="2019/05/01"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">结束时间</td>
+					<td class="ui_text_lt">
+						<input type="text" id="endTime" name="endTime" value="2019/06/01"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">当前贷款金额</td>
+					<td class="ui_text_lt">
+						<input type="text" id="nowLoanMoney" name="nowLoanMoney" value="100000"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">累计贷款金额</td>
+					<td class="ui_text_lt">
+						<input type="text" id="totalLoanMoney" name="totalLoanMoney" value="500000"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审批</td>
+					<td class="ui_text_lt">&nbsp;
+						<input type="radio" name="shenHeResult" value="0" />未通过&nbsp;
+						<input type="radio" name="shenHeResult" value="1" checked/>通过
+					</td>
+					<td class="ui_text_rt">审查意见</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeOpinion" name="shenHeOpinion" value=""  class="ui_input_txt02"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>
+</body>
+</html>

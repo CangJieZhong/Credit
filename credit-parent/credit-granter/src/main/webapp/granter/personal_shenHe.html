@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>审核管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+<link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/artDialog/artDialog.js"></script>
+</head>
+<body style="background-color: #F6F6E6;">
+<form id="submitForm" name="submitForm" action="" method="post">
+	<div id="container">
+		<div id="nav_links">
+			当前位置：贷款审核管理&nbsp;>&nbsp;<span style="color: #1A5CC6;">个人贷审核</span>
+		</div>
+		<div class="ui_content">
+			<table  cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
+				<tr>
+					<td class="ui_text_rt">贷款类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanType" name="loanType" value="个人贷"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">贷款单号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanId" name="loanId" value="201905301740"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">姓名</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanName" name="loanName" value="张三"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">出生日期</td>
+					<td class="ui_text_lt">
+						<input type="text" id="birthday" name="birthday" value="1998/12/12"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">身份证号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="idCard" name="idCard" value="362438199812124810"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">手机号码</td>
+					<td class="ui_text_lt">
+						<input type="text" id="phone" name="phone" value="18283742901"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">银行卡号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="bankCard" name="bankCard" value="662298764321811"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">邮箱地址</td>
+					<td class="ui_text_lt">
+						<input type="text" id="emailAddr" name="emailAddr" value="深圳"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">还款方式</td>
+					<td class="ui_text_lt">
+						<input type="text" id="returnType" name="returnType" value="等额本息"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">公司地址</td>
+					<td class="ui_text_lt">
+						<input type="text" id="companyAddr" name="companyAddr" value="深圳"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">现居住地址</td>
+					<td class="ui_text_lt">
+						<input type="text" id="nowAddr" name="nowAddr" value="深圳"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">户口所在地</td>
+					<td class="ui_text_lt">
+						<input type="text" id="huKouAddr" name="huKouAddr" value="广州"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">公司名称</td>
+					<td class="ui_text_lt">
+						<input type="text" id="company" name="company" value="葫芦公司"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">征信记录</td>
+					<td class="ui_text_lt">
+						<input type="text" id="creditRecord" name="creditRecord" value="良好"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">反欺诈</td>
+					<td class="ui_text_lt">
+						<input type="text" id="antiFraud" name="antiFraud" value="无欺诈行为"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">审核时间</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeTime" name="shenHeTime" value="2019/06/01"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审核人</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHePeople" name="shenHePeople" value="审计员n"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">审核评分</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeScore" name="shenHeScore" value="5"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审核意见</td>
+					<td class="ui_text_lt">&nbsp;
+						<input type="radio" name="shenHeOpinion" value="0" />不通过&nbsp;
+						<input type="radio" name="shenHeOpinion" value="1" checked/>通过
+					</td>
+					<td class="ui_text_rt">审查结果</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeResult" name="shenHeResult" value="审核通过"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审核单号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeID" name="shenHeID" value="123456"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_lt">
+						<input id="submit" type="button" value="提交" class="ui_input_btn01"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>
+</body>
+</html>
