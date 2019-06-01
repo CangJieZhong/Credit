@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>个人审核管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+<link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/artDialog/artDialog.js"></script>
+<style>
+.idCardItem{
+	width: 160px;
+	height: 100px;
+	float:left;
+	margin-left:5px;
+	border: 1px solid #e3e3e3;
+	text-align: center;
+	padding: 5px;
+			}
+.uploadImg{
+	width: 120px;
+	height: 100px;
+	margin-top: 5px;
+			}
+</style>
+</head>
+<body style="background-color: #F6F6E6;">
+<form id="submitForm" name="submitForm" action="" method="post">
+	<div id="container">
+		<div id="nav_links">
+			当前位置：贷款审核管理&nbsp;>&nbsp;<span style="color: #1A5CC6;">企业贷审核</span>
+		</div>
+		<div class="ui_content">
+			<table  cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
+				<tr>
+					<td class="ui_text_rt">企业名称</td>
+					<td class="ui_text_lt">
+						<input type="text" id="businessName" name="businessName" value="葫芦公司"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">贷款单号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanId" name="loanId" value="201905301740"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">企业类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="businessType" name="businessType" value="私营"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">公司注册资金</td>
+					<td class="ui_text_lt">
+						<input type="text" id="companyRegMoney" name="companyRegMoney" value="500000"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">注册时间</td>
+					<td class="ui_text_lt">
+						<input type="text" id="regTime" name="regTime" value="2000/06/12"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">公司规模</td>
+					<td class="ui_text_lt">
+						<input type="text" id="companySize" name="companySize" value=""  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">营业执照</td>
+					<td class="ui_text_lt">
+						<div class="idCardItem">
+							<img alt="营业执照" src="images/authority/ajax-loading.gif" class="uploadImg" />
+					    </div>
+					</td>
+					<td class="ui_text_rt">抵押资产</td>
+					<td class="ui_text_lt">
+						<div class="idCardItem">
+							<img alt="抵押资产" src="images/authority/ajax-loading.gif" class="uploadImg" />
+					    </div>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">法人代表</td>
+					<td class="ui_text_lt">
+						<input type="text" id="legalPerson" name="legalPerson" value="刘峰"  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">申请时间</td>
+					<td class="ui_text_lt">
+						<input type="text" id="applyTime" name="applyTime" value="2019/05/30"  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审查结果</td>
+					<td class="ui_text_lt">&nbsp;
+						<input type="radio" name="shenHeResult" value="0" />不通过&nbsp;
+						<input type="radio" name="shenHeResult" value="1" checked/>通过
+					</td>
+					<td class="ui_text_rt">审核意见</td>
+					<td class="ui_text_lt">
+					<input type="text" id="shenHeOpinion" name="shenHeOpinion" value="（驳回的原因）" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审核人</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHePeople" name="shenHePeople" value="（终极审核人姓名）"  class="ui_input_txt02"/>
+					</td>
+					<td>
+					<div style="margin-left: -120px;">
+						<input type="checkbox" name="protocol" value="" /><a href=""><span style="color: blue;">同意该协议</span></a>
+					</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">&emsp;</td>
+					<td class="ui_text_lt">
+						<div style="margin-left: 240px;">
+							<input id="submit" type="button" value="提交审核" class="ui_input_btn01"/>
+						</div>
+					</td>
+				</tr>
+				<tr><td>&emsp;</td></tr>
+			</table>
+		</div>
+	</div>
+</form>
+</body>
+</html>
