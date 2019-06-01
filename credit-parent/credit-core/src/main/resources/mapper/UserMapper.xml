@@ -4,4 +4,12 @@
 <select id="queryByNameAndPwd" resultType="User">
     select * from credit_user where username = #{username} and password = #{password}
 </select>
+<select id="queryNameInfo" resultType="int">
+    select count(1) from credit_user where username = #{username} and role_id = #{role_id}
+</select>
+<insert id="insertUser" parameterType="User">
+INSERT INTO 
+credit_user(user_id,Username,password,role_id,create_date) 
+VALUES(user_id.nextval,#{username},#{password},#{role_id},#{create_date})
+</insert>
 </mapper>

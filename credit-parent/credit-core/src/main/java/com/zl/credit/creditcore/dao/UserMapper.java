@@ -8,6 +8,10 @@ import com.zl.credit.creditcore.pojo.User;
 @Mapper
 public interface UserMapper {
 
-	User queryByNameAndPwd(@Param("username")String username,@Param("password")String password);
+	User queryByNameAndPwd(@Param("username")String username,@Param("password")String password) throws Exception;
+
+	int queryNameInfo(@Param("username")String username, @Param("role_id")int role_id) throws Exception;
+
+	void insertUser(User user)  throws Exception;
 	
 }
