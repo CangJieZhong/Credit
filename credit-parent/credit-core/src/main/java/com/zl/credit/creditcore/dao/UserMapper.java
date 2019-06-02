@@ -4,7 +4,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.zl.credit.creditcore.pojo.User;
-
+/**
+ * 
+ * @author cangjie
+ *
+ */
 @Mapper
 public interface UserMapper {
 

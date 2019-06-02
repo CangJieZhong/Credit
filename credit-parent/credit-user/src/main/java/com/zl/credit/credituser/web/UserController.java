@@ -2,6 +2,7 @@ package com.zl.credit.credituser.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zl.credit.creditcore.pojo.User;
 import com.zl.credit.creditcore.service.UserService;
 import com.zl.credit.creditcore.util.JsonResult;
+/**
+ * 
+ * @author cangjie
+ *
+ */
 @Controller
 public class UserController {
 	@Autowired
