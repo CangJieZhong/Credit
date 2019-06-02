@@ -32,7 +32,7 @@ public class UserController {
 	@RequestMapping(path="/checkUsername.action",method=RequestMethod.POST)
 	@ResponseBody
 	public boolean  checkUsername(String username) throws Exception{
-		return userServiceImpl.checkUsername(username,User.role_id_Personal);
+		return !userServiceImpl.checkUsername(username,User.role_id_Personal);
 	}
 	
 	
