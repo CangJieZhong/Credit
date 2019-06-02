@@ -14,8 +14,8 @@ import lombok.ToString;
 public class Role implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	/**角色id ( 1: 个人 , 2: 企业 , 3: 审计员 , 4: 业务经理 , 5: 发放专员)*/
+	/**角色id ( 1: 用户, 2: 审计员 , 3: 业务经理 ,4: 发放专员)*/
 	private Integer role_id;
-	/**角色名(个人,企业,审计员,业务经理,发放专员)*/
+	/**角色名(用户,审计员,业务经理,发放专员)*/
 	private String role_name;
 }
