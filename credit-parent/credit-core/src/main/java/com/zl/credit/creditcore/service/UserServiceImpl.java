@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zl.credit.creditcore.dao.UserInfoMapper;
 import com.zl.credit.creditcore.dao.UserMapper;
 import com.zl.credit.creditcore.pojo.User;
 import com.zl.credit.creditcore.util.MD5;

@@ -55,7 +55,6 @@ public class UserController {
 	@RequestMapping("/getUser.action")
 	public User getUser(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		System.out.println(user);
 		if(user!=null) {
 			user.setPassword(null);
 			user.setCreate_date(null);
