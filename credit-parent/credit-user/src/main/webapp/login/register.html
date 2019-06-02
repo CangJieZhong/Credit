@@ -81,27 +81,14 @@
 				}
 			},
 			submitHandler : function(form) {
-				$("#registerForm").ajaxSubmit({
+				$(".register-form").ajaxSubmit({
 					dataType : "json",
 					success : function(data) {
 						if (data.success) {
-							$.messager.model = {
-								ok : {
-									text : "关闭",
-									classed : 'btn­default'
-								},
-								cancel : {
-									text : "取消",
-									classed : 'btn­error'
-								}
-							};
-							$.messager.confirm("提示", "注册成功", function() {
-								//跳转到登录页面
-								location.href = "login.html";
-							});
-
+							alert("注册成功");
+							location.href = "login.html";
 						} else {
-							$.messager.popup("注册失败!")
+							alert(data.msg);
 						}
 					},
 					resetForm : true

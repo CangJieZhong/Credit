@@ -1,5 +1,7 @@
 package com.zl.credit.credituser.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +46,22 @@ public class UserController {
 		try{
 			userServiceImpl.register(username,password);
 		}catch(Exception e){
+			json.setMsg("注册失败,请稍后重试!");
 			json.setSuccess(false);
 		}
 		return json;
+	}
+	@ResponseBody
+	@RequestMapping("/getUser.action")
+	public User getUser(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		System.out.println(user);
+		if(user!=null) {
+			user.setPassword(null);
+			user.setCreate_date(null);
+			user.setUpdate_date(null);
+			return user;
+		}
+		return null;
 	}
 }

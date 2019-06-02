@@ -22,6 +22,21 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/bootsnav.css" />
   <link rel="stylesheet" href="css/responsive.css" />
+  <script type="text/javascript" src="js/jquery/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+	$.post("/getUser.action",function(rs){
+		if(rs!=null&&rs!=""){
+			$(".header-top-soical ul").html("");
+			var tr = $("<li><a href='#'><i class='fa fa-facebook' aria-hidden='true'>用户名 :  &nbsp;"+rs.username+"</i></a></li> &nbsp;"+
+			         "<li><a href='/user/user.html'><i class='fa fa-pinterest-p' aria-hidden='true'>个人中心</i></a></li>" );
+			$(".header-top-soical ul").append(tr);
+		}
+	});
+});
+  
+  
+  </script>
  </head>
  <body>
   <div id="preloader">
@@ -42,9 +57,9 @@
       <div class="col-md-3 col-sm-3">
        <div class="header-top-soical">
         <ul>
-         <li><a href="#"><i class="fa fa-facebook" aria-hidden="true">登录</i></a></li>
+         <li><a href="/login/login.html"><i class="fa fa-facebook" aria-hidden="true">登录</i></a></li>
          &nbsp;
-         <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true">注册</i></a></li>
+         <li><a href="/login/register.html"><i class="fa fa-pinterest-p" aria-hidden="true">注册</i></a></li>
       
         </ul>
        </div>
@@ -143,9 +158,9 @@
         <img src="img/icon/s-v9-1.png" alt="" />
        </div>
        <div class="service-v9-content">
-        <h4><a href="#">个人信息</a></h4>
+        <h4><a href="/user/user.html">个人信息</a></h4>
         <p>修改或者查看个人信息</p>
-        <a href="#" class="service-v9-btn">了解详情<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+        <a href="/user/user.html" class="service-v9-btn">了解详情<i class="fa fa-caret-right" aria-hidden="true"></i></a>
        </div>
       </div>
      </div>
@@ -155,9 +170,9 @@
         <img src="img/icon/s-v9-2.png" alt="" />
        </div>
        <div class="service-v9-content">
-        <h4><a href="#">个人贷款</a></h4>
+        <h4><a href="/user/apply.html">个人贷款</a></h4>
         <p>个人贷款需要完整的个人信息</p>
-        <a href="#" class="service-v9-btn">了解详情<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+        <a href="/user/apply.html" class="service-v9-btn">了解详情<i class="fa fa-caret-right" aria-hidden="true"></i></a>
        </div>
       </div>
      </div>
@@ -168,9 +183,9 @@
         <img src="img/icon/s-v9-4.png" alt="" />
        </div>
        <div class="service-v9-content">
-        <h4><a href="#">企业贷款</a></h4>
+        <h4><a href="/user/apply.html">企业贷款</a></h4>
         <p>企业贷款,资产评估很重要的环节</p>
-        <a href="#" class="service-v9-btn">了解详情<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+        <a href="/user/apply.html" class="service-v9-btn">了解详情<i class="fa fa-caret-right" aria-hidden="true"></i></a>
        </div>
       </div>
      </div>
