@@ -44,31 +44,6 @@
 			};
 		})
 	});
-	/** 用户角色   **/
-	var userRole = '';
-
-	/** 普通跳转 **/
-	function jumpNormalPage(page){
-		$("#submitForm").attr("action", "house_list.html?page=" + page).submit();
-	}
-	
-	/** 输入页跳转 **/
-	function jumpInputPage(totalPage){
-		// 如果“跳转页数”不为空
-		if($("#jumpNumTxt").val() != ''){
-			var pageNum = parseInt($("#jumpNumTxt").val());
-			// 如果跳转页数在不合理范围内，则置为1
-			if(pageNum<1 | pageNum>totalPage){
-				art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-				pageNum = 1;
-			}
-			$("#submitForm").attr("action", "house_list.html?page=" + pageNum).submit();
-		}else{
-			// “跳转页数”为空
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-			$("#submitForm").attr("action", "house_list.html?page=" + 1).submit();
-		}
-	}
 </script>
 </head>
 <body>
