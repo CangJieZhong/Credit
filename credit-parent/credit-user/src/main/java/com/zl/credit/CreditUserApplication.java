@@ -10,5 +10,4 @@ public class CreditUserApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CreditUserApplication.class, args);
 	}
-
 }

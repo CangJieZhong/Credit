@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.zl.credit.creditcore.pojo.User;
 import com.zl.credit.creditcore.service.UserService;
 import com.zl.credit.creditcore.util.JsonResult;
@@ -68,5 +67,10 @@ public class UserController {
 			return user;
 		}
 		return null;
+	}
+	@RequestMapping("/test")
+	public String test() {
+		int a = 1/0;
+		return a+"";
 	}
 }
