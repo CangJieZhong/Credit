@@ -16,7 +16,7 @@ public class Userinfo implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	/**用户登录表id*/
-	private Integer userId;
+	private Integer user_id;
 	/**身份证*/
 	private Integer idcard;
 	/**真实姓名*/
@@ -63,16 +63,17 @@ public class Userinfo implements Serializable{
 	private Date create_date;
 	/**修改时间*/
 	private Date update_date;
-	/**状态码*/
-	private Integer status_code;
+	/**状态码 默认是0,既什么都没有实名认证*/
+	private Integer status_code =0;
 	/**征信评级(征信接口自动生成)*/
 	private Integer credit1;
 	/**反诈骗评级(反诈骗接口)*/
 	private Integer credit2;
 	/**风控评级(风控接口)*/
 	private Integer credit3;
-	/**分数,类似于蚂蚁积分*/
-	private Integer grade;
-	/**版本*/
-	private Integer edition;
+	
+	/**分数,类似于蚂蚁积分 默认是500分*/
+	private Integer grade = 500;
+	/**版本 默认为1*/
+	private Integer edition = 1;
 }

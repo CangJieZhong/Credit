@@ -12,4 +12,8 @@ INSERT INTO
 credit_user(user_id,Username,password,role_id,create_date) 
 VALUES(user_id.nextval,#{username},#{password},#{role_id},#{create_date})
 </insert>
+<select id="queryUidByUsername" resultType="int">
+select user_id from credit_user where username = #{username}
+
+</select>
 </mapper>

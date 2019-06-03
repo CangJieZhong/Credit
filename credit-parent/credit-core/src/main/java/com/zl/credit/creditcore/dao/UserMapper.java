@@ -18,4 +18,5 @@ public interface UserMapper {
 
 	void insertUser(User user)  throws Exception;
 	
+	int queryUidByUsername(@Param("username")String username) throws Exception;
 }
