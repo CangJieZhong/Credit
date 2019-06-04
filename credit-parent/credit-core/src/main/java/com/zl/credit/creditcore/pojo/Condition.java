@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 查询条件类
+ * 高级查询条件类
  * @author THINK
  *
  */

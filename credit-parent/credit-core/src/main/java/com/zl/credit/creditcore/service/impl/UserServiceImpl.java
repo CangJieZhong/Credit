@@ -1,4 +1,4 @@
-package com.zl.credit.creditcore.service;
+package com.zl.credit.creditcore.service.impl;
 
 import java.util.Date;
 
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.zl.credit.creditcore.dao.UserInfoMapper;
 import com.zl.credit.creditcore.dao.UserMapper;
 import com.zl.credit.creditcore.pojo.User;
+import com.zl.credit.creditcore.service.UserService;
 import com.zl.credit.creditcore.util.MD5;
 import com.zl.credit.creditcore.util.UserContext;
 /**

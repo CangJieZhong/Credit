@@ -2,4 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zl.credit.creditcore.dao.ApplyMapper">
 
+	<!-- 查询所有客户类型 -->
+	<select id="queryAllLoanType" resultMap="Integer">
+		SELECT loan_type FROM credit_apply
+	</select>
 </mapper>
