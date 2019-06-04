@@ -68,9 +68,4 @@ public class UserController {
 		}
 		return null;
 	}
-	@RequestMapping("/test")
-	public String test() {
-		int a = 1/0;
-		return a+"";
-	}
 }

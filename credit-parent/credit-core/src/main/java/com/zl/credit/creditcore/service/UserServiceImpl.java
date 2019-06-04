@@ -37,12 +37,14 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public void register(String username, String password) throws Exception {
+		
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(MD5.encode(password));
 		user.setRole_id(User.role_id_Personal);
 		user.setCreate_date(new Date());
 		try {
+			//往user表中插入一行数据
 			userMapper.insertUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
