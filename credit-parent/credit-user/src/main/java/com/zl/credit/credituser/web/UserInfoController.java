@@ -74,4 +74,16 @@ public class UserInfoController {
 		}
 		return map;
 	}
+	//查询数据库该身份证是否绑定用户了
+	@RequestMapping("/checkIdCardInfo.action")
+	@ResponseBody
+	public boolean checkIdCardInfo(String idcard){
+		return userInfoService.queryIdCardInfo(idcard);
+	}
+	//添加身份证信息
+	@RequestMapping("/bindIdcard.action")
+	@ResponseBody
+	public Map<String, Object> bindIdcard(String realname,String idcard) throws Exception {
+		return userInfoService.updateIdCard(realname,idcard);
+	}
 }

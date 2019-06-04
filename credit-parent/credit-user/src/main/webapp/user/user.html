@@ -58,12 +58,18 @@
 				alert("请先登录!");
 				window.location.href = "/login/login.html";
 			} else {
+				var sex;
+				if(rs.sex_id==0){
+					sex="男";
+				}else if(rs.sex_id==1){
+					sex="女";
+				}
 				var personMsg = new Vue({
 					el : "#table1",
 					
 					data : {
 						realname : rs.realname,
-						sex : rs.sex,
+						sex : sex,
 						birthday : rs.birthday,
 						phone_number : rs.phone_number,
 						now_address : rs.now_address,
@@ -388,8 +394,7 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<form class="form-horizontal" id="bindIdcardForm" method="post"
-								action="#">
+							<form class="form-horizontal" id="bindIdcardForm" method="post">
 								<label for="phoneNumber" class="col-sm-3 control-label">姓名:</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" id="realname"
@@ -416,7 +421,7 @@
 			<!-- 身份证绑定js -->
 			<script type="text/javascript">
 			$(function() {
-				$("#bindIdcard").validate({
+				$("#bindIdcardForm").validate({
 					rules : {
 						idcard : {
 							required : true,
@@ -434,13 +439,38 @@
 							maxlength : "身份证必须是18位"
 						},
 						realname : {
-							required : "用户名不能为空"
+							required : "姓名不能为空"
 						}
 					},
 					errorClass : "text-danger"
 				});
-				
-				
+				$("#idcard").blur(function() {
+					var idcard = $("#idcard").val();
+					$.post("/checkIdCardInfo.action",{"idcard":idcard},function(rs){
+						if(!rs){
+							alert("身份证号码已绑定其他账号,请解除其他账号绑定后重试!");
+							//重置表单
+							$('#bindIdcardForm')[0].reset();
+						}
+					});
+				});
+				$("#bindIdcardNumber").click(function() {
+					var idcard = $("#idcard").val();
+					var realname = $("#realname").val();
+					if(idcard!=''&&realname!=''){
+						$.post("/bindIdcard.action",{"idcard":idcard,"realname":realname},function(rs){
+							if(rs==null||rs.success==false){
+								alert("你输入的信息有误!");
+								//重置表单
+								$('#bindIdcardForm')[0].reset();
+							}else{
+								window.location.href = "user.html";
+							}
+						});
+					}else{
+						alert("请输入完整信息!");
+					}
+				});
 				
 			});
 			
@@ -479,6 +509,12 @@
 					</div>
 				</div>
 			</div>
+			<!-- 现居住地址js -->
+			<script type="text/javascript">
+			$(function() {
+				
+			});
+			</script>
 			<!-- 银行卡 -->
 			<div class="modal fade" id="BindBank_card" tabindex="-1"
 				role="dialog" aria-labelledby="exampleModalLabel">

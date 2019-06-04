@@ -4,19 +4,19 @@ public class BitStateUtil {
 	/**
 	 * 身份证认证的状态码
 	 */
-	public  static  final  int OP_ID_CARD = 1 << 0;  //0001
+	public  static  final  int OP_ID_CARD = 1 << 0;  //0001 1
 	/**
 	 * 手机认证的状态码
 	 */
-	public  static  final  int OP_PHONE_NUMBER = 1 << 1; //0010
+	public  static  final  int OP_PHONE_NUMBER = 1 << 1; //0010 2
 	/**
 	 * 银行卡认证的状态码
 	 */
-	public  static  final  int OP_BACK_CARD = 1 << 2;  //0100
+	public  static  final  int OP_BACK_CARD = 1 << 2;  	//0100 4
 	/**
 	 * 现居住地址认证的状态码
 	 */
-	public  static  final  int OP_NEW_ADDRESS = 1 << 3;  //1000
+	public  static  final  int OP_NEW_ADDRESS = 1 << 3;  //1000 8
 	/**
 	 * 判断是否有该认证
 	 * @param bitState  用户认证状态

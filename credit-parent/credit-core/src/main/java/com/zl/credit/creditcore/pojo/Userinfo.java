@@ -18,7 +18,7 @@ public class Userinfo implements Serializable{
 	/**用户登录表id*/
 	private Integer user_id;
 	/**身份证*/
-	private Integer idcard;
+	private String idcard;
 	/**真实姓名*/
 	private String realname;
 	/**性别id 0:男 , 1:女*/

@@ -6,9 +6,25 @@ select * from credit_userinfo where user_id = #{user_id}
 </select>
 <!-- 插入一条数据时,初始化表中的数据,包括用户id,创建时间,状态码(默认为0),分数,版本 -->
 <insert id="insertUserInfo" parameterType="Userinfo">
-insert into credit_userinfo(user_id,create_date,status_code,grade,edition) values(#{userId},#{create_date},#{status_code},#{grade},#{edition})
+insert into credit_userinfo(user_id,create_date,status_code,grade,edition) values(#{user_id},#{create_date},#{status_code},#{grade},#{edition})
 </insert>
 <update id="addPhoneNumber">
 update  credit_userinfo set  phone_number =#{phoneNumber},status_code=#{status_code},update_date =#{update_date} where user_id =#{user_id}
+</update>
+<select id="queryByIdCard" resultType="int">
+select count(1) from credit_userinfo where idcard=#{idcard}
+</select>
+<update id="addIdCard" parameterType="Userinfo">
+update credit_userinfo 
+set 
+idcard=#{idcard},
+sex_id =#{sex_id},
+realname=#{realname},
+address = #{address},
+birthday =#{birthday},
+update_date=#{update_date},
+status_code=#{status_code}
+where
+user_id =#{user_id}
 </update>
 </mapper>

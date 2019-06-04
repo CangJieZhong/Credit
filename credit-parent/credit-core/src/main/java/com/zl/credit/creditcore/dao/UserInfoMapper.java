@@ -19,4 +19,8 @@ public interface UserInfoMapper {
 	Userinfo queryByUid(@Param("user_id")Integer user_id) throws Exception;
 
 	void addPhoneNumber(@Param("user_id")Integer user_id,@Param("phoneNumber")String phoneNumber,@Param("status_code")Integer status_code,@Param("update_date")Date update_date) throws Exception;
+
+	int queryByIdCard(@Param("idcard")String idcard);
+
+	void addIdCard(Userinfo userinfo);
 }
