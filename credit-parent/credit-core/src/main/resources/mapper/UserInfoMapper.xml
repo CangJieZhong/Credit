@@ -8,4 +8,7 @@ select * from credit_userinfo where user_id = #{user_id}
 <insert id="insertUserInfo" parameterType="Userinfo">
 insert into credit_userinfo(user_id,create_date,status_code,grade,edition) values(#{userId},#{create_date},#{status_code},#{grade},#{edition})
 </insert>
+<update id="addPhoneNumber">
+update  credit_userinfo set  phone_number =#{phoneNumber},status_code=#{status_code},update_date =#{update_date} where user_id =#{user_id}
+</update>
 </mapper>

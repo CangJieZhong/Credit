@@ -4,6 +4,8 @@ import com.zl.credit.creditcore.pojo.Userinfo;
 
 public interface UserInfoService {
 
-	Userinfo getUserInfoById();
+	Userinfo getUserInfoById() throws Exception;
+
+	void updatePhoneNumber(String phoneNumber) throws Exception;
 
 }

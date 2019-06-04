@@ -44,7 +44,12 @@
 
 <script src="js/js.cookie.min.js"></script>
 <script src="js/front.js"></script>
-
+<!-- 表单验证 -->
+<script type="text/javascript"
+	src="js/plugins/jquery-validation/jquery.validate.js"></script>
+<script type="text/javascript"
+	src="js/plugins/jquery-validation/localization/messages_zh.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.form.js"></script>
 
 <script type="text/javascript">
 	$(function() {
@@ -55,6 +60,7 @@
 			} else {
 				var personMsg = new Vue({
 					el : "#table1",
+					
 					data : {
 						realname : rs.realname,
 						sex : rs.sex,
@@ -83,12 +89,19 @@
 				$("#username").text(rs.username);
 			}
 		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	});
 </script>
-<!-- Tweaks for older IEs-->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 </head>
 
 <body>
@@ -188,10 +201,11 @@
 						</tr>
 						<tr>
 							<td>电话号码</td>
-							<td><a href="JavaScript:void(0)" v-if="phone_number==null"
-								id="showBindPhoneModal" data-target="#bindPhoneModal"
+							<td  v-if="phone_number==null"><a href="JavaScript:void(0)"
+								id="showBindPhoneModal" data-target="#bindPhone"
 								data-toggle="modal">绑定手机号码</a></td>
-							<td v-else>{{phone_number}} &nbsp;<a>更换手机号</a></td>
+							<td  v-else><a style="font-size: 17px;">{{phone_number}}</a> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#">更换手机号</a>
+							</td>
 						</tr>
 						<tr>
 							<td>现居地住址</td>
@@ -235,7 +249,7 @@
 
 			<!-- 模态宽 -->
 			<!-- 手机号码绑定 -->
-			<div class="modal fade" id="bindPhoneModal" tabindex="-1"
+			<div class="modal fade" id="bindPhone" tabindex="-1"
 				role="dialog" aria-labelledby="exampleModalLabel">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -243,6 +257,7 @@
 						<h4 class="modal-title" id="exampleModalLabel">
 							绑定手机
 						</h4>
+						<!-- 关闭按钮 -->
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
@@ -271,13 +286,93 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" id="bindPhone">保存</button>
+							<button type="button" class="btn btn-primary" id="bindPhoneNumber">保存</button>
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">取消</button>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- 手机绑定js -->
+			<script type="text/javascript">
+			//手机号码验证
+			$(function() {
+				$("#bindPhoneForm").validate({
+					rules : {
+						phoneNumber : {
+							required : true,
+							minlength : 11,
+							maxlength : 11
+						}
+					},
+					messages : {
+						phoneNumber : {
+							required : "电话号码不能为空",
+							minlength : "电话号码必须是11位",
+							maxlength : "电话号码必须是11位"
+						}
+					},
+					errorClass : "text-danger"
+				});
+				//点击按钮,触发事件
+				$("#sendVerifyCode").click(function() {
+					var phone = $("#phoneNumber").val();
+					if (phone.length != 11) {
+						alert("亲,您的电话号码有误!");
+					} else {
+						$("#sendVerifyCode").attr("disabled",true);
+						$.ajax({
+							url : "/sendPhoneMessage.action?phoneNumber=" + phone,
+							success : function(data) {
+								if(data!=null&&data!=""){
+									alert("出错了,请稍后重试!");
+								}
+							}
+						});
+						var sec = 90;
+		                var timer = setInterval(function(){
+		                    sec--;
+		                    if(sec > 0){
+		                   	 $("#sendVerifyCode").text(sec+"秒后重新发送验证码");
+		                    }else{
+		                        clearInterval(timer);
+		                        $("#sendVerifyCode").attr("disabled",false);
+		                        $("#sendVerifyCode").text("重新发送验证码");
+		                    }
+		                },1000);
+					}
+				});
+				$("#verifyCode").blur(
+						function() {
+							var phone = $("#phoneNumber").val();
+							if ($("#verifyCode").val().length != 6) {
+								alert("验证码错误!");
+								$("#bindPhone").attr("disabled", true);
+							} else {
+								$.ajax({
+									url : "/savePhoneNumber.action?code="
+											+ $("#verifyCode").val() + "&phoneNumber="
+											+ phone,
+									success : function(data) {
+										if (data.success) {
+											alert("保存成功");
+											$("#bindPhone").attr("disabled", false);
+										} else {
+											alert(data.ErroMsg);
+											$("#bindPhone")
+													.attr("disabled", true);
+										}
+									}
+								});
+							}
+						});
+				//绑定完成刷新页面
+				$("#bindPhoneNumber").click(function() {
+					window.location.href = "user.html";
+				});
+			});			
+
+			</script>
 			<!-- 身份证绑定 -->
 			<div class="modal fade" id="bindIdcard" tabindex="-1"
 				role="dialog" aria-labelledby="exampleModalLabel">
@@ -306,18 +401,50 @@
 								</div>
 								<div class="col-sm-8">
 										<input type="text" class="form-control" id="idcard"
-											name="verifyCode" />
+											name="idcard" />
 								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" id="bindPhone">保存</button>
+							<button type="button" class="btn btn-primary" id="bindIdcardNumber">保存</button>
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">取消</button>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- 身份证绑定js -->
+			<script type="text/javascript">
+			$(function() {
+				$("#bindIdcard").validate({
+					rules : {
+						idcard : {
+							required : true,
+							minlength : 18,
+							maxlength : 18
+						},
+						realname : {
+							required : true
+						}
+					},
+					messages : {
+						idcard : {
+							required : "身份证不能为空",
+							minlength : "身份证必须是18位",
+							maxlength : "身份证必须是18位"
+						},
+						realname : {
+							required : "用户名不能为空"
+						}
+					},
+					errorClass : "text-danger"
+				});
+				
+				
+				
+			});
+			
+			</script>
 			<!-- 现居住地址 -->
 			<div class="modal fade" id="BindNowAddress" tabindex="-1"
 				role="dialog" aria-labelledby="exampleModalLabel">
@@ -333,19 +460,19 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<form class="form-horizontal" id="bindIdcardForm" method="post"
+							<form class="form-horizontal" id="BindAddress" method="post"
 								action="#">
 								<div class="form-group">
 									<label for="new_address" class="col-sm-4 control-label">现居住地址:</label>
 								</div>
 								<div class="col-sm-8">
 										<input type="text" class="form-control" id="new_address"
-											name="verifyCode" />
+											name="new_address" />
 								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" id="bindPhone">保存</button>
+							<button type="button" class="btn btn-primary" id="BindNew_Address">保存</button>
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">取消</button>
 						</div>
@@ -367,38 +494,38 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<form class="form-horizontal" id="bindIdcardForm" method="post"
+							<form class="form-horizontal" id="bindBackCardForm" method="post"
 								action="#">
 								<div class="form-group">
-									<label for="new_address" class="col-sm-4 control-label">银行卡号::</label>
+									<label for="back_card" class="col-sm-4 control-label">银行卡号::</label>
 								</div>
 								<div class="col-sm-8">
-										<input type="text" class="form-control" id="new_address"
-											name="verifyCode" />
+										<input type="text" class="form-control" id="back_card"
+											name="back_card" />
 								</div>
 								
 								<div class="form-group">
 								<br/>
 									<label for="phoneNumber" class="col-sm-4 control-label">银行卡预留电话:</label>
 									<div class="col-sm-6">
-										<input type="text" class="form-control" id="phoneNumber"
-											name="phoneNumber" />
+										<input type="text" class="form-control" id="reser_phone"
+											name="reser_phone" />
 											<br/>
-										<button id="sendVerifyCode" class="btn btn-primary"
+										<button id="sendReserCode" class="btn btn-primary"
 											type="button" autocomplate="off">发送验证码</button>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="verifyCode" class="col-sm-2 control-label">验证码:</label>
+									<label for="ReserCode" class="col-sm-2 control-label">验证码:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="verifyCode"
-											name="verifyCode" />
+										<input type="text" class="form-control" id="ReserCode"
+											name="ReserCode" />
 									</div>
 								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" id="bindPhone">保存</button>
+							<button type="button" class="btn btn-primary" id="bindBack_card">保存</button>
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">取消</button>
 						</div>

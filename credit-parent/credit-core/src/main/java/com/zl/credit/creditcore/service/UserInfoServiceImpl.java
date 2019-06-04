@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 import com.zl.credit.creditcore.dao.UserInfoMapper;
 import com.zl.credit.creditcore.pojo.User;
 import com.zl.credit.creditcore.pojo.Userinfo;
+import com.zl.credit.creditcore.util.BitStateUtil;
 import com.zl.credit.creditcore.util.UserContext;
 @Service
 public class UserInfoServiceImpl implements UserInfoService{
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 	@Override
-	public Userinfo getUserInfoById() {
+	public Userinfo getUserInfoById() throws Exception {
 		//从域中获取user数据
 		User user = (User) UserContext.getCurrent("user");
 		if(user!=null) {
@@ -34,6 +35,24 @@ public class UserInfoServiceImpl implements UserInfoService{
 		}
 		//如果域中没有user数据,直接返回一个空
 		return null;
+	}
+	@Override
+	public void updatePhoneNumber(String phoneNumber) throws Exception {
+		//从域中获取user数据
+		User user = (User) UserContext.getCurrent("user");
+		if(user!=null) {
+			//获取个人信息
+			Userinfo userinfo = userInfoMapper.queryByUid(user.getUser_id());
+			//修改状态码
+			Integer status_code = userinfo.getStatus_code();
+			//判断数据库是否有该状态码
+			if(BitStateUtil.hasState(status_code, BitStateUtil.OP_PHONE_NUMBER)) {
+				//如果有就先移除
+				BitStateUtil.removeState(status_code, BitStateUtil.OP_PHONE_NUMBER);
+			}
+			//通过用户id添加电话号码,修改认证状态码
+			userInfoMapper.addPhoneNumber(user.getUser_id(),phoneNumber,BitStateUtil.addState(status_code, BitStateUtil.OP_PHONE_NUMBER),new Date());
+		}
 	}
 
 }
