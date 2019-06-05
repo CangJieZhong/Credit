@@ -10,8 +10,10 @@ public interface UserInfoService {
 
 	void updatePhoneNumber(String phoneNumber) throws Exception;
 
-	boolean queryIdCardInfo(String idcard);
+	boolean queryIdCardInfo(String idcard) throws Exception;
 
 	Map<String, Object> updateIdCard(String realname, String idcard) throws Exception;
+
+	void addNew_address(String new_address) throws Exception;
 
 }

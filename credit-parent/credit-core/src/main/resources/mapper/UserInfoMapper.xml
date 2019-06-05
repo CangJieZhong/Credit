@@ -27,4 +27,12 @@ status_code=#{status_code}
 where
 user_id =#{user_id}
 </update>
+<update id="addNew_address">
+update credit_userinfo 
+set
+update_date=#{update_date},
+now_address =#{now_address}
+where 
+user_id =#{user_id}
+</update>
 </mapper>

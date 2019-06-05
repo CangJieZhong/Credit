@@ -217,7 +217,7 @@
 							<td>现居地住址</td>
 							<td v-if="now_address==null"><a href="JavaScript:void(0)" id="showBindNowAddress" data-target="#BindNowAddress"
 								data-toggle="modal">添加居住地址</a></td>
-							<td v-else>{{now_address}} &nbsp;<a>更换现居住地址</a></td>
+							<td v-else>{{now_address}} &nbsp;&nbsp;<a href="#">更换现居住地址</a></td>
 						</tr>
 					</table>
 				</div>
@@ -490,8 +490,8 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<form class="form-horizontal" id="BindAddress" method="post"
-								action="#">
+							<form class="form-horizontal" id="BindAddress" method="get"
+								action="/bindNew_address.action" >
 								<div class="form-group">
 									<label for="new_address" class="col-sm-4 control-label">现居住地址:</label>
 								</div>
@@ -512,7 +512,12 @@
 			<!-- 现居住地址js -->
 			<script type="text/javascript">
 			$(function() {
-				
+				$("#BindNew_Address").click(function() {
+					var new_address = $("#new_address").val();
+					if(new_address!=''){
+						$("#BindAddress").submit();
+				}
+				});
 			});
 			</script>
 			<!-- 银行卡 -->

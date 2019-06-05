@@ -14,10 +14,6 @@ public class BitStateUtil {
 	 */
 	public  static  final  int OP_BACK_CARD = 1 << 2;  	//0100 4
 	/**
-	 * 现居住地址认证的状态码
-	 */
-	public  static  final  int OP_NEW_ADDRESS = 1 << 3;  //1000 8
-	/**
 	 * 判断是否有该认证
 	 * @param bitState  用户认证状态
 	 * @param stateCode  认证状态码

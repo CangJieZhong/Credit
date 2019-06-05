@@ -65,7 +65,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public boolean queryIdCardInfo(String idcard) {
+	public boolean queryIdCardInfo(String idcard) throws Exception {
 		int count = userInfoMapper.queryByIdCard(idcard);
 		if (count == 0) {
 			return true;
@@ -125,5 +125,16 @@ public class UserInfoServiceImpl implements UserInfoService {
 			map.put("success", false);
 		}
 		return map;
+	}
+
+	@Override
+	public void addNew_address(String new_address) throws Exception{
+		// 从域中获取user数据
+		User user = (User) UserContext.getCurrent("user");
+		if (user != null) {
+		userInfoMapper.addNew_address(user.getUser_id(),new_address,new Date());
+		}else {
+			throw new RuntimeException("域中没有用户数据");
+		}
 	}
 }
