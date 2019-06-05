@@ -13,19 +13,7 @@
 <title>还款管理系统</title>
 <script type="text/javascript">
 	$(document).ready(function(){
-		
-		/**查看   **/
-	    $("a.show").fancybox({
-	    	'width' : 733,
-	        'height' : 530,
-	        'type' : 'iframe',
-	        'hideOnOverlayClick' : false,
-	        'showCloseButton' : true,
-	        'onClosed' : function() { 
-	        	window.location.href = 'returnLoan_list.html';
-	        }
-	    });
-		/**查看   **/
+		/**评价信誉**/
 	    $("a.credit").fancybox({
 	    	'width' : 733,
 	        'height' : 530,
@@ -47,74 +35,13 @@
 	        	window.location.href = 'returnLoan_list.html';
 	        }
 	    });
-	});
-	/** 用户角色   **/
-	var userRole = '';
-	
-	/** 删除 **/
-	function del(fyID){
-		// 非空判断
-		if(fyID == '') return;
-		if(confirm("您确定要删除吗？")){
-			$("#submitForm").attr("action", "/xngzf/archives/delFangyuan.action?fyID=" + fyID).submit();			
-		}
-	}
-	
-	/** 批量删除 **/
-	function batchDel(){
-		if($("input[name='IDCheck']:checked").size()<=0){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'至少选择一条', ok:true,});
-			return;
-		}
-		// 1）取出用户选中的checkbox放入字符串传给后台,form提交
-		var allIDCheck = "";
-		$("input[name='IDCheck']:checked").each(function(index, domEle){
-			bjText = $(domEle).parent("td").parent("tr").last().children("td").last().prev().text();
-// 			alert(bjText);
-			// 用户选择的checkbox, 过滤掉“已审核”的，记住哦
-			if($.trim(bjText)=="已审核"){
-// 				$(domEle).removeAttr("checked");
-				$(domEle).parent("td").parent("tr").css({color:"red"});
-				$("#resultInfo").html("已审核的是不允许您删除的，请联系管理员删除！！！");
-// 				return;
-			}else{
-				allIDCheck += $(domEle).val() + ",";
-			}
+		/**删除*/
+		$(".del").click(function(){
+    	if(confirm("确定删除?")){
+    		location.href="";
+			};
 		});
-		// 截掉最后一个","
-		if(allIDCheck.length>0) {
-			allIDCheck = allIDCheck.substring(0, allIDCheck.length-1);
-			// 赋给隐藏域
-			$("#allIDCheck").val(allIDCheck);
-			if(confirm("您确定要批量删除这些记录吗？")){
-				// 提交form
-				$("#submitForm").attr("action", "/xngzf/archives/batchDelFangyuan.action").submit();
-			}
-		}
-	}
-
-	/** 普通跳转 **/
-	function jumpNormalPage(page){
-		$("#submitForm").attr("action", "house_list.html?page=" + page).submit();
-	}
-	
-	/** 输入页跳转 **/
-	function jumpInputPage(totalPage){
-		// 如果“跳转页数”不为空
-		if($("#jumpNumTxt").val() != ''){
-			var pageNum = parseInt($("#jumpNumTxt").val());
-			// 如果跳转页数在不合理范围内，则置为1
-			if(pageNum<1 | pageNum>totalPage){
-				art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-				pageNum = 1;
-			}
-			$("#submitForm").attr("action", "house_list.html?page=" + pageNum).submit();
-		}else{
-			// “跳转页数”为空
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-			$("#submitForm").attr("action", "house_list.html?page=" + 1).submit();
-		}
-	}
+	});
 </script>
 </head>
 <body>
@@ -125,12 +52,6 @@
 					<div id="box_border">
 						<div id="box_top">搜索</div>
 						<div id="box_center">
-							&nbsp;贷款类型
-							<select name="state" id="status" class="ui_select01">
-                                <option value="">--请选择--</option>
-                                <option value="0">企业贷</option>
-                                <option value="1">个人贷</option>
-                            </select>
 							&nbsp;贷款人
 							<input type="text" id="username" name="username" class="ui_input_txt02" />
 							&nbsp;贷款单号
@@ -145,11 +66,8 @@
                                 <option value="0">未还款</option>
                                 <option value="1">已还款</option>
                             </select>
-							&emsp;&nbsp;&nbsp;
+							&emsp;
 							<input type="button" value="查询" class="ui_input_btn01"/> 
-						</div>
-						<div id="box_bottom">
-							<input type="button" value="删除" class="ui_input_btn01" onclick="batchDel();" /> 
 						</div>
 					</div>
 				</div>
@@ -158,93 +76,47 @@
 				<div class="ui_tb">
 					<table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
 						<tr>
-							<th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" /></th>
 							<th>贷款类型</th>
 							<th>贷款单号</th>
 							<th>贷款人</th>
 							<th>金额</th>
-							<th>本期还款截止时间</th>
-							<th>分期状态</th>
+							<th>还款时间</th>
+							<th>分期类型</th>
 							<th>还款状态</th>
 							<th>操作</th>
 						</tr>
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="201905301740" class="acb" /></td>
-								<td>企业贷</td>
-								<td>201905301740</td>
-								<td>张三</td>
-								<td>10,000</td>
-								<td>2019/05/30</td>
-								<td>3期免息</td>
-								<td>未还款</td>
-								<td>
-									<a href="returnLoan_accept.html" class="returnLoan">接受还款</a>
-								</td>
-							</tr>
-						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="201905301646" class="acb" /></td>
-								<td>个人贷</td>
-								<td>201905301646</td>
-								<td>王梓</td>
-								<td>5,000</td>
-								<td>2019/05/30</td>
-								<td>4期免息</td>
-								<td>未还款</td>	
-								<td>
-									<a href="returnLoan_accept.html" class="returnLoan">接受还款</a>
-								</td>
-							</tr>
-						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="201905301710" class="acb" /></td>
-								<td>个人贷</td>
-								<td>201905301710</td>
-								<td>张飞</td>
-								<td>19,050</td>
-								<td>2019/05/30</td>
-								<td>6期免息</td>
-								<td>未还款</td>	
-								<td>
-									<a href="returnLoan_accept.html" class="returnLoan">接受还款</a>
-								</td>
-							</tr>
-						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="201905301138" class="acb" /></td>
-								<td>企业贷</td>
-								<td>201905301138</td>
-								<td>企鹅</td>
-								<td>21,324,000</td>
-								<td>2019/05/30</td>
-								<td>9期免息</td>
-								<td>已还款</td>
-								<td>
-									<a href="returnLoansRecord.html" class="show">查看</a>
-									<a href="credit.html" class="show">评价</a>
-								</td>
-							</tr>
-						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="201905301432" class="acb" /></td>
-								<td>个人贷</td>
-								<td>201905301432</td>
-								<td>逸轩</td>
-								<td>1,000,000</td>
-								<td>2019/05/30</td>
-								<td>3期免息</td>
-								<td>已还款</td>	
-								<td>
-									<a href="returnLoansRecord.html" class="show">查看</a>
-									<a href="credit.html" class="credit">评价</a>
-								</td>
-							</tr>
+						<tr>
+							<td>个人贷</td>
+							<td>201905301646</td>
+							<td>王梓</td>
+							<td>5,000</td>
+							<td>2019/05/30</td>
+							<td>4期免息</td>
+							<td>未还款</td>	
+							<td>
+								<a href="returnLoan_accept.html" class="returnLoan">接受还款</a>
+								<a href="" class="del">删除</a>
+							</td>
+						</tr>
+						<tr>
+							<td>个人贷</td>
+							<td>201905301710</td>
+							<td>张飞</td>
+							<td>19,050</td>
+							<td>2019/05/30</td>
+							<td>6期免息</td>
+							<td>已还款</td>	
+							<td>
+								<a href="credit.html" class="credit">评价</a>
+								<a href="" class="del">删除</a>
+							</td>
+						</tr>
 					</table>
 				</div>
 				<div class="ui_tb_h30">
 					<div class="ui_flt" style="height: 30px; line-height: 30px;">
 						共有
-						<span class="ui_txt_bold04">25</span>
+						<span class="ui_txt_bold04">15</span>
 						条记录，当前第
 						<span class="ui_txt_bold04">1
 						/

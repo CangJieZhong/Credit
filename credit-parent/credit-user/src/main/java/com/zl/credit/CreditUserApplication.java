@@ -11,3 +11,4 @@ public class CreditUserApplication {
 		SpringApplication.run(CreditUserApplication.class, args);
 	}
 }
+//6217002970110230741

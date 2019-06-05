@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.zl.credit.creditcore.dao.UserInfoMapper;
 import com.zl.credit.creditcore.pojo.User;
 import com.zl.credit.creditcore.pojo.Userinfo;
+import com.zl.credit.creditcore.util.AliyunQueryBackCard;
 import com.zl.credit.creditcore.util.BitStateUtil;
 import com.zl.credit.creditcore.util.IdCardUtil;
 import com.zl.credit.creditcore.util.UserContext;
@@ -134,7 +135,35 @@ public class UserInfoServiceImpl implements UserInfoService {
 		if (user != null) {
 		userInfoMapper.addNew_address(user.getUser_id(),new_address,new Date());
 		}else {
-			throw new RuntimeException("域中没有用户数据");
+			throw new RuntimeException("你没有登录!");
 		}
+	}
+
+	@Override
+	public void updateReser_phone(String backCard,String reser_phone) throws Exception {
+				// 从域中获取user数据
+				User user = (User) UserContext.getCurrent("user");
+				if (user != null) {
+					// 获取个人信息
+					Userinfo userinfo = userInfoMapper.queryByUid(user.getUser_id());
+					String body = AliyunQueryBackCard.queryBackCard(userinfo.getRealname(), backCard, userinfo.getIdcard());
+					System.out.println(body);
+					if(body.indexOf("\"认证通过\"")!=-1) {
+						if(BitStateUtil.hasState(userinfo.getStatus_code(), BitStateUtil.OP_BACK_CARD)) {
+							userinfo.setStatus_code(BitStateUtil.removeState(userinfo.getStatus_code(), BitStateUtil.OP_BACK_CARD));
+						}
+						//新的状态码
+						Integer status_code = BitStateUtil.addState(userinfo.getStatus_code(), BitStateUtil.OP_BACK_CARD);
+						try {
+							userInfoMapper.updateBackCard(user.getUser_id(),backCard,reser_phone,status_code,new Date());
+						} catch (Exception e) {
+							throw new RuntimeException("添加失败,请重试!");
+						}
+					}else {
+						throw new RuntimeException("银行卡客户资料不匹配");
+					}
+				}else {
+					throw new RuntimeException("你没有登录!");
+				}
 	}
 }

@@ -16,4 +16,6 @@ public interface UserInfoService {
 
 	void addNew_address(String new_address) throws Exception;
 
+	void updateReser_phone(String backCard,String reser_phone) throws Exception;
+
 }

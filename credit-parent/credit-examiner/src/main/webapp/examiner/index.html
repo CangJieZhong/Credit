@@ -181,8 +181,7 @@
 		
 		function loadMenu(resourceType, treeObj){
             data = [{"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":3,"resourceName":"功能管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"personal_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"个人贷款管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"business_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"企业贷款管理","resourceOrder":0,"resourceType":""},
+            {"accessPath":"loan_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"贷款管理","resourceOrder":0,"resourceType":""},
             {"accessPath":"returnLoan_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"还款管理","resourceOrder":0,"resourceType":""}];
             // 如果返回数据不为空，加载"业务模块"目录
             if(data != null){
@@ -211,9 +210,6 @@
 </head>
 <body onload="getDate01()">
     <div id="top">
-		<div id="top_logo">
-			<img alt="logo" src="images/common/logo.jpg" width="274" height="49" style="vertical-align:middle;">
-		</div>
 		<div id="top_links">
 			<div id="top_op">
 				<ul>
@@ -307,7 +303,7 @@
 	</script>
     <!-- side menu start -->
     <div id="top_nav">
-	 	<span id="here_area">当前位置：系统&nbsp;>&nbsp;贷款管理</span>
+	 	<span id="here_area">当前位置：系统&nbsp;>&nbsp;</span>
 	</div>
     <div id="main">
       	<iframe name="right" id="rightMain" src="loan_list.html" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"/>

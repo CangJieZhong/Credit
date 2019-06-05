@@ -35,4 +35,14 @@ now_address =#{now_address}
 where 
 user_id =#{user_id}
 </update>
+<update id="updateBackCard">
+update credit_userinfo 
+set
+bank_card = #{bank_card},
+reser_phone =#{reser_phone},
+status_code = #{status_code},
+update_date=#{update_date}
+where
+user_id =#{user_id}
+</update>
 </mapper>
