@@ -53,4 +53,6 @@ public class Apply implements Serializable{
 	private Integer manager_msg;
 	/**版本*/
 	private Integer edition;
+	/**一个贷款申请对应一个用户*/
+	private Userinfo userinfo;
 }
