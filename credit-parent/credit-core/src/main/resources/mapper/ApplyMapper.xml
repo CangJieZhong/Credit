@@ -43,7 +43,7 @@ SELECT * FROM credit_apply a WHERE a.user_id = #{user_id} AND a.apply_date = (SE
 		<result property="edition" column="edition" />
 
 		<association property="Apply"
-			javaType="com/zl/credit/creditcore/pojo/Apply">
+			javaType="com.zl.credit.creditcore.pojo.Apply">
 			<id property="loan_order" column="loan_order" />
 			<result property="user_id" column="user_id" />
 			<result property="loan_money" column="loan_money" />
@@ -68,7 +68,7 @@ SELECT * FROM credit_apply a WHERE a.user_id = #{user_id} AND a.apply_date = (SE
 
 <!-- 贷款申请表的分页加高级查询 -->
 	<select id="queryApplyAndUserinfo"
-		parameterType="com/zl/credit/creditcore/pojo/ApplyCondition"
+		parameterType="com.zl.credit.creditcore.pojo.ApplyCondition"
 		resultMap="UserAndApply">
 		SELECT * FROM (
 		SELECT
