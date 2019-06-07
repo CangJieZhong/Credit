@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zl.credit.creditcore.dao.ApplyMapper">
-
+<insert id="insertApply" parameterType="ApplyData">
+insert into credit_apply (user_id,loan_order,loan_money,loan_type,loan_purpose,repay_method,apply_date,EDITION) 
+values (#{user_id},loan_order.nextval,#{loan_money},#{loan_type},#{loan_purpose},#{repay_method},#{date},1)
+</insert>
+<select id="queryByUid" resultType="Apply">
+SELECT * FROM credit_apply a WHERE a.user_id = #{user_id} AND a.apply_date = (SELECT MAX(c.apply_date) FROM credit_apply c WHERE c.user_id =#{user_id})
+</select>
 </mapper>

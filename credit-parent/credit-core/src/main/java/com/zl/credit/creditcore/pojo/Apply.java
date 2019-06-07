@@ -15,7 +15,8 @@ import lombok.ToString;
 @ToString
 public class Apply implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	/**审核未通过*/
+	public static final Integer OP_PASS = 0;
 	/**用户登录表id*/
 	private Integer user_id;
 	/**单号*/
@@ -26,7 +27,7 @@ public class Apply implements Serializable{
 	private Integer loan_type;
 	/**贷款用途*/
 	private String loan_purpose;
-	/**还款方式  1: 等额本息 , 2: 提前还款 , 3: 先息后本*/
+	/**分期方式  0: 6+12 ,1: 9+12 , 2: 11+1*/
 	private Integer repay_method;
 	/**申请日期*/
 	private Date apply_date;
@@ -44,8 +45,8 @@ public class Apply implements Serializable{
 	private Integer auditor2_msg;
 	/**审计3意见  0: 不予批准（否决延期）, 1: 批准通过（通过延期）*/
 	private Integer auditor3_msg;
-	/**审核状态  0: 未审核，1: 已审核*/
-	private Integer audit_status;
+	/**审核状态  0: 未审核,1:审计审核中,2:业务经理审核中,3:审核失败,5:还款中,6:该贷款已结束*/
+	private Integer audit_status = 0;
 	/**业务经理 4: 业务经理*/
 	private Integer manager;
 	/**业务经理意见 0: 否决贷款（否决延期）, 1: 批准贷款（批准延期）*/

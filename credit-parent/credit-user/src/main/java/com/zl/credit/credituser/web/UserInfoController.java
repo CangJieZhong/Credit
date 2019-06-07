@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.zl.credit.creditcore.pojo.Userinfo;
 import com.zl.credit.creditcore.service.UserInfoService;
 import com.zl.credit.creditcore.util.AliyunSendPhoneMsg;
 import com.zl.credit.creditcore.util.SendPhoneMessage;
+import com.zl.credit.creditcore.util.UploadUtil;
 
 @Controller
 public class UserInfoController {
@@ -176,5 +178,21 @@ public class UserInfoController {
 			map.put("ErroMsg", "验证码或银行卡错误,请重新输入");
 		}
 		return map;
+	}
+	/**
+	 * 异步上传文件
+	 * @param file 文件
+	 * @return 
+	 */
+	@RequestMapping("/realAuth_upload.action")
+	@ResponseBody
+	public String realAuthUpload(MultipartFile file) {
+		String fileName = UploadUtil.upload(file);
+		return "/upload/"+fileName;
+	}
+	@RequestMapping("/addImg.action")
+	public String addImg(String image1,String image2) throws Exception {
+			userInfoService.addImg(image1,image2);
+			return "redirect:/user/user.html";
 	}
 }

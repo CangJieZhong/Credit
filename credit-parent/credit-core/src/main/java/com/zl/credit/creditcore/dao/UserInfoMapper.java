@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.zl.credit.creditcore.pojo.ApplyData;
 import com.zl.credit.creditcore.pojo.Userinfo;
 
 /**
@@ -66,4 +67,16 @@ public interface UserInfoMapper {
 	 * @param date 修改时间
 	 */
 	void updateBackCard(@Param("user_id")Integer user_id,@Param("bank_card")String bank_card,@Param("reser_phone")String reser_phone,@Param("status_code")Integer status_code,@Param("update_date")Date date) throws Exception;
+	/**
+	 * 添加身份证正反面
+	 * @param user_id 用户id
+	 * @param image1 正面
+	 * @param image2 反面
+	 */
+	void updateImg(@Param("user_id")Integer user_id,@Param("img_on")String image1,@Param("img_down")String image2);
+	/**
+	 * 贷款时信息完善
+	 * @param apply
+	 */
+	void updateApply(ApplyData apply);
 }
