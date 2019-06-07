@@ -55,6 +55,7 @@ public class UserController {
 		}
 		return json;
 	}
+	
 	@ResponseBody
 	@RequestMapping("/getUser.action")
 	public User getUser(HttpServletRequest request) {
