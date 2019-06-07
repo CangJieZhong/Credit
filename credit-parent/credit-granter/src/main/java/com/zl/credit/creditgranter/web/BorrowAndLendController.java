@@ -9,6 +9,7 @@ import com.zl.credit.creditcore.util.BorrowOrLendMoney;
 @RestController
 public class BorrowAndLendController {
 
+	
 	@RequestMapping(path="/borrowAndLend.action",method=RequestMethod.POST)
 	public String borrowAndLend(String idCard,String mobile,String name) {
 		return BorrowOrLendMoney.checkBorrowOrLendMoney(idCard, mobile, name);

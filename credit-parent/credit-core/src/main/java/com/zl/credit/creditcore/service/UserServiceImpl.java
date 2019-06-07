@@ -10,11 +10,7 @@ import com.zl.credit.creditcore.dao.UserMapper;
 import com.zl.credit.creditcore.pojo.User;
 import com.zl.credit.creditcore.util.MD5;
 import com.zl.credit.creditcore.util.UserContext;
-/**
- * 
- * @author cangjie
- *
- */
+
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
