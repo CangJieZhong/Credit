@@ -45,4 +45,27 @@ update_date=#{update_date}
 where
 user_id =#{user_id}
 </update>
+<update id="updateImg">
+update credit_userinfo 
+set
+img_on = #{img_on},
+img_down =#{img_down}
+where
+user_id =#{user_id}
+</update>
+<update id="updateApply" parameterType="ApplyData">
+update credit_userinfo 
+set
+urgent_person = #{urgent_person},
+urgent_phone =#{urgent_phone},
+marital_status =#{marital_status},
+educa  =#{educa },
+occ =#{occ},
+company =#{company},
+company_phone =#{company_phone},
+company_address =#{company_address},
+update_date = #{date}
+where
+user_id =#{user_id}
+</update>
 </mapper>

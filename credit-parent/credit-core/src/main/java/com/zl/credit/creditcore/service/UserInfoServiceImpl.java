@@ -4,12 +4,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zl.credit.creditcore.dao.ApplyMapper;
 import com.zl.credit.creditcore.dao.UserInfoMapper;
+import com.zl.credit.creditcore.pojo.Apply;
+import com.zl.credit.creditcore.pojo.ApplyData;
 import com.zl.credit.creditcore.pojo.User;
 import com.zl.credit.creditcore.pojo.Userinfo;
 import com.zl.credit.creditcore.util.AliyunQueryBackCard;
@@ -21,7 +25,8 @@ import com.zl.credit.creditcore.util.UserContext;
 public class UserInfoServiceImpl implements UserInfoService {
 	@Autowired
 	private UserInfoMapper userInfoMapper;
-
+	@Autowired
+	private ApplyMapper applyMapper;
 	@Override
 	public Userinfo getUserInfoById() throws Exception {
 		// 从域中获取user数据
@@ -165,5 +170,41 @@ public class UserInfoServiceImpl implements UserInfoService {
 				}else {
 					throw new RuntimeException("你没有登录!");
 				}
+	}
+
+	@Override
+	public void addImg(String image1, String image2) throws Exception{
+		User user = (User) UserContext.getCurrent("user");
+		if (user != null) {
+			userInfoMapper.updateImg(user.getUser_id(),image1,image2);
+		}else {
+			throw new RuntimeException("你没有登录!");
+		}
+	}
+
+	@Override
+	public void addApply(ApplyData apply) {
+		
+		
+		User user = (User) UserContext.getCurrent("user");
+		if (user != null) {
+			apply.setUser_id(user.getUser_id());
+			apply.setDate(new Date());
+			userInfoMapper.updateApply(apply);
+			applyMapper.insertApply(apply);
+		}else {
+			throw new RuntimeException("你没有登录!");
+		}
+	}
+
+	@Override
+	public Apply checkHaveApply() {
+		User user = (User) UserContext.getCurrent("user");
+		if (user != null) {
+			Apply  apply = applyMapper.queryByUid(user.getUser_id());
+			return apply;
+		}else {
+			throw new RuntimeException("你没有登录!");
+		}
 	}
 }

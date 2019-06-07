@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,27 +25,168 @@
     <!-- web-fonts -->
     <link href="http://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-    <!-- //web-fonts -->
-    <!-- Tweaks for older IEs-->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-</head>
+	 <!-- JavaScript files-->
+	 <script src="js/jquery-2.1.4.min.js"></script>
+	 
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js">
+    </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js">
+    </script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="js/js.cookie.min.js"></script>
+    <script src="js/front.js"></script>
+    <!-- 表单验证 -->
+<script type="text/javascript"
+	src="js/plugins/jquery-validation/jquery.validate.js"></script>
+	<!-- 导入vue -->
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+<script type="text/javascript"
+	src="js/plugins/jquery-validation/localization/messages_zh.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.form.js"></script>
 
+<script type="text/javascript">
+$(function() {
+		$.post("/getUserInfo.action", function(rs) {
+			if (rs == '') {
+				alert("请先登录!");
+				window.location.href = "/login/login.html";
+			} else {
+				$("#grade").attr("value",rs.grade);
+				if(rs.status_code!=7){
+					alert("请先去个人中心绑定个人证件!");
+					window.location.href = "/user/user.html";
+				}else if (rs.img_on==null&rs.img_down==null) {
+					alert("请去上传个人证件照片吧!");
+					window.location.href = "/user/real.html";
+				}
+				$.post("/MaxApplyMoney.action",{"grade":rs.grade},function(rs){
+					$("#maxApply").text(rs);
+				});
+			}
+		});
+		
+		$("#applyForm").validate({
+			rules : {
+				loan_purpose : {
+					required : true
+				},
+				loan_money:{
+					required : true
+				},
+				urgent_person:{
+					required : true
+				},
+				urgent_phone:{
+					required : true,
+					minlength : 11,
+					maxlength : 11
+				},
+				company:{
+					required : true
+				},
+				company_address:{
+					required : true
+				},
+				company_phone:{
+					required : true
+				},
+				occ :{
+					required : true
+				}
+			},
+			messages : {
+				loan_purpose : {
+					required : "贷款用途不能为空"
+				},
+				loan_money:{
+					required : "贷款金额不能为空"
+				},
+				urgent_person:{
+					required : "紧急联系人不能为空"
+				},
+				urgent_phone:{
+					required : "紧急联系人电话不能为空",
+					minlength : "电话号码必须是11位",
+					maxlength : "电话号码必须是11位"
+				},
+				company:{
+					required : "公司名不能为空"
+				},
+				company_address:{
+					required : "公司地址不能为空"
+				},
+				company_phone:{
+					required : "公司电话不能为空"
+				},
+				occ :{
+					required : "职位不能为空"
+				}
+			},
+			errorClass : "text-danger"
+		});
+		$("#loan_money").keyup(function(){
+    		var c=$(this);  
+            if(/[^\d]/.test(c.val())){//替换非数字字符  
+             var temp_amount=c.val().replace(/[^\d]/g,'');  
+             $(this).val(temp_amount);  
+            }
+    	});
+		$.post("/getUser.action", function(rs) {
+			if (rs != null && rs != "") {
+				$("#username").text(rs.username);
+			}
+		});
+		$("#loan_money").blur(function() {
+			$.post("/MaxApplyMoney.action",{"grade":$("#grade").val()},function(rs){
+				if($("#loan_money").val()<=200&&$("#loan_money").val()!=""){
+					alert("你的贷款金额太小,不支持贷款!");
+					$("#loan_money").val("");
+					$("#loan_money").focus();
+				}else if($("#loan_money").val()>rs && $("#loan_money").val()!=""){
+					alert("你的贷款金额超过了你的贷款额度,请重新输入!");
+					$("#loan_money").val("");
+					$("#loan_money").focus();
+				}
+			});
+		});
+		
+		$.post("/checkHaveApply.action",function(rs){
+			if(rs.audit_status==0||rs.audit_status==1||rs.audit_status==2){
+				$("#DataMsg").html("");
+				$("#DataMsg").append($("<a>你的申请正在审核,请等待</a>"));
+			}else if(rs.audit_status==5){
+				$("#DataMsg").html("");
+				$("#DataMsg").append($("<a>你正在还款,请还款结束再申请!</a>"));
+			}
+		});
+		
+		
+		
+		
+		
+});
+</script>
+</head>
 <body>
     <!-- navbar-->
+    <input type="hidden" id="grade">
     <header class="header">
         <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i class="fas fa-align-left"></i></a>
             <a href="index.html" class="navbar-brand font-weight-bold text-uppercase text-base">
-                <h2 style="color: blue">貸款申請</h2>
+                <h2 style="color: blue">贷款申请</h2>
             </a>
+            <h5>
+				用户名:&nbsp;&nbsp;<a id="username" style="color: blue;"></a>
+			</h5>
             <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
                 <li class="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
                     <div aria-labelledby="notifications" class="dropdown-menu">
                         <a href="#" class="dropdown-item">
                             <div class="d-flex align-items-center">
-
-
                             </div>
                         </a>
                         <a href="#" class="dropdown-item">
@@ -80,45 +220,76 @@
                 <li class="sidebar-list-item"><a href="user.html" class="sidebar-link text-muted "><i class="o-home-1 mr-3 text-gray"></i><span>个人中心</span></a></li>
 
                 <li class="sidebar-list-item"><a href="apply.html" class="sidebar-link text-muted active"><i class="o-table-content-1 mr-3 text-gray"></i><span>贷款申请</span></a></li>
-                <li class="sidebar-list-item"><a href="real.html" class="sidebar-link text-muted"><i class="o-survey-1 mr-3 text-gray"></i><span>实名认证</span></a></li>
-
-
             </ul>
             <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">EXTRAS</div>
 
         </div>
-        <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="page-holder w-100 d-flex flex-wrap" id="DataMsg">
             <div class="container-fluid px-xl-5">
                 <section class="py-5">
                     <div class="sub-main-w3">
-                        <form action="#" method="post">
-                            <h2>贷款申请</h2>
+                        <form action="/apply.action" method="get" id="applyForm">
+                            <h2>贷款信息填写</h2>
                             <div class="form-style-agile">
-                                <input placeholder="贷款用途" name="Name" type="text" required="">
+                                <input placeholder="贷款用途" name="loan_purpose" type="text" required="">
+                            </div>
+                            <a >你的贷款最高额度为:&nbsp;<a id="maxApply" style="color: red;"></a></a>
+                            <br>
+                            <div class="form-style-agile">
+                            <br>
+                                <input placeholder="贷款金额" name="loan_money" type="text" id="loan_money"required="">
                             </div>
                             <div class="form-style-agile">
-                                <input placeholder="贷款金额" name="Number" type="text" required="">
+                                <input placeholder="紧急联系人" name="urgent_person" type="text" required="">
                             </div>
                             <div class="form-style-agile">
-                                <input placeholder="紧急联系人" name="Number" type="text" required="">
+                                <input placeholder="紧急联系人电话" name="urgent_phone" type="text" required="">
                             </div>
                             <div class="form-style-agile">
-                                <input placeholder="紧急联系人电话" name="Number" type="text" required="">
+                                <input placeholder="公司名称" name="company" type="text" required="">
                             </div>
                             <div class="form-style-agile">
-                                <select class="category" required="">
-            <option value="">还款类型</option>
-            <option value="">6+12</option>
-            <option value="">9+12</option>
-            <option value="">11+1</option>
-          </select>
+                                <input placeholder="公司地址" name="company_address" type="text" required="">
                             </div>
                             <div class="form-style-agile">
-                                <select class="category" required="">
+                                 <input placeholder="公司电话" name="company_phone" type="text" required="">
+                            </div>
+                             <div class="form-style-agile">
+                                 <input placeholder="职业" name="occ" type="text" required="">
+                            </div>
+                            <div class="form-style-agile">
+								<select class="category" name="marital_status">
+									<option value="">婚姻状况</option>
+									<option value="0">未婚</option>
+									<option value="1">已婚</option>
+								</select>
+							</div>
+                            <div class="form-style-agile">
+								<select class="category" name="educa">
+									<option value="">学历</option>
+									<option value="0">高中及以下</option>
+									<option value="1">大专</option>
+									<option value="2">本科</option>
+									<option value="3">研究生</option>
+									<option value="4">硕士</option>
+									<option value="5">博士及以上</option>
+								</select>
+							</div>
+                            <div class="form-style-agile">
+								<select class="category" name="repay_method">
+									<option value="">分期类型</option>
+									<option value="0">6+12</option>
+									<option value="1">9+12</option>
+									<option value="3">11+1</option>
+								</select>
+							</div>
+                            <div class="form-style-agile">
+                            <p style="color: red;">因业务问题,暂只支持个人贷</p>
+                            <br>
+                                <select class="category" name="loan_type">
             <option value="">贷款类型</option>
-            <option value="">个人贷</option>
-            <option value="">企业贷</option>
-          </select>
+            <option value="0" selected="selected">个人贷</option>
+								</select>
                             </div>
 
 
@@ -139,16 +310,7 @@
             </footer>
         </div>
     </div>
-    <!-- JavaScript files-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/popper.js/umd/popper.min.js">
-    </script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/jquery.cookie/jquery.cookie.js">
-    </script>
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="js/js.cookie.min.js"></script>
-    <script src="js/front.js"></script>
+   
 </body>
 
 </html>

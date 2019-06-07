@@ -90,6 +90,13 @@
 						isOK : rs.bank_card
 					}
 				});
+				var real = new Vue({
+					el : "#real",
+					data : {
+						img1 : rs.img_on,
+						img2 : rs.img_down
+					}
+				});
 			}
 		});
 		$.post("/getUser.action", function(rs) {
@@ -174,9 +181,14 @@
 				<li class="sidebar-list-item"><a href="apply.html"
 					class="sidebar-link text-muted"><i
 						class="o-table-content-1 mr-3 text-gray"></i><span>贷款申请</span></a></li>
-				<li class="sidebar-list-item"><a href="real.html"
+				<li class="sidebar-list-item" id="real"><a href="real.html" v-if="img1==null&&img2==null"
 					class="sidebar-link text-muted"><i
-						class="o-survey-1 mr-3 text-gray"></i><span>身份证照片上传</span></a></li>
+						class="o-survey-1 mr-3 text-gray"> </i> <span>身份证照片上传</span> </a>
+						
+						<a href="real.html" v-else
+					class="sidebar-link text-muted"><i
+						class="o-survey-1 mr-3 text-gray"> </i> <span>更改身份证照片</span> </a>
+						</li>
 			</ul>
 			<div
 				class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">EXTRAS</div>
@@ -645,7 +657,8 @@
 						errorClass : "text-danger"
 					});
 					//发送短信
-					$("#sendReserCode").click(
+					$("#sendReserCode")
+							.click(
 									function() {
 										var phone = $("#reser_phone").val();
 										if (phone.length != 11) {
@@ -653,7 +666,8 @@
 										} else {
 											$("#sendReserCode").attr(
 													"disabled", true);
-											$.ajax({
+											$
+													.ajax({
 														url : "/sendBankPhoneMessage.action?phoneNumber="
 																+ phone,
 														success : function(data) {
@@ -687,28 +701,31 @@
 									alert("验证码错误!");
 									$("#bindBack_card").attr("disabled", true);
 								} else {
-									if(back_card.length ==19 &&phone.length==11 ){
-									$.ajax({
-										url : "/saveBackPhone.action?code="
-												+ $("#ReserCode").val()
-												+ "&phoneNumber=" + phone
-												+ "&backcard="+back_card,
-										success : function(data) {
-											if (data.success) {
-												alert("保存成功");
-												$("#bindBack_card").attr(
-														"disabled", false);
-											} else {
-												alert(data.ErroMsg);
-												$("#bindBack_card").attr(
-														"disabled", true);
-												//重置表单
-												$('#bindBackCardForm')[0].reset();
+									if (back_card.length == 19
+											&& phone.length == 11) {
+										$.ajax({
+											url : "/saveBackPhone.action?code="
+													+ $("#ReserCode").val()
+													+ "&phoneNumber=" + phone
+													+ "&backcard=" + back_card,
+											success : function(data) {
+												if (data.success) {
+													alert("保存成功");
+													$("#bindBack_card").attr(
+															"disabled", false);
+												} else {
+													alert(data.ErroMsg);
+													$("#bindBack_card").attr(
+															"disabled", true);
+													//重置表单
+													$('#bindBackCardForm')[0]
+															.reset();
+												}
 											}
-										}
-									});
-									}else{
-										$("#bindBack_card").attr("disabled", true);
+										});
+									} else {
+										$("#bindBack_card").attr("disabled",
+												true);
 										alert("请输入卡号或电话号码!");
 									}
 								}
