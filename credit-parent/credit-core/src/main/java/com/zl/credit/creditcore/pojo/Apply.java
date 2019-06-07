@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,17 +21,19 @@ public class Apply implements Serializable{
 	/**用户登录表id*/
 	private Integer user_id;
 	/**单号*/
-	private Integer loan_order;
+	private String loan_order;
 	/**贷款金额*/
 	private BigDecimal loan_money;
 	/**贷款类型  1: 个人贷 ，2: 企业贷*/
 	private Integer loan_type;
 	/**贷款用途*/
 	private String loan_purpose;
-	/**还款方式  1: 等额本息 , 2: 提前还款 , 3: 先息后本*/
+	/**分期类型：1:6+12 ,2:9+12 ,3:11+1*/
 	private Integer repay_method;
 	/**申请日期*/
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date apply_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	/**审核结束日期*/
 	private Date apply_end;
 	/**审计专员1*/
@@ -52,4 +56,5 @@ public class Apply implements Serializable{
 	private Integer manager_msg;
 	/**版本*/
 	private Integer edition;
+	private Userinfo userinfo;
 }

@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zl.credit.creditcore.dao.RepayMapper">
-
+	<resultMap type="Repay" id="repayMap">
+		<result column="loan_order" property="loan_order"/>
+		<result column="repay_status" property="repay_status"/>
+		<result column="repay_money" property="repay_money"/>
+		<result column="repay_date" property="repay_date"/>
+		
+		<association property="apply" javaType="Apply">
+			<id column="user_id" property="user_id"/>
+			<result column="loan_order" property="loan_order"/>
+			<result column="loan_money" property="loan_money"/>
+			<result column="loan_type" property="loan_type"/>
+			<result column="repay_method" property="repay_method"/>
+			
+			<association property="userinfo" javaType="Userinfo">
+				<id column="user_id" property="user_id"/>
+				<result column="realname" property="realname"/>
+			</association>
+		</association>
+	</resultMap>
+	
+	<select id="queryAllRepaysInfo" parameterType="RepayCondition" resultMap="repayMap">
+		SELECT loan_type,r.loan_order,realname,loan_money,repay_money,repay_date,repay_method,repay_status 
+ 		  FROM credit_repay r JOIN credit_apply a ON r.loan_order = a.loan_order JOIN credit_userinfo u  
+ 		  ON a.user_id = u.user_id <include refid="repayConditionSql"/>
+	</select>
+	<sql id="repayConditionSql">
+		<where>
+			<if test="customer != null and customer != '' ">
+				and realname like '%${customer}%'
+			</if>
+			<if test="loanOrder != null and loanOrder != '' ">
+				and r.loan_order = #{loanOrder}
+			</if>
+			<if test="startTime != null">
+				and repay_date &gt;= #{startTime}
+			</if>
+			<if test="endTime != null">
+				and repay_date &lt;= #{endTime}
+			</if>
+			<if test="state != null and state != -1 ">
+				and repay_status = #{state}
+			</if>
+		</where>
+	</sql>
 </mapper>
