@@ -59,14 +59,18 @@
 			<artifactId> junit </artifactId>
 			<scope> test </scope>
 		</dependency>
-		
+
 		<!-- 分页插件的依赖 -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>4.1.6</version>
 		</dependency>
-
+		<!-- themeleaf的依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
