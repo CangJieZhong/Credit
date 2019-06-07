@@ -24,14 +24,16 @@ public class UserController {
 	@RequestMapping(path="/login.action",method=RequestMethod.POST)
 	@ResponseBody
 	public JsonResult login(String username,String password) throws Exception{
+		User user = userServiceImpl.login(username,password);
 		JsonResult json = new JsonResult();
-		User user = userServiceImpl.login(username, password);
 		if(user!=null) {
-			json.setSuccess(true);
-			json.setMsg("登录成功！");
+		//获取角色
+		int rolo = user.getRole_id();
+		//判断角色
+		json.setSuccess(true);
 		}else {
 			json.setSuccess(false);
-			json.setMsg("账号密码错误！");
+			json.setMsg("用户名或密码错误!!!");
 		}
 		return json;
 	}
@@ -55,7 +57,6 @@ public class UserController {
 		}
 		return json;
 	}
-	
 	@ResponseBody
 	@RequestMapping("/getUser.action")
 	public User getUser(HttpServletRequest request) {

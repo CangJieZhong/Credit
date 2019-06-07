@@ -10,39 +10,14 @@
 <script type="text/javascript" src="scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <link rel="stylesheet" type="text/css" href="style/authority/jquery.fancybox-1.3.4.css" media="screen"></link>
 <script type="text/javascript" src="scripts/artDialog/artDialog.js"></script>
+<link rel="stylesheet" type="text/css" href="scripts/jquery/jquery.datepick.css">
+<script type="text/javascript" src="scripts/jquery/jquery.datepick.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery.datepick-zh-CN.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery.twbsPagination.min.js"></script>
+<script type="text/javascript" src="scripts/bootstrap/bootstrap.min.js"></script>
+<link href="scripts/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="ajax/repayAjax.js"></script>
 <title>还款管理系统</title>
-<script type="text/javascript">
-	$(document).ready(function(){
-		/**评价信誉**/
-	    $("a.credit").fancybox({
-	    	'width' : 733,
-	        'height' : 530,
-	        'type' : 'iframe',
-	        'hideOnOverlayClick' : false,
-	        'showCloseButton' : true,
-	        'onClosed' : function() { 
-	        	window.location.href = 'returnLoan_list.html';
-	        }
-	    });
-		/**还款**/
-	    $("a.returnLoan").fancybox({
-	    	'width' : 733,
-	        'height' : 530,
-	        'type' : 'iframe',
-	        'hideOnOverlayClick' : false,
-	        'showCloseButton' : true,
-	        'onClosed' : function() { 
-	        	window.location.href = 'returnLoan_list.html';
-	        }
-	    });
-		/**删除*/
-		$(".del").click(function(){
-    	if(confirm("确定删除?")){
-    		location.href="";
-			};
-		});
-	});
-</script>
 </head>
 <body>
 	<form id="submitForm" name="submitForm" action="" method="post">
@@ -52,8 +27,8 @@
 					<div id="box_border">
 						<div id="box_top">搜索</div>
 						<div id="box_center">
-							&nbsp;贷款人
-							<input type="text" id="username" name="username" class="ui_input_txt02" />
+							&nbsp;姓名
+							<input type="text" id="customer" name="customer" class="ui_input_txt02" />
 							&nbsp;贷款单号
 							<input type="text" id="loanOrder" name="loanOrder" class="ui_input_txt02" />
 							&nbsp;起止日期
@@ -61,13 +36,13 @@
 							至
 							<input type="text" id="endTime" name="endTime" class="ui_input_txt02" />
 							&nbsp;还款状态
-							<select name="state" id="status" class="ui_select01">
-                                <option value="">--请选择--</option>
-                                <option value="0">未还款</option>
-                                <option value="1">已还款</option>
+							<select name="state" id="state" class="ui_select01">
+                                <option value="-1">--请选择--</option>
+                                <option value="1">当前已还款</option>
+                                <option value="2">已全部还款</option>
                             </select>
 							&emsp;
-							<input type="button" value="查询" class="ui_input_btn01"/> 
+							<input type="button" value="查询" class="ui_input_btn01" onclick="query()"/>
 						</div>
 					</div>
 				</div>
@@ -79,67 +54,20 @@
 							<th>贷款类型</th>
 							<th>贷款单号</th>
 							<th>贷款人</th>
-							<th>金额</th>
+							<th>贷款金额</th>
+							<th>还款金额</th>
+							<th>剩余还款金额</th>
 							<th>还款时间</th>
 							<th>分期类型</th>
 							<th>还款状态</th>
 							<th>操作</th>
 						</tr>
-						<tr>
-							<td>个人贷</td>
-							<td>201905301646</td>
-							<td>王梓</td>
-							<td>5,000</td>
-							<td>2019/05/30</td>
-							<td>4期免息</td>
-							<td>未还款</td>	
-							<td>
-								<a href="returnLoan_accept.html" class="returnLoan">接受还款</a>
-								<a href="" class="del">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>个人贷</td>
-							<td>201905301710</td>
-							<td>张飞</td>
-							<td>19,050</td>
-							<td>2019/05/30</td>
-							<td>6期免息</td>
-							<td>已还款</td>	
-							<td>
-								<a href="credit.html" class="credit">评价</a>
-								<a href="" class="del">删除</a>
-							</td>
-						</tr>
+						<tbody id="tabBody"></tbody>
 					</table>
+					
 				</div>
-				<div class="ui_tb_h30">
-					<div class="ui_flt" style="height: 30px; line-height: 30px;">
-						共有
-						<span class="ui_txt_bold04">15</span>
-						条记录，当前第
-						<span class="ui_txt_bold04">1
-						/
-						5</span>
-						页
-					</div>
-					<div class="ui_frt">
-						<!--    如果是第一页，则只显示下一页、尾页 -->
-						
-							<input type="button" value="首页" class="ui_input_btn01" />
-							<input type="button" value="上一页" class="ui_input_btn01" />
-							<input type="button" value="下一页" class="ui_input_btn01"
-								onclick="jumpNormalPage(2);" />
-							<input type="button" value="尾页" class="ui_input_btn01"
-								onclick="jumpNormalPage(9);" />
-						
-						
-						
-						<!--     如果是最后一页，则只显示首页、上一页 -->
-						
-						转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
-							 <input type="button" class="ui_input_btn01" value="跳转" onclick="jumpInputPage(9);" />
-					</div>
+				<div class="ui_tb_h30" id="pagination-on">
+					<ul id="pagination" class="pagination"></ul>
 				</div>
 			</div>
 		</div>

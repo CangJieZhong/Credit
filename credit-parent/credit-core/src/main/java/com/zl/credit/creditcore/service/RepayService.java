@@ -1,19 +1,11 @@
-package com.zl.credit.creditcore.dao;
+package com.zl.credit.creditcore.service;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 
 import com.zl.credit.creditcore.pojo.Repay;
 import com.zl.credit.creditcore.pojo.RepayCondition;
 
-/**
- * 还款记录数据访问
- * @author THINK
- *
- */
-@Mapper
-public interface RepayMapper {
+public interface RepayService {
 
 	/**
 	 * 查询所有还款信息
