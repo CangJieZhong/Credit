@@ -2,10 +2,10 @@
 <!DOCTYPE configuration SYSTEM "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
    <!-- 分页插件 -->
-     <!-- <plugins>
+     <plugins>
         <plugin interceptor="com.github.pagehelper.PageHelper">
-            设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库        
-            <property name="dialect" value="mysql"/>
+            <!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库     -->    
+            <property name="dialect" value="oracle"/>
         </plugin>
-    </plugins> -->
+    </plugins>
 </configuration>
