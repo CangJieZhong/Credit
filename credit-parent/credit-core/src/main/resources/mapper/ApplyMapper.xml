@@ -1,104 +1,105 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zl.credit.creditcore.dao.ApplyMapper">
-<insert id="insertApply" parameterType="ApplyData">
-insert into credit_apply (user_id,loan_order,loan_money,loan_type,loan_purpose,repay_method,apply_date,EDITION) 
-values (#{user_id},loan_order.nextval,#{loan_money},#{loan_type},#{loan_purpose},#{repay_method},#{date},1)
-</insert>
-<select id="queryByUid" resultType="Apply">
-SELECT * FROM credit_apply a WHERE a.user_id = #{user_id} AND a.apply_date = (SELECT MAX(c.apply_date) FROM credit_apply c WHERE c.user_id =#{user_id})
-</select>
+	<insert id="insertApply" parameterType="ApplyData">
+		insert into credit_apply
+		(user_id,loan_order,loan_money,loan_type,loan_purpose,repay_method,apply_date,EDITION)
+		values
+		(#{user_id},loan_order.nextval,#{loan_money},#{loan_type},#{loan_purpose},#{repay_method},#{date},1)
+	</insert>
+	<select id="queryByUid" resultType="Apply">
+		SELECT * FROM credit_apply a
+		WHERE a.user_id = #{user_id} AND a.apply_date =
+		(SELECT
+		MAX(c.apply_date) FROM credit_apply c WHERE c.user_id
+		=#{user_id})
+	</select>
 
-	<!-- userinfo和apply的映射关系 -->
-	<resultMap type="Userinfo" id="UserAndApply">
-		<id property="user_id" column="user_id" />
-		<result property="idcard" column="idcard" />
-		<result property="realname" column="realname" />
-		<result property="sex_id" column="sex_id" />
-		<result property="birthday" column="birthday" />
-		<result property="address" column="address" />
-		<result property="now_address" column="now_address" />
-		<result property="phone_number" column="phone_number" />
-		<result property="bank_card" column="bank_card" />
-		<result property="reser_phone" column="reser_phone" />
-		<result property="urgent_person" column="urgent_person" />
-		<result property="urgent_phone" column="urgent_phone" />
-		<result property="marital_status" column="marital_status" />
-		<result property="educa" column="educa" />
-		<result property="occ" column="occ" />
-		<result property="company" column="company" />
-		<result property="company_phone" column="company_phone" />
-		<result property="company_address" column="company_address" />
-		<result property="img_on" column="img_on" />
-		<result property="img_down" column="img_down" />
-		<result property="img_hode" column="img_hode" />
-		<result property="credit_rating" column="credit_rating" />
-		<result property="create_date" column="create_date" />
-		<result property="update_date" column="update_date" />
-		<result property="status_code" column="status_code" />
-		<result property="credit1" column="credit1" />
-		<result property="credit2" column="credit2" />
-		<result property="credit3" column="credit3" />
-		<result property="grade" column="grade" />
+	<!--apply 和userinfo的映射关系 -->
+	<resultMap type="Apply" id="UserAndApply">
+		<id property="loan_order" column="loan_order" />
+		<result property="user_id" column="user_id" />
+		<result property="loan_money" column="loan_money" />
+		<result property="loan_type" column="loan_type" />
+		<result property="loan_purpose" column="loan_purpose" />
+		<result property="repay_method" column="repay_method" />
+		<result property="apply_date" column="apply_date" />
+		<result property="apply_end" column="apply_end" />
+		<result property="auditor1" column="auditor1" />
+		<result property="auditor2" column="auditor2" />
+		<result property="auditor3" column="auditor3" />
+		<result property="auditor1_msg" column="auditor1_msg" />
+		<result property="auditor2_msg" column="auditor2_msg" />
+		<result property="auditor3_msg" column="auditor3_msg" />
+		<result property="audit_status" column="audit_status" />
+		<result property="manager" column="manager" />
+		<result property="manager_msg" column="manager_msg" />
 		<result property="edition" column="edition" />
 
-		<association property="Apply"
-			javaType="com.zl.credit.creditcore.pojo.Apply">
-			<id property="loan_order" column="loan_order" />
-			<result property="user_id" column="user_id" />
-			<result property="loan_money" column="loan_money" />
-			<result property="loan_type" column="loan_type" />
-			<result property="loan_purpose" column="loan_purpose" />
-			<result property="repay_method" column="repay_method" />
-			<result property="apply_date" column="apply_date" />
-			<result property="apply_end" column="apply_end" />
-			<result property="auditor1" column="auditor1" />
-			<result property="auditor2" column="auditor2" />
-			<result property="auditor3" column="auditor3" />
-			<result property="auditor1_msg" column="auditor1_msg" />
-			<result property="auditor2_msg" column="auditor2_msg" />
-			<result property="auditor3_msg" column="auditor3_msg" />
-			<result property="audit_status" column="audit_status" />
-			<result property="manager" column="manager" />
-			<result property="manager_msg" column="manager_msg" />
+		<association property="userinfo" javaType="Userinfo">
+			<id property="user_id" column="user_id" />
+			<result property="idcard" column="idcard" />
+			<result property="realname" column="realname" />
+			<result property="sex_id" column="sex_id" />
+			<result property="birthday" column="birthday" />
+			<result property="address" column="address" />
+			<result property="now_address" column="now_address" />
+			<result property="phone_number" column="phone_number" />
+			<result property="bank_card" column="bank_card" />
+			<result property="reser_phone" column="reser_phone" />
+			<result property="urgent_person" column="urgent_person" />
+			<result property="urgent_phone" column="urgent_phone" />
+			<result property="marital_status" column="marital_status" />
+			<result property="educa" column="educa" />
+			<result property="occ" column="occ" />
+			<result property="company" column="company" />
+			<result property="company_phone" column="company_phone" />
+			<result property="company_address" column="company_address" />
+			<result property="img_on" column="img_on" />
+			<result property="img_down" column="img_down" />
+			<result property="img_hode" column="img_hode" />
+			<result property="credit_rating" column="credit_rating" />
+			<result property="create_date" column="create_date" />
+			<result property="update_date" column="update_date" />
+			<result property="status_code" column="status_code" />
+			<result property="credit1" column="credit1" />
+			<result property="credit2" column="credit2" />
+			<result property="credit3" column="credit3" />
+			<result property="grade" column="grade" />
 			<result property="edition" column="edition" />
+
 		</association>
 
 	</resultMap>
 
-<!-- 贷款申请表的分页加高级查询 -->
+	<!-- 贷款申请表的分页加高级查询 -->
 	<select id="queryApplyAndUserinfo"
 		parameterType="com.zl.credit.creditcore.pojo.ApplyCondition"
 		resultMap="UserAndApply">
-		SELECT * FROM (
+
 		SELECT
-		a.*,ROWNUM rn FROM
-		(SELECT
-		loan_order,realname,loan_money,loan_type,repay_method,apply_date,auditor3_msg
+		loan_order,realname,loan_money,loan_type,repay_method,create_date,auditor3_msg
 		FROM credit_apply,credit_userinfo WHERE
 		credit_apply.user_id=credit_userinfo.user_id
 		<where>
 			<if test="loan_type!=null and loan_type!=''">
-				and loan_type=#{loan_type}
+				and loan_type=#{loan_type} 
 			</if>
 			<if test="realname!=null and realname!=''">
-				and realname=#{realname}
+				and realname=#{realname} 
 			</if>
-			<if
-				test="startTime!=null and startTime !=''">
+			<if test="startTime!=null and startTime !=''">
 				and apply_date >=
 				to_date(#{startTime},'yyyy-MM-dd') 
 			</if>
 			<if test="endTime !=null and endTime !=''">
-				AND apply_date&lt;= to_date(#{endTime},'yyyy-MM-dd')
+				AND apply_date&lt;= to_date(#{endTime},'yyyy-MM-dd') 
 			</if>
-			
+
 			<if test="auditor3_msg !=null and auditor3_msg !=''">
-			and auditor3_msg=#{auditor3_msg}
+				and auditor3_msg=#{auditor3_msg} 
 			</if>
 		</where>
-		) a
-		) WHERE rn>=#{startRow} AND
-		rn&lt;=#{endRow}
+
 	</select>
 </mapper>
