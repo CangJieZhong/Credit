@@ -3,6 +3,8 @@ package com.zl.credit.creditcore.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +12,8 @@ import lombok.ToString;
 @Getter
 @Setter
 public class ApplyData implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	/**用户id*/
 	private Integer user_id;
 	/**贷款用途*/
@@ -37,5 +41,6 @@ public class ApplyData implements Serializable{
 	/**贷款类型  1: 个人贷 ，2: 企业贷*/
 	private Integer loan_type;
 	/**修改时间OR创建时间*/
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 }

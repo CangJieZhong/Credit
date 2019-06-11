@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zl.credit.creditcore.dao.RepayMapper">
 	<resultMap type="Repay" id="repayMap">
+		<id column="repay_id" property="repay_id"/>
 		<result column="loan_order" property="loan_order"/>
 		<result column="repay_status" property="repay_status"/>
 		<result column="repay_money" property="repay_money"/>
@@ -13,26 +14,68 @@
 			<result column="loan_money" property="loan_money"/>
 			<result column="loan_type" property="loan_type"/>
 			<result column="repay_method" property="repay_method"/>
+			<result property="apply_end" column="apply_end" />
+			<result property="isDelete" column="isDelete" />
 			
 			<association property="userinfo" javaType="Userinfo">
-				<id column="user_id" property="user_id"/>
-				<result column="realname" property="realname"/>
+				<id property="user_id" column="user_id" />
+				<result property="idcard" column="idcard" />
+				<result property="realname" column="realname" />
+				<result property="sex_id" column="sex_id" />
+				<result property="birthday" column="birthday" />
+				<result property="address" column="address" />
+				<result property="now_address" column="now_address" />
+				<result property="phone_number" column="phone_number" />
+				<result property="bank_card" column="bank_card" />
+				<result property="reser_phone" column="reser_phone" />
+				<result property="urgent_person" column="urgent_person" />
+				<result property="urgent_phone" column="urgent_phone" />
+				<result property="marital_status" column="marital_status" />
+				<result property="educa" column="educa" />
+				<result property="occ" column="occ" />
+				<result property="company" column="company" />
+				<result property="company_phone" column="company_phone" />
+				<result property="company_address" column="company_address" />
+				<result property="img_on" column="img_on" />
+				<result property="img_down" column="img_down" />
+				<result property="img_hode" column="img_hode" />
+				<result property="credit_rating" column="credit_rating" />
+				<result property="create_date" column="create_date" />
+				<result property="update_date" column="update_date" />
+				<result property="status_code" column="status_code" />
+				<result property="credit1" column="credit1" />
+				<result property="credit2" column="credit2" />
+				<result property="credit3" column="credit3" />
+				<result property="grade" column="grade" />
+				<result property="edition" column="edition" />
 			</association>
 		</association>
 	</resultMap>
-	
-	<select id="queryAllRepaysInfo" parameterType="RepayCondition" resultMap="repayMap">
-		SELECT loan_type,r.loan_order,realname,loan_money,repay_money,repay_date,repay_method,repay_status 
- 		  FROM credit_repay r JOIN credit_apply a ON r.loan_order = a.loan_order JOIN credit_userinfo u  
- 		  ON a.user_id = u.user_id <include refid="repayConditionSql"/>
+	<!-- 发放 还款页面分页查询 -->
+	<select id="queryAllRepaysInfo" parameterType="RepayConditions" resultMap="repayMap">
+		SELECT repay_id,loan_type,apply_end,r.loan_order,realname,loan_money,repay_money,repay_date,
+		repay_method,repay_status,r.isDelete FROM credit_repay r JOIN credit_apply a 
+		ON r.loan_order = a.loan_order JOIN credit_userinfo u ON a.user_id = u.user_id 
+		<include refid="repayConditionSql"/>
 	</select>
+	<!-- 查询多条还款记录(模态框) -->
+	<select id="queryRepayRecords" resultMap="repayMap">
+		SELECT loan_type,r.loan_order,realname,loan_money,repay_money,repay_date,repay_method,
+		repay_status,phone_number FROM credit_repay r JOIN credit_apply a ON r.loan_order = a.loan_order 
+		JOIN credit_userinfo u  ON a.user_id = u.user_id where r.loan_order = #{loanId}
+	</select>
+	<!-- 还款删除操作 -->
+	<update id="repayDel" parameterType="int">
+		UPDATE credit_repay SET isDelete = 1 WHERE repay_id = #{repayId}
+	</update>
+	
 	<sql id="repayConditionSql">
 		<where>
 			<if test="customer != null and customer != '' ">
 				and realname like '%${customer}%'
 			</if>
 			<if test="loanOrder != null and loanOrder != '' ">
-				and r.loan_order = #{loanOrder}
+				and r.loan_order like'%${loanOrder}%'
 			</if>
 			<if test="startTime != null">
 				and repay_date &gt;= #{startTime}
@@ -43,6 +86,7 @@
 			<if test="state != null and state != -1 ">
 				and repay_status = #{state}
 			</if>
+			and r.isDelete = 0
 		</where>
 	</sql>
 </mapper>

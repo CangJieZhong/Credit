@@ -7,7 +7,7 @@ function getzf(num){
 }
 //毫秒值转换为时间（'yyyy-MM-dd HH:mm:ss'） 
 //获得年月日      得到日期oTime  
-function getMyDate(str){  
+function getMyDate(str){
     var oDate = new Date(str),  
     oYear = oDate.getFullYear(),  
     oMonth = oDate.getMonth()+1,  
@@ -22,33 +22,18 @@ function getMyDate(str){
 
 $(function(){
 	//日期控件
-	$("#startTime,#endTime").datepick({dateFormat:"yy-mm-dd"});
+	$("#startTime,#endTime").click(function(){
+			WdatePicker();
+		})
 		
-	/**放款**/
-    $("a.fangLoan").fancybox({
-    	'width' : 750,
-        'height' : 630,
-        'type' : 'iframe',
-        'hideOnOverlayClick' : false,
-        'showCloseButton' : true,
-        'onClosed' : function() { 
-        	location.href = 'loan_list.html';
-        }
-	});
-	/**删除*/
-	$(".del").click(function(){
-   	if(confirm("确定删除?")){
-   		location.href="";
-		};		
-	});
-
 		//分页查询
 		var pageIndex = 1;
 		var pageSize = 3;
 		IninPage();
+		getInfoList();
 		function IninPage(){
 			$.ajax({	
-				url:"/returnLoans",
+				url:"/applysLoans",
 				type:"POST",
 				async: false,
 				data:'',
@@ -75,49 +60,48 @@ $(function(){
 			});
 		}
 		//显示分页数据
-		getInfoList();
+		
 		function getInfoList(){
 			$.ajax({
-				url:"/returnLoans",
+				url:"/applysLoans",
 				data:{pageIndex:pageIndex,pageSize:pageSize},
 				type:"POST",
 				dataType:"json",
 				async:false,
 				success:function(rs){
 					//alert(rs.list[i]);
-					var repay = rs.list;
+					var apply = rs.list;
 					var tabHtml = '';
-					for ( var i in repay) {
+					for ( var i in apply) {
 						//贷款类型 
-						if(repay[i].apply.loan_type == 1){
-							repay[i].apply.loan_type = '个人贷';
+						if(apply[i].loan_type == 1){
+							apply[i].loan_type = '个人贷';
 						}else{
-							repay[i].apply.loan_type = '企业贷';
+							apply[i].loan_type = '企业贷';
 						}
 						//分期类型
-						if(repay[i].apply.repay_method == 1){
-							repay[i].apply.repay_method = '6+12套餐';
-						}else if(repay[i].apply.repay_method == 2){
-							repay[i].apply.repay_method = '9+12套餐';
+						if(apply[i].repay_method == 1){
+							apply[i].repay_method = '6+12套餐';
+						}else if(apply[i].repay_method == 2){
+							apply[i].repay_method = '9+12套餐';
 						}else{
-							repay[i].apply.repay_method = '11+1套餐';
+							apply[i].repay_method = '11+1套餐';
 						}
 						//审核状态
-						if(repay[i].repay_status == 1){
-							repay[i].repay_status = '审核通过';
+						if(apply[i].audit_status == 1){
+							apply[i].audit_status = '已审核';
 						}
-						//审核时间（'yyyy-MM-dd HH:mm:ss'）
-						var repayDate = getMyDate(repay[i].repay_date) ;
-   						//alert(commonTime);
+						//审核结束时间（'yyyy-MM-dd HH:mm:ss'）
+						var applyEndDate = getMyDate(apply[i].apply_end) ;
 					
-					tabHtml += '<tr><td>'+repay[i].apply.loan_type+'</td>'+
-						'<td>'+repay[i].loan_order+'</td>'+
-						'<td>'+repay[i].apply.userinfo.realname+'</td>'+
-						'<td>'+repay[i].apply.loan_money.toFixed(2)+'</td>'+
-						'<td id="repayDate">'+repayDate+'</td><td>'+repay[i].apply.repay_method+'</td>'+
-						'<td>'+repay[i].repay_status+'</td><td>'+
-						'<a href="fangLoan.html" class="fangLoan">放款</a>'+
-						'<a href="" class="del">删除</a></td></tr>';
+					tabHtml += '<tr><td>'+apply[i].loan_type+'</td>'+
+						'<td id="loanorder">'+apply[i].loan_order+'</td>'+
+						'<td>'+apply[i].userinfo.realname+'</td>'+
+						'<td>'+apply[i].loan_money.toFixed(2)+'￥</td>'+
+						'<td id="applyDate">'+applyEndDate+'</td><td>'+apply[i].repay_method+'</td>'+
+						'<td>'+apply[i].audit_status+'</td><td>'+
+						'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="fangLoan('+apply[i].loan_order+')">放款</button>'+
+						'&emsp;<button type="button" class="btn btn-warning" onclick="loanDel('+apply[i].loan_order+')">删除</button></td></tr>';
 					}
 				$("#tabBody").append(tabHtml);
 			}
@@ -130,20 +114,21 @@ function query(){
 	$('#tabBody').html('');
 	var pageIndex = 1;
 	var pageSize = 3;
-	var cuetomerVal = $("#customer").val();
+	var customerVal = $("#customer").val();
 	var loanOrderVal = $("#loanOrder").val();
 	var startTimeVal = $("#startTime").val();
 	var endTimeVal = $("#endTime").val();
-	var stateVal = $("#state").val(); 
 	IninPage();
+	getInfoList();
+	
 	function IninPage(){
 	$('#pagination').remove();
-		$("#pagination-on").append('<ul id="pagination" class="pagination"></ul>');
+	$("#pagination-on").append('<ul id="pagination" class="pagination"></ul>');
 		$.ajax({	
-			url:"/returnLoans",
+			url:"/applysLoans",
 			type:"POST",
 			async: false,
-			data:{customer:cuetomerVal,loanOrder:loanOrderVal,startTime:startTimeVal,endTime:endTimeVal,state:stateVal},
+			data:{customer:customerVal,loanOrder:loanOrderVal,startTime:startTimeVal,endTime:endTimeVal,pageIndex:pageIndex,pageSize:pageSize},
 			dataType:"json",
 			success:function(data){
 				$("#pagination").twbsPagination({
@@ -166,48 +151,48 @@ function query(){
 			}
 		});
 	}	
-	getInfoList();
+	
 	function getInfoList(){
 	 	$.ajax({
         	type: "POST",
             dataType: "json",
-            url: "/returnLoans" ,
+            url: "/applysLoans" ,
             async:false,
-            data: {pageIndex:pageIndex,pageSize:pageSize,customer:cuetomerVal,loanOrder:loanOrderVal,startTime:startTimeVal,endTime:endTimeVal},
+            data: {pageIndex:pageIndex,pageSize:pageSize,customer:customerVal,loanOrder:loanOrderVal,startTime:startTimeVal,endTime:endTimeVal},
             success: function (rs) {
-            	var repay = rs.list;
+            	var apply = rs.list;
 				var tabHtml = '';
-				for ( var i in repay) {
-            	 	//alert(repay[i].apply.userinfo.realname);
+				for ( var i in apply) {
+            	 	//alert(apply[i].userinfo.realname);
 					//贷款类型 
-					if(repay[i].apply.loan_type == 1){
-						repay[i].apply.loan_type = '个人贷';
+					if(apply[i].loan_type == 1){
+						apply[i].loan_type = '个人贷';
 					}else{
-						repay[i].apply.loan_type = '企业贷';
+						apply[i].loan_type = '企业贷';
 					}
 					//分期类型
-					if(repay[i].apply.repay_method == 1){
-						repay[i].apply.repay_method = '6+12套餐';
-					}else if(repay[i].apply.repay_method == 2){
-						repay[i].apply.repay_method = '9+12套餐';
+					if(apply[i].repay_method == 1){
+						apply[i].repay_method = '6+12套餐';
+					}else if(apply[i].repay_method == 2){
+						apply[i].repay_method = '9+12套餐';
 					}else{
-						repay[i].apply.repay_method = '11+1套餐';
+						apply[i].repay_method = '11+1套餐';
 					}
 					//审核状态
-					if(repay[i].repay_status == 1){
-						repay[i].repay_status = '审核通过';
+					if(apply[i].audit_status == 1){
+						apply[i].audit_status = '已审核';
 					}
-					//贷款时间（'yyyy-MM-dd HH:mm:ss'）
-					var repayDate = getMyDate(repay[i].repay_date) ;
+					//审核结束时间（'yyyy-MM-dd HH:mm:ss'）
+					var applyEndDate = getMyDate(apply[i].apply_end) ;
 					//alert(commonTime);
-				tabHtml += '<tr><td>'+repay[i].apply.loan_type+'</td>'+
-					'<td>'+repay[i].loan_order+'</td>'+
-					'<td>'+repay[i].apply.userinfo.realname+'</td>'+
-					'<td>'+repay[i].apply.loan_money.toFixed(2)+'</td>'+
-					'<td id="repayDate">'+repayDate+'</td><td>'+repay[i].apply.repay_method+'</td>'+
-					'<td>'+repay[i].repay_status+'</td><td>'+
-					'<a href="fangLoan.html" class="fangLoan">放款</a>'+
-					'<a href="" class="del">删除</a></td></tr>';
+				tabHtml += '<tr><td>'+apply[i].loan_type+'</td>'+
+					'<td>'+apply[i].loan_order+'</td>'+
+					'<td>'+apply[i].userinfo.realname+'</td>'+
+					'<td>'+apply[i].loan_money.toFixed(2)+'￥</td>'+
+					'<td>'+applyEndDate+'</td><td>'+apply[i].repay_method+'</td>'+
+					'<td>'+apply[i].audit_status+'</td><td>'+
+					'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="fangLoan('+apply[i].loan_order+')">放款</button>'+
+					'&emsp;<button type="button" class="btn btn-warning" onclick="loanDel('+apply[i].loan_order+')">删除</button></td></tr>';
 				}
 			$("#tabBody").append(tabHtml);
             }

@@ -2,21 +2,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery.js"></script>
 <link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
 <link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
-<script type="text/javascript" src="scripts/fancybox/jquery.fancybox-1.3.4.js"></script>
-<script type="text/javascript" src="scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="style/authority/jquery.fancybox-1.3.4.css" media="screen"></link>
-<script type="text/javascript" src="scripts/artDialog/artDialog.js"></script>
-<link rel="stylesheet" type="text/css" href="scripts/jquery/jquery.datepick.css">
-<script type="text/javascript" src="scripts/jquery/jquery.datepick.js"></script>
-<script type="text/javascript" src="scripts/jquery/jquery.datepick-zh-CN.js"></script>
+<script type="text/javascript" src="scripts/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="scripts/jquery/jquery.twbsPagination.min.js"></script>
 <script type="text/javascript" src="scripts/bootstrap/bootstrap.min.js"></script>
 <link href="scripts/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="ajax/repayAjax.js"></script>
+<script type="text/javascript" src="ajax/returnLoan.js"></script>
 <title>还款管理系统</title>
 </head>
 <body>
@@ -42,14 +36,14 @@
                                 <option value="2">已全部还款</option>
                             </select>
 							&emsp;
-							<input type="button" value="查询" class="ui_input_btn01" onclick="query()"/>
+							<button type="button" class="btn btn-info" onclick="query()" >查询</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="ui_content">
 				<div class="ui_tb">
-					<table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+					<table class="table table-bordered">
 						<tr>
 							<th>贷款类型</th>
 							<th>贷款单号</th>
@@ -64,7 +58,6 @@
 						</tr>
 						<tbody id="tabBody"></tbody>
 					</table>
-					
 				</div>
 				<div class="ui_tb_h30" id="pagination-on">
 					<ul id="pagination" class="pagination"></ul>
@@ -72,5 +65,105 @@
 			</div>
 		</div>
 	</form>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h5 class="modal-title" id="myModalLabel">
+						当前位置：还款管理&nbsp;>&nbsp;<span style="color: #1A5CC6;">信誉度评价</span>
+					</h5>
+				</div>
+				<div class="modal-body">
+					<form id="submitForm" name="submitForm" action="" method="post">
+						<table>
+							<tr>
+								<td>
+									<div class="form-group box1">
+										<label for="loanType" class="control-label">贷款类型:</label> <input
+											type="text" class="form-control" id="loanType"
+											name="loanType" value="" readonly="readonly" />
+									</div>
+								</td>
+								<td>
+									<div class="form-group box2">
+										<label for="loanId" class="control-label">贷款单号:</label> <input
+											type="text" class="form-control" id="loanId" name="loanId"
+											value="" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group box1">
+										<label for="loanName" class="control-label">姓名:</label>
+										<input type="text" class="form-control" id="loanName" name="loanName" value="" readonly="readonly" />
+									</div>
+								</td>
+								<td>
+									<div class="form-group box2">
+										<label for="phone" class="control-label">手机号码:</label>
+										<input type="text" class="form-control" id="phone" name="phone" value="" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group box1">
+										<label for="loanMoney" class="control-label">贷款金额:</label>
+										<input type="text" class="form-control" id="loanMoney" name="loanMoney" value="" readonly="readonly" />
+									</div>
+								</td>
+								<td>
+									<div class="form-group box2">
+										<label for="returnMoney" class="control-label">还款金额:</label>
+										<input type="text" class="form-control" id="returnMoney" name="returnMoney" value="" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group box1">
+										<label for="returnTime" class="control-label">还款时间:</label>
+										<input type="text" class="form-control" id="returnTime" name="returnTime" value="" readonly="readonly" />
+									</div>
+								</td>
+								<td>
+									<div class="form-group box2">
+										<label for="repayType" class="control-label">分期类型:</label>
+										<input type="text" class="form-control" id="repayType" name="repayType" value="" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group box1">
+										<label for="returnState" class="control-label">还款状态:</label>
+										<input type="text" class="form-control" id="returnState" name="returnState" value="" readonly="readonly" />
+									</div>
+								</td>
+								<td>
+									<div class="form-group box2">
+										<label for="credit" class="control-label">信誉度:</label>
+										<input type="text" class="form-control" id="credit" name="credit" placeholder="请评价" value="" />
+									</div>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">评价</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
