@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zl.credit.creditcore.dao.ApplyMapper;
 import com.zl.credit.creditcore.pojo.Apply;
 import com.zl.credit.creditcore.pojo.ApplyCondition;
+import com.zl.credit.creditcore.pojo.ApplyConditions;
 import com.zl.credit.creditcore.pojo.PageBean;
 
 @Service
@@ -42,6 +44,24 @@ public class ApplyServiceImpl implements ApplyService {
 		pageDate.setItems(allList);
 
 		return pageDate.getItems();
+	}
+
+	@Override
+	public List<Apply> queryAllApplysInfo(ApplyConditions applyConditions) {
+		List<Apply> list = applyMapper.queryAllApplysInfo(applyConditions);
+		PageInfo<Apply> pageInfo = new PageInfo<Apply>();
+		pageInfo.setList(list);
+		return list;
+	}
+
+	@Override
+	public Apply queryALoanRecord(String loanOrder) {
+		return applyMapper.queryALoanRecord(loanOrder);
+	}
+
+	@Override
+	public int loanDelete(String loanOrder) {
+		return applyMapper.loanDelete(loanOrder);
 	}
 
 

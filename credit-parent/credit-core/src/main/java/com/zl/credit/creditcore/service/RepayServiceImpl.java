@@ -10,17 +10,21 @@ import com.github.pagehelper.PageInfo;
 import com.zl.credit.creditcore.dao.QuertzMapper;
 import com.zl.credit.creditcore.dao.RepayMapper;
 import com.zl.credit.creditcore.pojo.Repay;
-import com.zl.credit.creditcore.pojo.RepayCondition;
+import com.zl.credit.creditcore.pojo.RepayConditions;
+
 @Service
 public class RepayServiceImpl implements RepayService {
 	@Autowired
 	private RepayMapper repayMapper;
+
 	@Autowired
 	private QuertzMapper quertzMapper;
-	
+
+
+
 	@Override
-	public List<Repay> queryAllRepaysInfo(RepayCondition repayCondition) {
-		List<Repay> list = repayMapper.queryAllRepaysInfo(repayCondition);
+	public List<Repay> queryAllRepaysInfo(RepayConditions repayConditions) {
+		List<Repay> list = repayMapper.queryAllRepaysInfo(repayConditions);
 		PageInfo<Repay> pageInfo = new PageInfo<Repay>();
 		pageInfo.setList(list);
 		return list;
@@ -36,5 +40,14 @@ public class RepayServiceImpl implements RepayService {
 	}
 
 
-	
+	@Override
+	public List<Repay> queryRepayRecords(String loanId) {
+		return repayMapper.queryRepayRecords(loanId);
+	}
+
+	@Override
+	public int repayDel(Integer repayId) {
+		return repayMapper.repayDel(repayId);
+	}
+
 }

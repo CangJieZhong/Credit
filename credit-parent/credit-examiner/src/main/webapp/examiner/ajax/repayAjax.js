@@ -22,36 +22,9 @@ function getMyDate(str){
 
 $(function(){
 	//日期控件
-	$("#startTime,#endTime").datepick({dateFormat:"yy-mm-dd"});
-		
-		/**评价信誉**/
-	    $("a.credit").fancybox({
-	    	'width' : 733,
-	        'height' : 530,
-	        'type' : 'iframe',
-	        'hideOnOverlayClick' : false,
-	        'showCloseButton' : true,
-	        'onClosed' : function() { 
-	        	window.location.href = 'returnLoan_list.html';
-	        }
-	    });
-		/**还款**/
-	    $("a.returnLoan").fancybox({
-	    	'width' : 733,
-	        'height' : 530,
-	        'type' : 'iframe',
-	        'hideOnOverlayClick' : false,
-	        'showCloseButton' : true,
-	        'onClosed' : function() { 
-	        	window.location.href = 'returnLoan_list.html';
-	        }
-	    });
-		/**删除*/
-		$(".del").click(function(){
-    	if(confirm("确定删除?")){
-    		location.href="";
-			};
-		});
+	$("#startTime,#endTime").click(function(){
+		WdatePicker();
+	})
 
 		//分页查询
 		var pageIndex = 1;
@@ -95,7 +68,6 @@ $(function(){
 				dataType:"json",
 				async:false,
 				success:function(rs){
-					//alert(rs.list[i]);
 					var repay = rs.list;
 					var tabHtml = '';
 					for ( var i in repay) {
@@ -105,7 +77,8 @@ $(function(){
 						}else{
 							repay[i].apply.loan_type = '企业贷';
 						}
-						//分期类型
+						
+						//分期类型 
 						if(repay[i].apply.repay_method == 1){
 							repay[i].apply.repay_method = '6+12套餐';
 						}else if(repay[i].apply.repay_method == 2){
@@ -128,13 +101,13 @@ $(function(){
 					tabHtml += '<tr><td>'+repay[i].apply.loan_type+'</td>'+
 						'<td>'+repay[i].loan_order+'</td>'+
 						'<td>'+repay[i].apply.userinfo.realname+'</td>'+
-						'<td>'+repay[i].apply.loan_money.toFixed(2)+'</td>'+
-						'<td>'+repay[i].repay_money.toFixed(2)+'</td>'+
-						'<td>'+(repay[i].apply.loan_money-repay[i].repay_money).toFixed(2)+'</td>'+
+						'<td>'+repay[i].apply.loan_money.toFixed(2)+'￥</td>'+
+						'<td>'+repay[i].repay_money.toFixed(2)+'￥</td>'+
+						'<td>'+(repay[i].apply.loan_money-repay[i].repay_money).toFixed(2)+'￥</td>'+
 						'<td id="repayDate">'+repayDate+'</td><td>'+repay[i].apply.repay_method+'</td>'+
 						'<td>'+repay[i].repay_status+'</td><td>'+
-						'<a href="credit.html" class="credit">评价</a>'+
-						'<a href="" class="del">删除</a></td></tr>';
+						'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="returnLoan('+repay[i].loan_order+')">评价</button>'+
+						'&emsp;<button type="button" class="btn btn-warning" onclick="repayDel('+repay[i].repay_id+')">删除</button></td></tr>';
 					}
 				$("#tabBody").append(tabHtml);
 			}
@@ -147,20 +120,21 @@ function query(){
 	$('#tabBody').html('');
 	var pageIndex = 1;
 	var pageSize = 3;
-	var cuetomerVal = $("#customer").val();
+	var customerVal = $("#customer").val();
 	var loanOrderVal = $("#loanOrder").val();
 	var startTimeVal = $("#startTime").val();
 	var endTimeVal = $("#endTime").val();
 	var stateVal = $("#state").val(); 
 	IninPage();
+	
 	function IninPage(){
-	$('#pagination').remove();
+		$('#pagination').remove();
 		$("#pagination-on").append('<ul id="pagination" class="pagination"></ul>');
 		$.ajax({	
 			url:"/returnLoans",
 			type:"POST",
 			async: false,
-			data:{customer:cuetomerVal,loanOrder:loanOrderVal,startTime:startTimeVal,endTime:endTimeVal,state:stateVal},
+			data:{customer:customerVal,loanOrder:loanOrderVal,startTime:startTimeVal,endTime:endTimeVal,state:stateVal},
 			dataType:"json",
 			success:function(data){
 				$("#pagination").twbsPagination({
@@ -183,6 +157,7 @@ function query(){
 			}
 		});
 	}	
+	
 	getInfoList();
 	function getInfoList(){
 	 	$.ajax({
@@ -190,7 +165,7 @@ function query(){
             dataType: "json",
             url: "/returnLoans" ,
             async:false,
-            data: {pageIndex:pageIndex,pageSize:pageSize,customer:cuetomerVal,loanOrder:loanOrderVal,startTime:startTimeVal,endTime:endTimeVal,state:stateVal},
+            data: {pageIndex:pageIndex,pageSize:pageSize,customer:customerVal,loanOrder:loanOrderVal,startTime:startTimeVal,endTime:endTimeVal,state:stateVal},
             success: function (rs) {
             	var repay = rs.list;
 				var tabHtml = '';
@@ -224,13 +199,13 @@ function query(){
 				tabHtml += '<tr><td>'+repay[i].apply.loan_type+'</td>'+
 					'<td>'+repay[i].loan_order+'</td>'+
 					'<td>'+repay[i].apply.userinfo.realname+'</td>'+
-					'<td>'+repay[i].apply.loan_money.toFixed(2)+'</td>'+
-					'<td>'+repay[i].repay_money.toFixed(2)+'</td>'+
-					'<td>'+(repay[i].apply.loan_money-repay[i].repay_money).toFixed(2)+'</td>'+
+					'<td>'+repay[i].apply.loan_money.toFixed(2)+'￥</td>'+
+					'<td>'+repay[i].repay_money.toFixed(2)+'￥</td>'+
+					'<td>'+(repay[i].apply.loan_money-repay[i].repay_money).toFixed(2)+'￥</td>'+
 					'<td id="repayDate">'+repayDate+'</td><td>'+repay[i].apply.repay_method+'</td>'+
 					'<td>'+repay[i].repay_status+'</td><td>'+
-					'<a href="credit.html" class="credit">评价</a>'+
-					'<a href="" class="del">删除</a></td></tr>';
+					'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="returnLoan('+repay[i].loan_order+')">评价</button>'+
+					'&emsp;<button type="button" class="btn btn-warning" onclick="repayDel('+repay[i].repay_id+')">删除</button></td></tr>';
 				}
 			$("#tabBody").append(tabHtml);
             }

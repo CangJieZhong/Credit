@@ -17,6 +17,8 @@ import lombok.ToString;
 public class Repay implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	/** 还款序列id 主键 自增 */
+	private Integer repay_id;
 	/**单号*/
 	private String loan_order;
 	/**当前第几期*/
@@ -27,5 +29,8 @@ public class Repay implements Serializable{
 	private BigDecimal repay_money;
 	/**还款日期*/
 	private Date repay_date;
+	/**还款删除状态（0：未删除，1：已删除） 默认为0*/
+	private Integer isDelte;
+	
 	private Apply apply;
 }

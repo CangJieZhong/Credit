@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.zl.credit.creditcore.pojo.Apply;
+import com.zl.credit.creditcore.pojo.ApplyConditions;
 import com.zl.credit.creditcore.pojo.ApplyData;
 
 import java.util.List;
@@ -31,4 +32,25 @@ public interface ApplyMapper {
 	 * @throws Exception
 	 */
 	List<Apply> queryApplyAndUserinfo(Map<String,Object> map) throws Exception;
+
+	/**
+	 * （发放）查询所有Apply信息
+	 * @param applyCondition
+	 * @return
+	 */
+	List<Apply> queryAllApplysInfo(ApplyConditions applyConditions);
+
+	/**
+	 * 查询一条贷款记录（模态框）
+	 * @param loanOrder
+	 * @return
+	 */
+	Apply queryALoanRecord(String loanOrder);
+
+	/**
+	 * 处理删除
+	 * @param loanOrder
+	 * @return
+	 */
+	int loanDelete(String loanOrder);
 }

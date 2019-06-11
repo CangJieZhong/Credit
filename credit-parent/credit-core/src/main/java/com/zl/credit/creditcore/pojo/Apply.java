@@ -29,11 +29,7 @@ public class Apply implements Serializable{
 	private Integer loan_type;
 	/**贷款用途*/
 	private String loan_purpose;
-
-	/**分期类型：1:6+12 ,2:9+12 ,3:11+1*/
-
 	/**分期方式  0: 6+12 ,1: 9+12 , 2: 11+1*/
-
 	private Integer repay_method;
 	/**申请日期*/
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -61,6 +57,8 @@ public class Apply implements Serializable{
 	private Integer manager_msg;
 	/**版本*/
 	private Integer edition;
+	/**贷款删除状态（0：未删除，1：已删除） 默认为0*/
+	private Integer isDelete;
 
 	/**一个贷款申请对应一个用户*/
 	private Userinfo userinfo;

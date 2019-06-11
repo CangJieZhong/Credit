@@ -3,6 +3,8 @@ package com.zl.credit.creditcore.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +26,7 @@ public class Userinfo implements Serializable{
 	/**性别id 0:男 , 1:女*/
 	private Integer sex_id;
 	/**出生年月日*/
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 	/**家庭住址*/
 	private String address;
@@ -60,8 +63,10 @@ public class Userinfo implements Serializable{
 	/**信誉评级*/
 	private Integer credit_rating;
 	/**创建时间*/
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date create_date;
 	/**修改时间*/
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date update_date;
 	/**状态码 默认是0,既什么都没有实名认证*/
 	private Integer status_code =0;
