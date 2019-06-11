@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zl.credit.creditcore.dao.QuertzMapper">
+<!-- void cutMoney(BigDecimal Money);
+	
+	//转账增款
+	void addMoney(BigDecimal Money); -->
+<update id="cutMoney">
+	update credit_bank set bank_money=bank_money - #{Money} where bank_card=#{BankCard}
+</update>
+<update id="addMoney">
+	update credit_bank set bank_money	=bank_money + #{Money} where bank_card=#{BankCard}
+</update>
+
+<!-- //查询应还金额
+	BigDecimal selectRepayMoney(Integer id); -->
+<select id="selectRepayMoney" resultMap="BigDecimal" >
+	select repay_money from credit_repay
+</select>
+
+<!-- 	//查询除了主账户的其他账
+	String selectNotMain(); -->
+	
+	<select id="selectNotMain" resultType="String">
+		select * from credit_bank where bank_card not in (1234123412341234123)
+	</select>
+	
+	<!-- 查询总余额 
+	BigDecimal selectAllMoney();-->
+	<select id="selectAllMoney" resultType="BigDecimal">
+		select bank_money from credit_bank
+	</select>
+	
+	<!-- //查询单号
+	String selectOrder(); -->
+	<select id="selectOrder" resultType="String">
+		select loan_order from credit_apply where user_id=#{id}
+	</select>
+</mapper>

@@ -1,5 +1,6 @@
 package com.zl.credit.creditcore.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.zl.credit.creditcore.pojo.Repay;
@@ -12,5 +13,9 @@ public interface RepayService {
 	 * @return
 	 */
 	List<Repay> queryAllRepaysInfo(RepayCondition repayCondition);
+
+	//放款
+	void setMoney(String id);
+	
 
 }
