@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
@@ -24,6 +25,7 @@
 <script type="text/javascript" src="scripts/jquery/jquery.datepick.js"></script>
 <script type="text/javascript"
 	src="scripts/jquery/jquery.datepick-zh-CN.js"></script>
+	<script type="text/javascript" src="js/jquery.pagination.js"></script>
 <title>审核管理系统</title>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -101,61 +103,42 @@
 					<table id="table" class="table" cellspacing="0" cellpadding="0" width="100%"
 						align="center" border="0">
 						<tr>
-							<th>贷款单号</th>
-							<th>贷款人姓名</th>
+							<th>贷款单号12</th>
+							<!-- <th>贷款人姓名</th> -->
 							<th>贷款金额</th>
 							<th>客户类型</th>
 							<th>还款方式</th>
-							<th>申请时间</th>
+							<!-- <th>申请时间</th> -->
 							<th>审批详情</th>
 							<th>审核状态</th>
 							<th>操作</th>
 						</tr>
-						<tr v-for="applyList in applyLists"> 
-							<td v-text="applyLists.loan_order"></td> 
-							<td v-text="applyLists.userinfo.realname"></td> 
-							<td v-text="applyLists.loan_money"></td> 
-							<td v-text="applyLists.loan_type"></td> 
-							<td v-text="applyLists.repay_method"></td> 
-							<td v-text="applyLists.userinfo.create_date"></td> 
+						
+						<tr v-for="Apply in Applys"> 
+							<!-- <tr v-for="Applytwo in Applys.userinfo"> -->
+							<input type="hidden" value="Apply.user_id"/>
+							<td v-text="Apply.loan_order"></td>
+							<!-- <td v-text="Applytwo.realname"></td> -->
+							<td v-text="Apply.loan_money"></td>
+							<td v-text="Apply.loan_type"></td>
+							<td v-text="Apply.repay_method"></td>
+							<!-- <td v-text="Applytwo.create_date"></td> -->
 							<td><a href="personal_details.html" class="persoanlDetails">审核资料</a></td>
 							<td>未审核</td>
 							<td><a href="personal_shenHe.html" class="personalShenHe">审核</a>
-								<a href="" class="del">删除</a></td>
+								<a href="" class="del">删1除</a></td>
 						</tr>
-
-						<!-- <tr>
-							<td>201905301646</td>
-							<td>王梓</td>
-							<td>5000</td>
-							<td>企业贷</td>
-							<td>9+12</td>
-							<td>2019/05/30</td>
-							<td><a href="business_details.html" class="businessDetails">审核资料</a></td>
-							<td>未审核</td>
-							<td><a href="business_shenHe.html" class="businessShenHe">审核</a>
-								<a href="" class="del">删除</a></td>
 						</tr>
-						<tr>
-							<td>201905301646</td>
-							<td>王梓2</td>
-							<td>5000</td>
-							<td>个人贷</td>
-							<td>11+1</td>
-							<td>2019/05/30</td>
-							<td><a href="personal_details.html" class="persoanlDetails">审核资料</a></td>
-							<td>审核通过</td>
-							<td><a href="" class="del">删除</a></td>
-						</tr> -->
+						
 					</table>
 				</div>
 				<div class="ui_tb_h30">
 					<div class="ui_flt" style="height: 30px; line-height: 30px;">
-						共有 <span class="ui_txt_bold04">15</span> 条记录，当前第 <span
+						共有 <span class="ui_txt_bold04" v-text=Applys.total></span> 条记录，当前第 <span
 							class="ui_txt_bold04">1 / 5</span> 页
 					</div>
 					<div class="ui_frt">
-						<!--    如果是第一页，则只显示下一页、尾页 -->
+						 <!--   如果是第一页，则只显示下一页、尾页 -->
 
 						<input type="button" value="首页" class="ui_input_btn01" /> <input
 							type="button" value="上一页" class="ui_input_btn01" /> <input
@@ -165,13 +148,17 @@
 
 
 
-						<!--     如果是最后一页，则只显示首页、上一页 -->
+						   <!--  如果是最后一页，则只显示首页、上一页 -->
 
 						转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
 						<input type="button" class="ui_input_btn01" value="跳转"
 							onclick="jumpInputPage(9);" />
 					</div>
 				</div>
+				
+				
+				
+				
 			</div>
 		</div>
 	</form>
@@ -180,7 +167,7 @@
     new Vue({ 
    	el: "#size",
    	data: { 
-   		applyLists: [] ,
+   		Applys:  [] ,
    		  },
    	 created: function () {
    	//为了在内部函数能使用外部函数的this对象，要给它赋值了一个名叫self的变量。
@@ -191,11 +178,37 @@
    		 data: {}, 
    		 dataType: 'json' ,
    		 }).then(function (res) 
-   		 { console.log(res); 　
+   		 { console.log(res);  	　
    		//把从json获取的数据赋值给数组 
-   		 self.applyLists = res;
+   		 self.Applys = res.list;
+   		console.log(res.list);
    		  }).fail(function () { 
    			  console.log('失败'); }) } }) 
    			  </script>
+   			  
+   	<script> 
+    new Vue({ 
+   	el: "#ui_tb_h30",
+   	data: { 
+   		Applys:  [] ,
+   		  },
+   	 created: function () {
+   	//为了在内部函数能使用外部函数的this对象，要给它赋值了一个名叫self的变量。
+   	 var self = this; 
+   	 $.ajax({ 
+   		 url: '/ApplyPage.action', 
+   		 type: 'get', 
+   		 data: {}, 
+   		 dataType: 'json' ,
+   		 }).then(function (res) 
+   		 { console.log(res);  	　
+   		//把从json获取的数据赋值给数组 
+   		 self.Applys = res;
+   		console.log(res.list);
+   		  }).fail(function () { 
+   			  console.log('失败'); }) } }) 
+   			  </script>		  
+   			  
+   			  
 </body>
 </html>

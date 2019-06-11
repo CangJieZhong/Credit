@@ -78,7 +78,7 @@
 		resultMap="UserAndApply">
 
 		SELECT
-		loan_order,realname,loan_money,loan_type,repay_method,create_date,auditor3_msg
+		credit_apply.user_id,loan_order,realname,loan_money,loan_type,repay_method,create_date,auditor3_msg
 		FROM credit_apply,credit_userinfo WHERE
 		credit_apply.user_id=credit_userinfo.user_id
 		<where>
