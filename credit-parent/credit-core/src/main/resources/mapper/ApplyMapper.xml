@@ -102,4 +102,96 @@
 		</where>
 
 	</select>
+
+	
+	<!-- 发放 贷款和用户信息 关联查询， 以贷款表为主 -->
+	<resultMap type="Apply" id="applyAndUserinfoMap">
+		<id property="loan_order" column="loan_order" />
+		<result property="user_id" column="user_id" />
+		<result property="loan_money" column="loan_money" />
+		<result property="loan_type" column="loan_type" />
+		<result property="loan_purpose" column="loan_purpose" />
+		<result property="repay_method" column="repay_method" />
+		<result property="apply_date" column="apply_date" />
+		<result property="apply_end" column="apply_end" />
+		<result property="auditor1" column="auditor1" />
+		<result property="auditor2" column="auditor2" />
+		<result property="auditor3" column="auditor3" />
+		<result property="auditor1_msg" column="auditor1_msg" />
+		<result property="auditor2_msg" column="auditor2_msg" />
+		<result property="auditor3_msg" column="auditor3_msg" />
+		<result property="audit_status" column="audit_status" />
+		<result property="manager" column="manager" />
+		<result property="manager_msg" column="manager_msg" />
+		<result property="edition" column="edition" />
+		<result property="isDelete" column="isDelete" />
+	
+		<association property="userinfo" javaType="Userinfo">
+			<id property="user_id" column="user_id" />
+			<result property="idcard" column="idcard" />
+			<result property="realname" column="realname" />
+			<result property="sex_id" column="sex_id" />
+			<result property="birthday" column="birthday" />
+			<result property="address" column="address" />
+			<result property="now_address" column="now_address" />
+			<result property="phone_number" column="phone_number" />
+			<result property="bank_card" column="bank_card" />
+			<result property="reser_phone" column="reser_phone" />
+			<result property="urgent_person" column="urgent_person" />
+			<result property="urgent_phone" column="urgent_phone" />
+			<result property="marital_status" column="marital_status" />
+			<result property="educa" column="educa" />
+			<result property="occ" column="occ" />
+			<result property="company" column="company" />
+			<result property="company_phone" column="company_phone" />
+			<result property="company_address" column="company_address" />
+			<result property="img_on" column="img_on" />
+			<result property="img_down" column="img_down" />
+			<result property="img_hode" column="img_hode" />
+			<result property="credit_rating" column="credit_rating" />
+			<result property="create_date" column="create_date" />
+			<result property="update_date" column="update_date" />
+			<result property="status_code" column="status_code" />
+			<result property="credit1" column="credit1" />
+			<result property="credit2" column="credit2" />
+			<result property="credit3" column="credit3" />
+			<result property="grade" column="grade" />
+			<result property="edition" column="edition" />
+		</association>
+	</resultMap>
+	
+	<!-- 发放 贷款页面分页查询 -->
+	<select id="queryAllApplysInfo" parameterType="ApplyConditions" resultMap="applyAndUserinfoMap">
+		SELECT loan_type,loan_order,realname,loan_money,apply_end,repay_method,audit_status,app.isDelete  
+		 FROM credit_apply app JOIN credit_userinfo uinfo ON app.user_id = uinfo.user_id <include refid="applyConditionSql"/>
+	</select>
+	<!-- 查询一条贷款记录(模态框) -->
+	<select id="queryALoanRecord" resultMap="applyAndUserinfoMap">
+		SELECT loan_type,loan_order,loan_money,repay_method,realname,idcard,birthday,
+		 phone_number,bank_card,address,company_address,now_address,company,occ 
+		 FROM credit_apply app JOIN credit_userinfo uinfo ON app.user_id = uinfo.user_id 
+		 where loan_order = #{loanOrder}
+	</select>
+	<!-- 删除 -->
+	<update id="loanDelete" parameterType="string">
+		UPDATE credit_apply SET isDelete = 1 WHERE loan_order = #{loan_order}
+	</update>
+	
+	<sql id="applyConditionSql">
+		<where>
+			<if test="customer != null and customer != '' ">
+				and realname like '%${customer}%'
+			</if>
+			<if test="loanOrder != null and loanOrder != '' ">
+				and loan_order like '%${loanOrder}%'
+			</if>
+			<if test="startTime != null">
+				and apply_end &gt;= #{startTime}
+			</if>
+			<if test="endTime != null">
+				and apply_end &lt;= #{endTime}
+			</if>
+			 and audit_status = 1 and app.isDelete = 0
+		</where>
+	</sql>
 </mapper>

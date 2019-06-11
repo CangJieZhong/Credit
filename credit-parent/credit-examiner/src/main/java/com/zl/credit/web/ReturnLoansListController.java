@@ -10,24 +10,57 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zl.credit.creditcore.pojo.Repay;
-import com.zl.credit.creditcore.pojo.RepayCondition;
+import com.zl.credit.creditcore.pojo.RepayConditions;
 import com.zl.credit.creditcore.service.RepayService;
 import com.zl.credit.creditcore.util.DateUtil;
+import com.zl.credit.creditcore.util.JsonResult;
 
 @RestController
 public class ReturnLoansListController {
 	@Autowired
 	private RepayService repayService;
 	
+	/**
+	 * 带条件分页查询还款信息
+	 * @param pageIndex
+	 * @param repayConditions
+	 * @return
+	 */
 	@RequestMapping("/returnLoans")
 	public PageInfo<Repay> returnLoans(@RequestParam(defaultValue = "1")Integer pageIndex,
-			RepayCondition repayCondition){
-		repayCondition.setStartTime(DateUtil.beginForDate(repayCondition.getStartTime()));
-		repayCondition.setEndTime(DateUtil.endForDate(repayCondition.getEndTime()));
+			RepayConditions repayConditions){
+		repayConditions.setStartTime(DateUtil.beginForDate(repayConditions.getStartTime()));
+		repayConditions.setEndTime(DateUtil.endForDate(repayConditions.getEndTime()));
 		PageHelper.startPage(pageIndex, 3);
-		List<Repay> list = repayService.queryAllRepaysInfo(repayCondition);
+		List<Repay> list = repayService.queryAllRepaysInfo(repayConditions);
 		PageInfo<Repay> repayList = new PageInfo<Repay>(list);
 		return repayList;
 	}
-		
+	
+	/**
+	 * 查询多条还款记录(模态框)
+	 * @param loanId
+	 * @return
+	 */
+	@RequestMapping("/repayRecords")
+	public List<Repay> queryRepayRecords(String loanId){
+		List<Repay> list = repayService.queryRepayRecords(loanId);
+		return list;
+	}
+	
+	/***
+	 * 还款删除操作
+	 * @param loanOrder
+	 * @return
+	 */
+	@RequestMapping("/repayDelete")
+	public JsonResult repayDel(Integer repayId) {
+		JsonResult json = new JsonResult();
+		int rows = repayService.repayDel(repayId);
+		if(rows > 0) {
+			return json;
+		}
+		json.setSuccess(false);
+		return json;
+	}
 }

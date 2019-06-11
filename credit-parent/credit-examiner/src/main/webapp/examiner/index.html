@@ -12,7 +12,7 @@
 		/**退出系统**/
 		function logout(){
 			if(confirm("您确定要退出本系统吗？")){
-				window.location.href = "login.html";
+				location.href = "login/login.html";
 			}
 		}
 		
@@ -303,7 +303,7 @@
 	</script>
     <!-- side menu start -->
     <div id="top_nav">
-	 	<span id="here_area">当前位置：系统&nbsp;>&nbsp;</span>
+	 	<span id="here_area">当前位置：系统&nbsp;>&nbsp;贷款管理</span>
 	</div>
     <div id="main">
       	<iframe name="right" id="rightMain" src="loan_list.html" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"/>
