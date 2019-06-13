@@ -9,7 +9,7 @@ $(function() {
 			data:'',
 			dataType:"json",
 			success:function(rs){
-				if(rs.username == null){
+				if(rs  == null){
 					location.href="http://localhost:8090/login/login.html";
 				}else{					
 //				alert(rs.username);

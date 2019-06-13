@@ -13,6 +13,9 @@ public class IndexController {
 	@RequestMapping("/gainUser")
 	public User gainUserName(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		return user;
+		if(user!=null) {
+			return user;
+		}
+		return null;
 	}
 }

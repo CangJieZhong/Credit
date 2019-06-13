@@ -157,10 +157,10 @@ $(function() {
 		$.post("/checkHaveApply.action",function(rs){
 			if(rs.audit_status==0||rs.audit_status==1||rs.audit_status==2){
 				$("#DataMsg").html("");
-				$("#DataMsg").append($("<a>你的申请正在审核,请等待</a>"));
+				$("#DataMsg").append($("<br><br>&nbsp;<a style='color: red;'>你的申请正在审核,请等待</a>"));
 			}else if(rs.audit_status==5){
 				$("#DataMsg").html("");
-				$("#DataMsg").append($("<a>你正在还款,请还款结束再申请!</a>"));
+				$("#DataMsg").append($("<br><br>&nbsp;<a style='color: red;'>你正在还款,请还款结束再申请!</a>"));
 			}
 		});
 		

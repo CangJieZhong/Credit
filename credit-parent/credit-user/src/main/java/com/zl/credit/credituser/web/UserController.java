@@ -1,5 +1,6 @@
 package com.zl.credit.credituser.web;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -68,5 +69,13 @@ public class UserController {
 			return user;
 		}
 		return null;
+	}
+	@RequestMapping("/clearUser.action")
+	public void clearUser(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		Cookie[] cookies = request.getCookies();
+		if(user!=null) {
+			request.getSession().setAttribute("user", null);
+		}
 	}
 }
