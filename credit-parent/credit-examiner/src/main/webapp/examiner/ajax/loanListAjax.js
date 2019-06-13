@@ -91,6 +91,13 @@ $(function(){
 						if(apply[i].audit_status == 1){
 							apply[i].audit_status = '已审核';
 						}
+						//判断放款按钮状态
+						var loanBtn = "";
+						if(apply[i].loanBtn_status == 1){
+							loanBtn = '<button type="button" disabled class="btn btn-success">已放款</button>';
+						}else{
+							loanBtn = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="fangLoan('+apply[i].loan_order+')">放款</button>';
+						}
 						//审核结束时间（'yyyy-MM-dd HH:mm:ss'）
 						var applyEndDate = getMyDate(apply[i].apply_end) ;
 					
@@ -99,8 +106,7 @@ $(function(){
 						'<td>'+apply[i].userinfo.realname+'</td>'+
 						'<td>'+apply[i].loan_money.toFixed(2)+'￥</td>'+
 						'<td id="applyDate">'+applyEndDate+'</td><td>'+apply[i].repay_method+'</td>'+
-						'<td>'+apply[i].audit_status+'</td><td>'+
-						'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="fangLoan('+apply[i].loan_order+')">放款</button>'+
+						'<td>'+apply[i].audit_status+'</td><td>'+loanBtn+
 						'&emsp;<button type="button" class="btn btn-warning" onclick="loanDel('+apply[i].loan_order+')">删除</button></td></tr>';
 					}
 				$("#tabBody").append(tabHtml);
@@ -182,6 +188,13 @@ function query(){
 					if(apply[i].audit_status == 1){
 						apply[i].audit_status = '已审核';
 					}
+					
+					var loanBtn = "";
+					if(apply[i].loanBtn_status == 1){
+						loanBtn = '<button type="button" disabled="disabled" class="btn btn-success">已放款</button>';
+					}else{
+						loanBtn = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="fangLoan('+apply[i].loan_order+')">放款</button>';
+					}
 					//审核结束时间（'yyyy-MM-dd HH:mm:ss'）
 					var applyEndDate = getMyDate(apply[i].apply_end) ;
 					//alert(commonTime);
@@ -190,8 +203,7 @@ function query(){
 					'<td>'+apply[i].userinfo.realname+'</td>'+
 					'<td>'+apply[i].loan_money.toFixed(2)+'￥</td>'+
 					'<td>'+applyEndDate+'</td><td>'+apply[i].repay_method+'</td>'+
-					'<td>'+apply[i].audit_status+'</td><td>'+
-					'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="fangLoan('+apply[i].loan_order+')">放款</button>'+
+					'<td>'+apply[i].audit_status+'</td><td>'+loanBtn+
 					'&emsp;<button type="button" class="btn btn-warning" onclick="loanDel('+apply[i].loan_order+')">删除</button></td></tr>';
 				}
 			$("#tabBody").append(tabHtml);

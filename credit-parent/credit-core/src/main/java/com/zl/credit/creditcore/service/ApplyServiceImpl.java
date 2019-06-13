@@ -76,5 +76,10 @@ public class ApplyServiceImpl implements ApplyService {
 		return applyMapper.loanDelete(loanOrder);
 	}
 
+	@Override
+	public int updateApplyStatus(String loanId) {
+		return applyMapper.updateApplyStatus(loanId);
+	}
+
 
 }

@@ -36,6 +36,10 @@ public interface RepayMapper {
 	 */
 	int repayDel(Integer repayId);
 
+	//修改还款状态
+	void updateRepayState(String loanId);
+
+	
 	/**
 	 * 更新用户积分 
 	 * @param grades

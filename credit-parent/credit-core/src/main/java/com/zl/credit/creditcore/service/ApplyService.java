@@ -30,5 +30,12 @@ public interface ApplyService {
 	 * @return
 	 */
 	int loanDelete(String loanOrder);
+
+	/**
+	 * 更新放款按钮状态
+	 * @param loanId
+	 * @return
+	 */
+	int updateApplyStatus(String loanId);
 	
 }

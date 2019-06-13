@@ -6,8 +6,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EnableScheduling
 @EnableTransactionManagement
+@EnableScheduling//开启定时任务
 public class CreditCoreApplication {
 
 	public static void main(String[] args) {

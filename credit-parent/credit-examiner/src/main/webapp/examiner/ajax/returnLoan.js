@@ -49,7 +49,6 @@ function returnLoan(repayid) {
 				} else {
 					repayState = "已全部还款";
 				}
-
 				$("#loanType").val(loanType);
 				$("#loanId").val(rs.loan_order);
 				$("#loanName").val(rs.apply.userinfo.realname);

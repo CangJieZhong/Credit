@@ -78,5 +78,34 @@ function loanDel(loanOrder) {
 			}
 		}
 	})
+	
+	
+}
+
+/* 放款操作*/
+function sendLoan() {
+	var loanMoney = $("#loanMoney").val();
+	var repayType = $("#repayType").val();
+	var bankCard = $("#bankCard").val();
+	var loanId = $("#loanId").val();
+	$.ajax({
+		type : "POST",
+		dataType : "json",
+		url : "/sendLoans",
+		async : false,
+		data : {
+			loanMoney : loanMoney,
+			repayType: repayType,
+			bankCard: bankCard,
+			loanId: loanId
+		},
+		success : function(rs) {
+			if (rs.success) {
+				alert("放款成功!");
+				location.reload();
+				
+			}
+		}
+	})
 }
 

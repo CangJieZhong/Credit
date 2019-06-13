@@ -27,8 +27,8 @@
 	
 	<!-- 查询总余额 
 	BigDecimal selectAllMoney();-->
-	<select id="selectAllMoney" resultType="BigDecimal">
-		select bank_money from credit_bank
+	<select id="selectAllMoney" resultType="BigDecimal" parameterType="String">
+		select bank_money from credit_bank where bank_card=#{notMainList}
 	</select>
 	
 	<!-- //查询单号

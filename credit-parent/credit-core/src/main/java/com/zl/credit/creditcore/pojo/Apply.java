@@ -59,6 +59,8 @@ public class Apply implements Serializable{
 	private Integer edition;
 	/**贷款删除状态（0：未删除，1：已删除） 默认为0*/
 	private Integer isDelete;
+	/** 放款按钮状态 */
+	private Integer loanBtn_status;
 
 	/**一个贷款申请对应一个用户*/
 	private Userinfo userinfo;

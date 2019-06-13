@@ -28,7 +28,11 @@ public interface RepayService {
 	int repayDel(Integer repayId);
 
 	//放款
-	void setMoney(String id);
+
+	void updateRepayState(String loanId);
+
+	
+	String setMoney(String id);
 
 	/**
 	 * 更新用户积分（grade）
