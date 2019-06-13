@@ -90,10 +90,8 @@ $(function(){
 						//还款状态
 						if(repay[i].repay_status == 0){
 							repay[i].repay_status = '未还款';
-						}else if(repay[i].repay_status == 1){
-							repay[i].repay_status = '当前已还款';
 						}else{
-							repay[i].repay_status = '已全部还款';
+							repay[i].repay_status = '已还款';
 						}
 						var creditBtn = '';
 						if(repay[i].credit_status == 1){

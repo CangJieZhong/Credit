@@ -44,10 +44,8 @@ function returnLoan(repayid) {
 				var repayState = rs.repay_status;
 				if (repayState == 0) {
 					repayState = "未还款";
-				} else if (repayState == 1) {
-					repayState = "当前已还款";
-				} else {
-					repayState = "已全部还款";
+				} else{
+					repayState = "已还款";
 				}
 				$("#loanType").val(loanType);
 				$("#loanId").val(rs.loan_order);
