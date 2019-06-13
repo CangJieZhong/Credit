@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zl.credit.creditcore.service.RepayServiceImpl;
+import com.zl.credit.creditcore.service.RepayService;
 
 @Controller
 public class LoanBtnController {
 
 	@Autowired
-	private RepayServiceImpl repayServiceImpl;
+	private RepayService repayService;
 	
 	
 	//放款操作
@@ -21,4 +21,5 @@ public class LoanBtnController {
 		return null;
 		
 	}
+
 }

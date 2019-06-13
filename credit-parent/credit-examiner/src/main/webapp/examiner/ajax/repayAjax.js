@@ -71,6 +71,7 @@ $(function(){
 					var repay = rs.list;
 					var tabHtml = '';
 					for ( var i in repay) {
+//						alert(repay[i].credit_status);
 						//贷款类型 
 						if(repay[i].apply.loan_type == 1){
 							repay[i].apply.loan_type = '个人贷';
@@ -94,6 +95,12 @@ $(function(){
 						}else{
 							repay[i].repay_status = '已全部还款';
 						}
+						var creditBtn = '';
+						if(repay[i].credit_status == 1){
+							creditBtn = '<button type="button" disabled class="btn btn-success">已评价</button>'
+						}else{
+							creditBtn = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="returnLoan('+repay[i].repay_id+')">评&nbsp;&nbsp;&nbsp;价</button>'
+						}
 						//还款时间（'yyyy-MM-dd HH:mm:ss'）
 						var repayDate = getMyDate(repay[i].repay_date) ;
    						//alert(commonTime);
@@ -105,9 +112,8 @@ $(function(){
 						'<td>'+repay[i].repay_money.toFixed(2)+'￥</td>'+
 						'<td>'+(repay[i].apply.loan_money-repay[i].repay_money).toFixed(2)+'￥</td>'+
 						'<td id="repayDate">'+repayDate+'</td><td>'+repay[i].apply.repay_method+'</td>'+
-						'<td>'+repay[i].repay_status+'</td><td>'+
-						'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="returnLoan('+repay[i].loan_order+')">评价</button>'+
-						'&emsp;<button type="button" class="btn btn-warning" onclick="repayDel('+repay[i].repay_id+')">删除</button></td></tr>';
+						'<td>'+repay[i].repay_status+'</td><td>'+creditBtn+
+						'&emsp;<button type="button" class="btn btn-warning" onclick="repayDel('+repay[i].repay_id+')">删&nbsp;&nbsp;除</button></td></tr>';
 					}
 				$("#tabBody").append(tabHtml);
 			}
@@ -188,10 +194,15 @@ function query(){
 					//还款状态
 					if(repay[i].repay_status == 0){
 						repay[i].repay_status = '未还款';
-					}else if(repay[i].repay_status == 1){
-						repay[i].repay_status = '当前已还款';
 					}else{
-						repay[i].repay_status = '已全部还款';
+						repay[i].repay_status = '已还款';
+					}
+					
+					var creditBtn = '';
+					if(repay[i].credit_status == 1){
+						creditBtn = '<button type="button" disabled class="btn btn-success">已评价</button>'
+					}else{
+						creditBtn = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="returnLoan('+repay[i].repay_id+')">评&nbsp;&nbsp;&nbsp;价</button>'
 					}
 					//还款时间（'yyyy-MM-dd HH:mm:ss'）
 					var repayDate = getMyDate(repay[i].repay_date) ;
@@ -203,9 +214,8 @@ function query(){
 					'<td>'+repay[i].repay_money.toFixed(2)+'￥</td>'+
 					'<td>'+(repay[i].apply.loan_money-repay[i].repay_money).toFixed(2)+'￥</td>'+
 					'<td id="repayDate">'+repayDate+'</td><td>'+repay[i].apply.repay_method+'</td>'+
-					'<td>'+repay[i].repay_status+'</td><td>'+
-					'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="returnLoan('+repay[i].loan_order+')">评价</button>'+
-					'&emsp;<button type="button" class="btn btn-warning" onclick="repayDel('+repay[i].repay_id+')">删除</button></td></tr>';
+					'<td>'+repay[i].repay_status+'</td><td>'+creditBtn+
+					'&emsp;<button type="button" class="btn btn-warning" onclick="repayDel('+repay[i].repay_id+')">删&nbsp;&nbsp;除</button></td></tr>';
 				}
 			$("#tabBody").append(tabHtml);
             }
