@@ -1,5 +1,6 @@
 package com.zl.credit.creditcore.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,13 +25,15 @@ public class ApplyServiceImpl implements ApplyService {
 	@Override
 	public List<Apply> queryApplyAndUserinfo(Integer currentPage, Integer pageSize, 
 			String loan_type,String realname,String startTime,String endTime,Integer auditor3_msg)throws Exception {
-		PageHelper.startPage(currentPage, pageSize);
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("loan_type", loan_type);
-		map.put("realname",realname );
-		map.put("startTime",startTime );
-		map.put("endTime", endTime);
-		map.put("auditor3_msg", auditor3_msg);
+		if(currentPage==null) {
+			currentPage=1;
+		}
+		
+		/*
+		 * Map<String,Object> map = new HashMap<String,Object>(); map.put("loan_type",
+		 * loan_type); map.put("realname",realname ); map.put("startTime",startTime );
+		 * map.put("endTime", endTime); map.put("auditor3_msg", auditor3_msg);
+		 */
 		
 		ApplyCondition applyCondition = new ApplyCondition();
 		applyCondition.setAuditor3_msg(auditor3_msg);
@@ -38,12 +41,21 @@ public class ApplyServiceImpl implements ApplyService {
 		applyCondition.setLoan_type(loan_type);
 		applyCondition.setRealname(realname);
 		applyCondition.setStartTime(startTime);
-		
-		List<Apply> allList = applyMapper.queryApplyAndUserinfo(map);
-		PageBean<Apply> pageDate = new PageBean<>(currentPage,pageSize);
-		pageDate.setItems(allList);
 
-		return pageDate.getItems();
+
+		return applyMapper.queryApplyAndUserinfo(applyCondition); 
+		/*
+		 * List<Apply> list = new ArrayList<Apply>();
+		 * System.err.println("接收到的alllist"+allList);
+		 * System.err.println(allList.size());
+		 */
+		
+//		System.out.println(list);
+		/*
+		 * PageInfo<Apply> pageDate = new PageInfo<>(); pageDate.setList(allList);
+		 * System.out.println("接收到的"+pageDate.getList());
+			return allList;
+			 */	
 	}
 
 	@Override

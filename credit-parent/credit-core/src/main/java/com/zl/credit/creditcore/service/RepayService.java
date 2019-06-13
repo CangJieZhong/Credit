@@ -1,6 +1,5 @@
 package com.zl.credit.creditcore.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import com.zl.credit.creditcore.pojo.Repay;
@@ -19,7 +18,7 @@ public interface RepayService {
 	 * @param loanId
 	 * @return
 	 */
-	List<Repay> queryRepayRecords(String loanId);
+	Repay queryRepayRecords(Integer repayid);
 
 	/**
 	 * 还款删除 返回的结果
@@ -29,10 +28,25 @@ public interface RepayService {
 	int repayDel(Integer repayId);
 
 	//放款
-	String setMoney(String id);
 
 	void updateRepayState(String loanId);
 
 	
+	String setMoney(String id);
+
+	/**
+	 * 更新用户积分（grade）
+	 * @param grades
+	 * @param name
+	 * @return
+	 */
+	int updateGrade(Integer grades, String name);
+
+	/**
+	 * 评价后 改评价按钮的状态
+	 * @param repayid
+	 * @return
+	 */
+	int updateCreditStatus(Integer repayid);
 
 }

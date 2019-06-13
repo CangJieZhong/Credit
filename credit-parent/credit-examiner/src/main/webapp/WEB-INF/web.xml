@@ -14,18 +14,18 @@
 	</welcome-file-list>
 
 	<!-- 配置一个创建Spring容器的监听器 -->
-	<listener>
+	<!-- <listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<!-- 指明spring配置文件的路径 -->
+	指明spring配置文件的路径
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<!-- 默认加载是WEB-INF/applicationContext.xml -->
+		默认加载是WEB-INF/applicationContext.xml
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 
-	<!-- 配置SpringMVC的前端控制器 -->
+	配置SpringMVC的前端控制器
 	<servlet>
 		<servlet-name>springMVC</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -39,7 +39,7 @@
 	<servlet-mapping>
 		<servlet-name>springMVC</servlet-name>
 		<url-pattern>*.action</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 
 
 	<!-- 处理post请求编码,以及响应编码 -->
@@ -52,8 +52,8 @@
 		</init-param>
 	</filter>
 
-    <filter-mapping>
+    <!-- <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping> -->
 </web-app>

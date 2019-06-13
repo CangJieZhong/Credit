@@ -31,6 +31,8 @@ public class Repay implements Serializable{
 	private Date repay_date;
 	/**还款删除状态（0：未删除，1：已删除） 默认为0*/
 	private Integer isDelte;
+	/** 评价状态 0：未评价，1：已评价 */
+	private Integer credit_status;
 	
 	private Apply apply;
 }

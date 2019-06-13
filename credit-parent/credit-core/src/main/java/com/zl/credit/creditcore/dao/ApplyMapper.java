@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.zl.credit.creditcore.pojo.Apply;
+
+import com.zl.credit.creditcore.pojo.ApplyCondition;
+
 import com.zl.credit.creditcore.pojo.ApplyConditions;
 import com.zl.credit.creditcore.pojo.ApplyData;
 
@@ -31,6 +34,8 @@ public interface ApplyMapper {
 	 * @return
 	 * @throws Exception
 	 */
+	List<Apply> queryApplyAndUserinfo(ApplyCondition applyCondition) throws Exception;
+
 	List<Apply> queryApplyAndUserinfo(Map<String,Object> map) throws Exception;
 
 	/**

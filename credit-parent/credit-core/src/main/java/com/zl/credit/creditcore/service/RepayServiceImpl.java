@@ -16,11 +16,8 @@ import com.zl.credit.creditcore.pojo.RepayConditions;
 public class RepayServiceImpl implements RepayService {
 	@Autowired
 	private RepayMapper repayMapper;
-
 	@Autowired
 	private QuertzMapper quertzMapper;
-
-
 
 	@Override
 	public List<Repay> queryAllRepaysInfo(RepayConditions repayConditions) {
@@ -30,6 +27,7 @@ public class RepayServiceImpl implements RepayService {
 		return list;
 	}
 	//放款
+
 	@Override
 	public String setMoney(String id) {
 		
@@ -43,8 +41,8 @@ public class RepayServiceImpl implements RepayService {
 
 
 	@Override
-	public List<Repay> queryRepayRecords(String loanId) {
-		return repayMapper.queryRepayRecords(loanId);
+	public Repay queryRepayRecords(Integer repayid) {
+		return repayMapper.queryRepayRecords(repayid);
 	}
 
 	@Override
@@ -55,6 +53,16 @@ public class RepayServiceImpl implements RepayService {
 	public void updateRepayState(String loanId) {
 		repayMapper.updateRepayState(loanId);
 		
+	}
+
+	@Override
+	public int updateGrade(Integer grades, String name) {
+		return repayMapper.updateGrade(grades, name);
+	}
+
+	@Override
+	public int updateCreditStatus(Integer repayid) {
+		return repayMapper.updateCreditStatus(repayid);
 	}
 
 }

@@ -83,7 +83,16 @@
 						if (rs.success) {
 							//登录成功
                             alert("登录成功");
-                            window.location.href="/index/index.html";
+							//判断用户角色
+							if(rs.msg==1){
+								 window.location.href="/index/index.html";
+							//2: 审计员
+							}else if (rs.msg==2) {
+								window.location.href="http://localhost:8091/granter/index.html";
+								//4: 发放专员
+							}else if (rs.msg==4) {
+								window.location.href="http://localhost:8092/examiner/index.html";
+							}
 						} else {
                             alert(rs.msg);
 						}

@@ -15,7 +15,7 @@ function getMyDate(str) {
 	return oTime;
 };
 /* 还款模态框 */
-function returnLoan(loanId) {
+function returnLoan(repayid) {
 	// alert(loanOrder);
 	$.ajax({
 		type : "POST",
@@ -23,17 +23,17 @@ function returnLoan(loanId) {
 		url : "/repayRecords",
 		async : false,
 		data : {
-			loanId : loanId
+			repayid : repayid
 		},
 		success : function(rs) {
-			for ( var i in rs) {
-				var loanType = rs[i].apply.loan_type;
+//			alert(rs.loan_order)
+				var loanType = rs.apply.loan_type;
 				if (loanType == 1) {
 					loanType = "个人贷";
 				} else {
 					loanType = "企业贷";
 				}
-				var repayType = rs[i].apply.repay_method;
+				var repayType = rs.apply.repay_method;
 				if (repayType == 1) {
 					repayType = "6+12套餐";
 				} else if (repayType == 2) {
@@ -41,7 +41,7 @@ function returnLoan(loanId) {
 				} else {
 					repayType = "11+1套餐";
 				}
-				var repayState = rs[i].repay_status;
+				var repayState = rs.repay_status;
 				if (repayState == 0) {
 					repayState = "未还款";
 				} else if (repayState == 1) {
@@ -49,17 +49,16 @@ function returnLoan(loanId) {
 				} else {
 					repayState = "已全部还款";
 				}
-
 				$("#loanType").val(loanType);
-				$("#loanId").val(rs[i].loan_order);
-				$("#loanName").val(rs[i].apply.userinfo.realname);
-				$("#phone").val(rs[i].apply.userinfo.phone_number);
-				$("#loanMoney").val(rs[i].apply.loan_money.toFixed(2));
-				$("#returnMoney").val(rs[i].repay_money.toFixed(2));
-				$("#returnTime").val(getMyDate(rs[i].repay_date));
+				$("#loanId").val(rs.loan_order);
+				$("#loanName").val(rs.apply.userinfo.realname);
+				$("#phone").val(rs.apply.userinfo.phone_number);
+				$("#loanMoney").val(rs.apply.loan_money.toFixed(2));
+				$("#returnMoney").val(rs.repay_money.toFixed(2));
+				$("#returnTime").val(getMyDate(rs.repay_date));
 				$("#repayType").val(repayType);
 				$("#returnState").val(repayState);
-			}
+				$("#hid").val(rs.repay_id);
 		}
 	});
 }
@@ -76,6 +75,29 @@ function repayDel(repayId) {
 		success : function(rs) {
 			if (rs.success) {
 				alert("删除成功!");
+				location.reload();
+			}
+		}
+	})
+}
+/* 更新评价 */
+function credit(){
+	var grades = $("#credit").val();
+	var name = $("#loanName").val();
+	var repayid = $("#hid").val();
+	$.ajax({
+		type : "POST",
+		dataType : "json",
+		url : "/credit",
+		async : false,
+		data : {
+			grades : grades,
+			name : name,
+			repayid : repayid
+		},	
+		success : function(rs) {
+			if (rs.success) {
+				alert("评价成功!");
 				location.reload();
 			}
 		}

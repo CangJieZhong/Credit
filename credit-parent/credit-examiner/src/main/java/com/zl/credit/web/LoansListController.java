@@ -2,6 +2,8 @@ package com.zl.credit.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,12 +30,13 @@ public class LoansListController {
 	 */
 	@RequestMapping("/applysLoans")
 	public PageInfo<Apply> applyLoans(@RequestParam(defaultValue = "1")Integer pageIndex,
-			ApplyConditions applyConditions){
+			ApplyConditions applyConditions,HttpServletRequest  request){
 		applyConditions.setStartTime(DateUtil.beginForDate(applyConditions.getStartTime()));
 		applyConditions.setEndTime(DateUtil.endForDate(applyConditions.getEndTime()));
 		PageHelper.startPage(pageIndex, 3);
 		List<Apply> list = applyService.queryAllApplysInfo(applyConditions);
 		PageInfo<Apply> applyList = new PageInfo<Apply>(list);
+		System.out.println("8092"+request.getSession().getAttribute("user"));
 		return applyList;
 	}
 	

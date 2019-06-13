@@ -11,10 +11,15 @@ import com.zl.credit.creditcore.pojo.User;
 import com.zl.credit.creditcore.util.MD5;
 import com.zl.credit.creditcore.util.UserContext;
 
+
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
+	/**Redis集群*/
+	/*
+	 * @Autowired private JedisCluster jedisCluster;
+	 */
 	@Override
 	public User login(String username, String password) throws Exception {
 		User user = userMapper.queryByNameAndPwd(username,MD5.encode(password));

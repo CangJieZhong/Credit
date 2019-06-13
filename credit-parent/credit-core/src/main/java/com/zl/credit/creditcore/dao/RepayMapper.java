@@ -3,6 +3,7 @@ package com.zl.credit.creditcore.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.zl.credit.creditcore.pojo.Repay;
 import com.zl.credit.creditcore.pojo.RepayConditions;
@@ -26,7 +27,7 @@ public interface RepayMapper {
 	 * @param loanId
 	 * @return
 	 */
-	List<Repay> queryRepayRecords(String loanId);
+	Repay queryRepayRecords(Integer repayid);
 
 	/**
 	 * 还款删除成功与否 返回的 int 结果
@@ -39,4 +40,19 @@ public interface RepayMapper {
 	void updateRepayState(String loanId);
 
 	
+	/**
+	 * 更新用户积分 
+	 * @param grades
+	 * @param name
+	 * @return
+	 */
+	int updateGrade(@Param("grades")Integer grades, @Param("name")String name);
+
+	/**
+	 * 更改评价按钮的状态
+	 * @param repayid
+	 * @return
+	 */
+	int updateCreditStatus(Integer repayid);
+
 }
