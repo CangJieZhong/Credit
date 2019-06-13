@@ -8,7 +8,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import com.github.pagehelper.PageHelper;
-
+/**
+ * 审计模块
+ * @author Administrator
+ *
+ */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class CreditGranterApplication {
 	public static void main(String[] args) {

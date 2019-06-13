@@ -30,6 +30,7 @@ public class UserController {
 		int rolo = user.getRole_id();
 		//判断角色
 		json.setSuccess(true);
+		json.setMsg(rolo+"");
 		}else {
 			json.setSuccess(false);
 			json.setMsg("用户名或密码错误!!!");

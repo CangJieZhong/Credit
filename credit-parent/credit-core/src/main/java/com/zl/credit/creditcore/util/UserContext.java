@@ -1,7 +1,10 @@
 package com.zl.credit.creditcore.util;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 
 /**
  * 封装获取HttpSession,以及往HttpSession存放数据

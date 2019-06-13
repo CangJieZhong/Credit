@@ -14,7 +14,7 @@
 
 <!-- //查询应还金额
 	BigDecimal selectRepayMoney(Integer id); -->
-<select id="selectRepayMoney" resultMap="BigDecimal" >
+<select id="selectRepayMoney" resultType="BigDecimal" >
 	select repay_money from credit_repay
 </select>
 
