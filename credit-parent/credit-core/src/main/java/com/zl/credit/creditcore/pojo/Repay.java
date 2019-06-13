@@ -19,49 +19,6 @@ public class Repay implements Serializable{
 
 	/** 还款序列id 主键 自增 */
 	private Integer repay_id;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**单号*/
 	private String loan_order;
 	/**当前第几期*/
