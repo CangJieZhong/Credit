@@ -89,4 +89,10 @@
 			and r.isDelete = 0
 		</where>
 	</sql>
+	<!-- //修改还款状态
+	void updateRepayState(String loanId);
+	UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值 -->
+	<update id="updateRepayState" parameterType="String">
+		update credit_repay set repay_status = 1 where loan_order = #{loanId}
+	</update>
 </mapper>

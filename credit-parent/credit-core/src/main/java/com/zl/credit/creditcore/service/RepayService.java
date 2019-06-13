@@ -29,7 +29,10 @@ public interface RepayService {
 	int repayDel(Integer repayId);
 
 	//放款
-	void setMoney(String id);
+	String setMoney(String id);
+
+	void updateRepayState(String loanId);
+
 	
 
 }

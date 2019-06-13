@@ -29,14 +29,16 @@ public class RepayServiceImpl implements RepayService {
 		pageInfo.setList(list);
 		return list;
 	}
+	//放款
 	@Override
-	public void setMoney(String id) {
-		BigDecimal money = quertzMapper.selectRepayMoney();
+	public String setMoney(String id) {
+		
 		String order=quertzMapper.selectOrder(id);
+		BigDecimal money = quertzMapper.selectRepayMoney(order);
 		//放款操作
 		quertzMapper.cutMoney(money,"1234123412341234123");
 		quertzMapper.addMoney(money,order);
-		
+		return order;
 	}
 
 
@@ -48,6 +50,11 @@ public class RepayServiceImpl implements RepayService {
 	@Override
 	public int repayDel(Integer repayId) {
 		return repayMapper.repayDel(repayId);
+	}
+	@Override
+	public void updateRepayState(String loanId) {
+		repayMapper.updateRepayState(loanId);
+		
 	}
 
 }

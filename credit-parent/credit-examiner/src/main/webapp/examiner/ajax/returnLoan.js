@@ -54,8 +54,8 @@ function returnLoan(loanId) {
 				$("#loanId").val(rs[i].loan_order);
 				$("#loanName").val(rs[i].apply.userinfo.realname);
 				$("#phone").val(rs[i].apply.userinfo.phone_number);
-				$("#loanMoney").val(rs[i].apply.loan_money.toFixed(2) + '￥');
-				$("#returnMoney").val(rs[i].repay_money.toFixed(2) + '￥');
+				$("#loanMoney").val(rs[i].apply.loan_money.toFixed(2));
+				$("#returnMoney").val(rs[i].repay_money.toFixed(2));
 				$("#returnTime").val(getMyDate(rs[i].repay_date));
 				$("#repayType").val(repayType);
 				$("#returnState").val(repayState);

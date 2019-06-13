@@ -171,7 +171,7 @@ SELECT * FROM credit_apply a WHERE a.user_id = #{user_id} AND a.apply_date = (SE
 		 where loan_order = #{loanOrder}
 	</select>
 	<!-- 删除 -->
-	<update id="loanDelete" parameterType="string">
+	<update id="loanDelete" >
 		UPDATE credit_apply SET isDelete = 1 WHERE loan_order = #{loan_order}
 	</update>
 	
