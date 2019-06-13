@@ -87,6 +87,7 @@ function sendLoan() {
 	var loanMoney = $("#loanMoney").val();
 	var repayType = $("#repayType").val();
 	var bankCard = $("#bankCard").val();
+	var loanId = $("#loanId").val();
 	$.ajax({
 		type : "POST",
 		dataType : "json",
@@ -95,7 +96,8 @@ function sendLoan() {
 		data : {
 			loanMoney : loanMoney,
 			repayType: repayType,
-			bankCard: bankCard
+			bankCard: bankCard,
+			loanId: loanId
 		},
 		success : function(rs) {
 			if (rs.success) {
@@ -105,6 +107,4 @@ function sendLoan() {
 			}
 		}
 	})
-	
-	
 }

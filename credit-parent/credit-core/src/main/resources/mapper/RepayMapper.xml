@@ -16,6 +16,7 @@
 			<result column="repay_method" property="repay_method"/>
 			<result property="apply_end" column="apply_end" />
 			<result property="isDelete" column="isDelete" />
+			<result property="loanBtn_status" column="loanBtn_status" />
 			
 			<association property="userinfo" javaType="Userinfo">
 				<id property="user_id" column="user_id" />
@@ -54,7 +55,7 @@
 	<!-- 发放 还款页面分页查询 -->
 	<select id="queryAllRepaysInfo" parameterType="RepayConditions" resultMap="repayMap">
 		SELECT repay_id,loan_type,apply_end,r.loan_order,realname,loan_money,repay_money,repay_date,
-		repay_method,repay_status,r.isDelete FROM credit_repay r JOIN credit_apply a 
+		repay_method,repay_status,r.isDelete,loanBtn_status FROM credit_repay r JOIN credit_apply a 
 		ON r.loan_order = a.loan_order JOIN credit_userinfo u ON a.user_id = u.user_id 
 		<include refid="repayConditionSql"/>
 	</select>
@@ -86,7 +87,7 @@
 			<if test="state != null and state != -1 ">
 				and repay_status = #{state}
 			</if>
-			and r.isDelete = 0
+			and r.isDelete = 0 and loanBtn_status = 1
 		</where>
 	</sql>
 	<!-- //修改还款状态

@@ -15,12 +15,14 @@ import com.zl.credit.creditcore.service.LoadMoneyService;
 @Component
 public class AutoRepayController {
 
+	private int MONTH=1;
+	
 	@Autowired
 	private LoadMoneyService loadMoneyService;
 	
 	//还款操作
 		@Transactional
-		@Scheduled(cron = "0/5 * * * * ? ")
+		@Scheduled(cron = "0 30 1 1 * ?")
 		public void sendLoan() {
 			//查询除主账户的其他账户
 			List<String> list = loadMoneyService.selectNotMain();

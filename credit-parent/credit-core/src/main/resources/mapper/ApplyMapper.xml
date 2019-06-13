@@ -123,6 +123,7 @@ SELECT * FROM credit_apply a WHERE a.user_id = #{user_id} AND a.apply_date = (SE
 		<result property="manager_msg" column="manager_msg" />
 		<result property="edition" column="edition" />
 		<result property="isDelete" column="isDelete" />
+		<result property="loanBtn_status" column="loanBtn_status" />
 	
 		<association property="userinfo" javaType="Userinfo">
 			<id property="user_id" column="user_id" />
@@ -160,12 +161,12 @@ SELECT * FROM credit_apply a WHERE a.user_id = #{user_id} AND a.apply_date = (SE
 	
 	<!-- 发放 贷款页面分页查询 -->
 	<select id="queryAllApplysInfo" parameterType="ApplyConditions" resultMap="applyAndUserinfoMap">
-		SELECT loan_type,loan_order,realname,loan_money,apply_end,repay_method,audit_status,app.isDelete  
+		SELECT loan_type,loan_order,realname,loan_money,apply_end,repay_method,audit_status,app.isDelete,loanBtn_status   
 		 FROM credit_apply app JOIN credit_userinfo uinfo ON app.user_id = uinfo.user_id <include refid="applyConditionSql"/>
 	</select>
 	<!-- 查询一条贷款记录(模态框) -->
 	<select id="queryALoanRecord" resultMap="applyAndUserinfoMap">
-		SELECT loan_type,loan_order,loan_money,repay_method,realname,idcard,birthday,
+		SELECT loan_type,loan_order,loan_money,repay_method,realname,idcard,birthday,loanBtn_status,
 		 phone_number,bank_card,address,company_address,now_address,company,occ 
 		 FROM credit_apply app JOIN credit_userinfo uinfo ON app.user_id = uinfo.user_id 
 		 where loan_order = #{loanOrder}
@@ -173,6 +174,10 @@ SELECT * FROM credit_apply a WHERE a.user_id = #{user_id} AND a.apply_date = (SE
 	<!-- 删除 -->
 	<update id="loanDelete" >
 		UPDATE credit_apply SET isDelete = 1 WHERE loan_order = #{loan_order}
+	</update>
+	<!-- 更新放款按钮状态 -->
+	<update id="updateApplyStatus" >
+		UPDATE credit_apply SET loanBtn_status = 1 WHERE loan_order = #{loanId}
 	</update>
 	
 	<sql id="applyConditionSql">
