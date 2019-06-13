@@ -52,7 +52,7 @@ function fangLoan(loanOrder) {
 			$("#bankCard").val(rs.userinfo.bank_card);
 			$("#job").val(rs.userinfo.occ);
 			$("#repayType").val(repayType);
-			$("#loanMoney").val(rs.loan_money.toFixed(2) + '￥');
+			$("#loanMoney").val(rs.loan_money.toFixed(2));
 			$("#nowAddr").val(rs.userinfo.now_address);
 			$("#huKouAddr").val(rs.userinfo.address);
 			$("#company").val(rs.userinfo.company);
@@ -79,3 +79,4 @@ function loanDel(loanOrder) {
 		}
 	})
 }
+

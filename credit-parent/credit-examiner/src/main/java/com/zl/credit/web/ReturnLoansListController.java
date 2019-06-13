@@ -43,9 +43,9 @@ public class ReturnLoansListController {
 	 * @return
 	 */
 	@RequestMapping("/repayRecords")
-	public List<Repay> queryRepayRecords(String loanId){
-		List<Repay> list = repayService.queryRepayRecords(loanId);
-		return list;
+	public Repay queryRepayRecords(Integer repayid){
+		Repay repay = repayService.queryRepayRecords(repayid);
+		return repay;
 	}
 	
 	/***
@@ -58,6 +58,22 @@ public class ReturnLoansListController {
 		JsonResult json = new JsonResult();
 		int rows = repayService.repayDel(repayId);
 		if(rows > 0) {
+			return json;
+		}
+		json.setSuccess(false);
+		return json;
+	}
+	/**
+	 * 评价
+	 * @param grades
+	 * @return
+	 */
+	@RequestMapping("/credit")
+	public JsonResult credit(Integer grades,String name,Integer repayid) {
+		JsonResult json = new JsonResult();
+		int rows = repayService.updateGrade(grades,name);
+		int creditStatus = repayService.updateCreditStatus(repayid);
+		if(rows > 0 && creditStatus > 0) {
 			return json;
 		}
 		json.setSuccess(false);

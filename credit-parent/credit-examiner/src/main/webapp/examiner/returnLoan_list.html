@@ -32,8 +32,7 @@
 							&nbsp;还款状态
 							<select name="state" id="state" class="ui_select01">
                                 <option value="-1">--请选择--</option>
-                                <option value="1">当前已还款</option>
-                                <option value="2">已全部还款</option>
+                                <option value="1">已还款</option>
                             </select>
 							&emsp;
 							<button type="button" class="btn btn-info" onclick="query()" >查询</button>
@@ -151,16 +150,19 @@
 								<td>
 									<div class="form-group box2">
 										<label for="credit" class="control-label">信誉度:</label>
-										<input type="text" class="form-control" id="credit" name="credit" placeholder="请评价" value="" />
+										<input type="text" class="form-control" id="credit" name="credit" value="10" />
 									</div>
 								</td>
+								<td>（1~4位的数字）</td>
+								<td><span style="color:red;" id="credit_prompt"></span></td>
 							</tr>
 						</table>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">评价</button>
+					<input type="hidden" id="hid" value=""/>
+					<button type="button" class="btn btn-primary" onclick="credit()">评价</button>
 				</div>
 			</div>
 		</div>

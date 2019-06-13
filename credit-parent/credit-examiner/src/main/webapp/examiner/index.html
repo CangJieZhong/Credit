@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
 	<script type="text/javascript" src="scripts/zTree/jquery.ztree.core-3.2.js"></script>
 	<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+	<script type="text/javascript" src="ajax/index.js"></script>
 	<script type="text/javascript">
 		/**退出系统**/
 		function logout(){
@@ -18,6 +19,7 @@
 		
 		/**获得当前日期**/
 		function  getDate01(){
+			
 			var time = new Date();
 			var myYear = time.getFullYear();
 			var myMonth = time.getMonth()+1;
@@ -215,7 +217,7 @@
 				<ul>
 					<li>
 						<img alt="当前用户" src="images/common/user.jpg">：
-						<span>admin</span>
+						<span id="userName">admin</span>
 					</li>
 					<li>
 						<img alt="事务月份" src="images/common/month.jpg">：

@@ -7,6 +7,7 @@
 		<result column="repay_status" property="repay_status"/>
 		<result column="repay_money" property="repay_money"/>
 		<result column="repay_date" property="repay_date"/>
+		<result column="credit_status" property="credit_status"/>
 		
 		<association property="apply" javaType="Apply">
 			<id column="user_id" property="user_id"/>
@@ -54,19 +55,27 @@
 	<!-- 发放 还款页面分页查询 -->
 	<select id="queryAllRepaysInfo" parameterType="RepayConditions" resultMap="repayMap">
 		SELECT repay_id,loan_type,apply_end,r.loan_order,realname,loan_money,repay_money,repay_date,
-		repay_method,repay_status,r.isDelete FROM credit_repay r JOIN credit_apply a 
+		repay_method,repay_status,r.isDelete,credit_status FROM credit_repay r JOIN credit_apply a 
 		ON r.loan_order = a.loan_order JOIN credit_userinfo u ON a.user_id = u.user_id 
 		<include refid="repayConditionSql"/>
 	</select>
 	<!-- 查询多条还款记录(模态框) -->
 	<select id="queryRepayRecords" resultMap="repayMap">
-		SELECT loan_type,r.loan_order,realname,loan_money,repay_money,repay_date,repay_method,
+		SELECT repay_id,loan_type,r.loan_order,realname,loan_money,repay_money,repay_date,repay_method,
 		repay_status,phone_number FROM credit_repay r JOIN credit_apply a ON r.loan_order = a.loan_order 
-		JOIN credit_userinfo u  ON a.user_id = u.user_id where r.loan_order = #{loanId}
+		JOIN credit_userinfo u  ON a.user_id = u.user_id where repay_id = #{repayid}
 	</select>
 	<!-- 还款删除操作 -->
 	<update id="repayDel" parameterType="int">
 		UPDATE credit_repay SET isDelete = 1 WHERE repay_id = #{repayId}
+	</update>
+	<!-- 更新用户积分 -->
+	<update id="updateGrade">
+		UPDATE credit_userinfo SET grade=grade+#{grades},edition=edition+1 WHERE realname=#{name}
+	</update>
+	<!-- 更改评价按钮状态 -->
+	<update id="updateCreditStatus">
+		UPDATE credit_repay SET credit_status = 1 WHERE repay_id = #{repayid}
 	</update>
 	
 	<sql id="repayConditionSql">

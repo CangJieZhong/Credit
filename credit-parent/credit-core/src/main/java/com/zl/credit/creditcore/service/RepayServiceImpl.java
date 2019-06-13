@@ -18,9 +18,6 @@ public class RepayServiceImpl implements RepayService {
 	private RepayMapper repayMapper;
 	@Autowired
 	private QuertzMapper quertzMapper;
-	
-
-
 
 	@Override
 	public List<Repay> queryAllRepaysInfo(RepayConditions repayConditions) {
@@ -29,20 +26,20 @@ public class RepayServiceImpl implements RepayService {
 		pageInfo.setList(list);
 		return list;
 	}
+
 	@Override
 	public void setMoney(String id) {
 		BigDecimal money = quertzMapper.selectRepayMoney();
-		String order=quertzMapper.selectOrder(id);
-		//放款操作
-		quertzMapper.cutMoney(money,"1234123412341234123");
-		quertzMapper.addMoney(money,order);
-		
+		String order = quertzMapper.selectOrder(id);
+		// 放款操作
+		quertzMapper.cutMoney(money, "1234123412341234123");
+		quertzMapper.addMoney(money, order);
+
 	}
 
-
 	@Override
-	public List<Repay> queryRepayRecords(String loanId) {
-		return repayMapper.queryRepayRecords(loanId);
+	public Repay queryRepayRecords(Integer repayid) {
+		return repayMapper.queryRepayRecords(repayid);
 	}
 
 	@Override
@@ -50,6 +47,14 @@ public class RepayServiceImpl implements RepayService {
 		return repayMapper.repayDel(repayId);
 	}
 
+	@Override
+	public int updateGrade(Integer grades, String name) {
+		return repayMapper.updateGrade(grades, name);
+	}
 
-	
+	@Override
+	public int updateCreditStatus(Integer repayid) {
+		return repayMapper.updateCreditStatus(repayid);
+	}
+
 }
