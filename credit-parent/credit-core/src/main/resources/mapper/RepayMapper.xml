@@ -56,7 +56,7 @@
 	<!-- 发放 还款页面分页查询 -->
 	<select id="queryAllRepaysInfo" parameterType="RepayConditions" resultMap="repayMap">
 		SELECT repay_id,loan_type,apply_end,r.loan_order,realname,loan_money,repay_money,repay_date,
-		repay_method,repay_status,r.isDelete,loanBtn_status FROM credit_repay r JOIN credit_apply a 
+		repay_method,repay_status,r.isDelete,credit_status,loanBtn_status FROM credit_repay r JOIN credit_apply a 
 		ON r.loan_order = a.loan_order JOIN credit_userinfo u ON a.user_id = u.user_id 
 		<include refid="repayConditionSql"/>
 	</select>

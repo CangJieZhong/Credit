@@ -3,9 +3,9 @@
 <mapper namespace="com.zl.credit.creditcore.dao.ApplyMapper">
 	<insert id="insertApply" parameterType="ApplyData">
 		insert into credit_apply
-		(user_id,loan_order,loan_money,loan_type,loan_purpose,repay_method,apply_date,EDITION)
+		(user_id,loan_order,loan_money,loan_type,loan_purpose,repay_method,apply_date,EDITION,audit_status)
 		values
-		(#{user_id},loan_order.nextval,#{loan_money},#{loan_type},#{loan_purpose},#{repay_method},#{date},1)
+		(#{user_id},loan_order.nextval,#{loan_money},#{loan_type},#{loan_purpose},#{repay_method},#{date},1,1)
 	</insert>
 	<select id="queryByUid" resultType="Apply">
 		SELECT * FROM credit_apply a
@@ -73,7 +73,7 @@
 	</resultMap>
 
 	<!-- 贷款申请表的分页加高级查询 -->
-	<select id="queryApplyAndUserinfo"
+	<!-- <select id="queryApplyAndUserinfo"
 		parameterType="com.zl.credit.creditcore.pojo.ApplyCondition"
 		resultMap="UserAndApply">
 
@@ -101,7 +101,7 @@
 			</if>
 		</where>
 
-	</select>
+	</select> -->
 
 	
 	<!-- 发放 贷款和用户信息 关联查询， 以贷款表为主 -->
@@ -196,7 +196,47 @@
 			<if test="endTime != null">
 				and apply_end &lt;= #{endTime}
 			</if>
-			 and audit_status = 1 and app.isDelete = 0
+			 and audit_status = 4 and app.isDelete = 0
+		</where>
+	</sql>
+	
+	<!-- 审核 贷款页面分页查询-->
+	<select id="queryAllApplyInfo" resultMap="applyAndUserinfoMap">
+		SELECT loan_type,loan_order,realname,loan_money,repay_method,audit_status,shenHe_status   
+		 FROM credit_apply app JOIN credit_userinfo uinfo ON app.user_id = uinfo.user_id <include refid="conditionSql"/>
+	</select>
+	<!--  审核 查询一条贷款记录(模态框) -->
+	<select id="queryALoanRecords" resultMap="applyAndUserinfoMap">
+		SELECT loan_type,loan_order,loan_money,repay_method,loan_purpose,realname,img_on,img_down,birthday,
+		 phone_number,bank_card,address,company_address,now_address,company,occ,urgent_person,
+		 marital_status,credit1,credit2,auditor1,auditor2,auditor3,auditor1_msg,auditor2_msg,
+		 auditor3_msg,audit_status,apply_end  
+		 FROM credit_apply app JOIN credit_userinfo uinfo ON app.user_id = uinfo.user_id 
+		 where loan_order = #{loanOrder}
+	</select>
+	<!-- 更新审核按钮状态 -->
+	<update id="updateShenHeStatus" >
+		UPDATE credit_apply SET shenHe_status = 1 WHERE loan_order = #{loanId}
+	</update>
+	<update id="updateAuditStatus" >
+		UPDATE credit_apply SET audit_status = 4 WHERE loan_order = #{loanId}
+	</update>
+	
+	<sql id="conditionSql">
+		<where>
+			<if test="customer != null and customer != '' ">
+				and realname like '%${customer}%'
+			</if>
+			<if test="loanOrder != null and loanOrder != '' ">
+				and loan_order like '%${loanOrder}%'
+			</if>
+			<if test="startTime != null">
+				and apply_end &gt;= #{startTime}
+			</if>
+			<if test="endTime != null">
+				and apply_end &lt;= #{endTime}
+			</if>
+			and audit_status = 1 
 		</where>
 	</sql>
 </mapper>

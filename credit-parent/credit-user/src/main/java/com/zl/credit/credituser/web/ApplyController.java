@@ -18,7 +18,7 @@ public class ApplyController {
 	@RequestMapping("/apply.action")
 	public String apply(ApplyData apply) {
 		userInfoService.addApply(apply);
-		return "/user/user.html";
+		return "redirect:/user/user.html";
 	}
 	@RequestMapping("/MaxApplyMoney.action")
 	@ResponseBody

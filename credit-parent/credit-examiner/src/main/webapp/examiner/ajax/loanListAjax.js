@@ -88,7 +88,7 @@ $(function(){
 							apply[i].repay_method = '11+1套餐';
 						}
 						//审核状态
-						if(apply[i].audit_status == 1){
+						if(apply[i].audit_status == 4){
 							apply[i].audit_status = '已审核';
 						}
 						//判断放款按钮状态
@@ -185,7 +185,7 @@ function query(){
 						apply[i].repay_method = '11+1套餐';
 					}
 					//审核状态
-					if(apply[i].audit_status == 1){
+					if(apply[i].audit_status == 4){
 						apply[i].audit_status = '已审核';
 					}
 					

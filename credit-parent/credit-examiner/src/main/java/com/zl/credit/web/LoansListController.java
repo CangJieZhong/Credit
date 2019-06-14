@@ -27,16 +27,17 @@ public class LoansListController {
 	 * @param pageIndex
 	 * @param applyConditions
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping("/applysLoans")
 	public PageInfo<Apply> applyLoans(@RequestParam(defaultValue = "1")Integer pageIndex,
-			ApplyConditions applyConditions,HttpServletRequest  request){
+			ApplyConditions applyConditions,HttpServletRequest  request) throws Exception{
 		applyConditions.setStartTime(DateUtil.beginForDate(applyConditions.getStartTime()));
 		applyConditions.setEndTime(DateUtil.endForDate(applyConditions.getEndTime()));
 		PageHelper.startPage(pageIndex, 3);
 		List<Apply> list = applyService.queryAllApplysInfo(applyConditions);
 		PageInfo<Apply> applyList = new PageInfo<Apply>(list);
-		System.out.println("8092"+request.getSession().getAttribute("user"));
+		//System.out.println("8092"+request.getSession().getAttribute("user"));
 		return applyList;
 	}
 	

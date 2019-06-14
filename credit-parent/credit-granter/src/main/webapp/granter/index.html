@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
 	<script type="text/javascript" src="scripts/zTree/jquery.ztree.core-3.2.js"></script>
 	<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+	<script type="text/javascript" src="ajax/index.js"></script>
 	<script type="text/javascript">
 		/**退出系统**/
 		function logout(){
@@ -181,10 +182,7 @@
 		
 		function loadMenu(resourceType, treeObj){
             data = [{"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":3,"resourceName":"功能管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"loan_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"贷审核管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"delay_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"延期审核管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"activitiesLoan_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"贷款活动审核管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"returnLoan_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"还款管理","resourceOrder":0,"resourceType":""}];
+            {"accessPath":"loan_list.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":0,"resourceName":"贷审核管理","resourceOrder":0,"resourceType":""}];
             // 如果返回数据不为空，加载"业务模块"目录
             if(data != null){
                 // 将返回的数据赋给zTree
@@ -208,6 +206,7 @@
 	// 		$("#ajaxDialog").dialog("close");
 			$("#ajaxDialog").hide();
 		}
+		
 	</script>
 </head>
 <body onload="getDate01()">
@@ -217,7 +216,7 @@
 				<ul>
 					<li>
 						<img alt="当前用户" src="images/common/user.jpg">：
-						<span>admin</span>
+						<span id="userName">admin</span>
 					</li>
 					<li>
 						<img alt="事务月份" src="images/common/month.jpg">：
@@ -308,7 +307,7 @@
 	 	<span id="here_area">当前位置：系统&nbsp;>&nbsp;简介</span>
 	</div>
     <div id="main">
-      	<iframe name="right" id="rightMain" src="introduce.html" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"/>
+      	<iframe name="right" id="rightMain" src="loan_list.html" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"/>
     </div>
 </body>
 </html>

@@ -1,74 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
-<link href="style/authority/basic_layout.css" rel="stylesheet"
-	type="text/css">
-<link href="style/authority/common_style.css" rel="stylesheet"
-	type="text/css">
-
-<script type="text/javascript" src="js/vue.js"></script>
-	<!-- <script type="text/javascript" src="js/jquery.js"></script>  -->
-
-<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
-<script type="text/javascript"
-	src="scripts/fancybox/jquery.fancybox-1.3.4.js"></script>
-<script type="text/javascript"
-	src="scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="style/authority/jquery.fancybox-1.3.4.css" media="screen">
-<script type="text/javascript" src="scripts/artDialog/artDialog.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="scripts/jquery/jquery.datepick.css">
-<script type="text/javascript" src="scripts/jquery/jquery.datepick.js"></script>
-<script type="text/javascript"
-	src="scripts/jquery/jquery.datepick-zh-CN.js"></script>
-<title>审核管理系统</title>
-<script type="text/javascript">
-	$(document).ready(function() {
-		//显示日期 
-		$("#startTime,#endTime").datepick({
-			dateFormat : "yy-mm-dd"
-		});
-
-		/**详情**/
-		$("a.persoanlDetails,a.businessDetails").fancybox({
-			'width' : 750,
-			'height' : 630,
-			'type' : 'iframe',
-			'hideOnOverlayClick' : false,
-			'showCloseButton' : true,
-			'onClosed' : function() {
-				location.href = 'loan_list.html';
-			}
-		});
-
-		/**审核**/
-		$("a.personalShenHe,a.businessShenHe").fancybox({
-			'width' : 750,
-			'height' : 630,
-			'type' : 'iframe',
-			'hideOnOverlayClick' : false,
-			'showCloseButton' : true,
-			'onClosed' : function() {
-				location.href = 'loan_list.html';
-			}
-		});
-		/**删除*/
-		$(".del").click(function() {
-			if (confirm("确定删除?")) {
-				location.href = "";
-			}
-			;
-		});
-
-		
-	});
-</script>
-
-
+<script type="text/javascript" src="scripts/jquery/jquery.js"></script>
+<link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery.twbsPagination.min.js"></script>
+<script type="text/javascript" src="scripts/bootstrap/bootstrap.min.js"></script>
+<link href="scripts/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="ajax/loanListAjax.js"></script>
+<script type="text/javascript" src="ajax/fangLoan.js"></script>
+<title>贷款管理系统</title>
 </head>
 <body>
 	<form id="submitForm" name="submitForm" action="" method="post">
@@ -78,136 +21,209 @@
 					<div id="box_border">
 						<div id="box_top">搜索</div>
 						<div id="box_center">
-							&nbsp;客户类型 <select name="customerType" id="customerType"
-								class="ui_select01">
-								<option value="">--请选择--</option>
-								<option value="0">个人贷</option>
-								<option value="1">企业贷</option>
-							</select> &nbsp;贷款人 <input type="text" id="username" name="username"
-								class="ui_input_txt02" /> &nbsp;起止日期 <input type="text"
-								id="startTime" name="startTime" class="ui_input_txt02"
-								readonly="readonly" /> 至 <input type="text" id="endTime"
-								name="endTime" class="ui_input_txt02" readonly="readonly" />
-							&nbsp;审核状态 <select name="state" id="status" class="ui_select01">
-								<option value="">--请选择--</option>
-								<option value="0">未审核</option>
-								<option value="1">审核通过</option>
-							</select> &nbsp; <input type="button" value="查询" class="ui_input_btn01" />
+							&nbsp;贷款人 
+							<input type="text" id="customer" name="customer"
+								class="ui_input_txt02" />
+							&nbsp;贷款单号
+							 <input type="text"
+								id="loanOrder" name="loanOrder" class="ui_input_txt02" />
+							&nbsp;起止日期
+							<input type="text" id="startTime" name="startTime"
+								class="ui_input_txt02" /> 
+							至 <input type="text" id="endTime"
+								name="endTime" class="ui_input_txt02" />
+							&emsp;
+							<button type="button" class="btn btn-info" onclick="query()" >查询</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="ui_content" id="size">
-				<div class="ui_tb" >
-					<table id="table" class="table" cellspacing="0" cellpadding="0" width="100%"
-						align="center" border="0">
+			<div class="ui_content">
+				<div class="ui_tb">
+					<table class="table table-bordered">
 						<tr>
-							<th>贷款单号12</th>
-							<!-- <th>贷款人姓名</th> -->
-							<th>贷款金额</th>
-							<th>客户类型</th>
-							<th>还款方式</th>
-							<!-- <th>申请时间</th> -->
-							<th>审批详情</th>
+							<th>贷款类型</th>
+							<th>贷款单号</th>
+							<th>贷款人</th>
+							<th>金额</th>
+							<th>审核结束时间</th>
+							<th>分期类型</th>
 							<th>审核状态</th>
 							<th>操作</th>
 						</tr>
-						
-						<tr v-for="Apply in Applys"> 
-							<!-- <tr v-for="Applytwo in Applys.userinfo"> -->
-							<input type="hidden" value="Apply.user_id"/>
-							<td v-text="Apply.loan_order"></td>
-							<!-- <td v-text="Applytwo.realname"></td> -->
-							<td v-text="Apply.loan_money"></td>
-							<td v-text="Apply.loan_type"></td>
-							<td v-text="Apply.repay_method"></td>
-							<!-- <td v-text="Applytwo.create_date"></td> -->
-							<td><a href="personal_details.html" class="persoanlDetails">审核资料</a></td>
-							<td>未审核</td>
-							<td><a href="personal_shenHe.html" class="personalShenHe">审核</a>
-								<a href="" class="del">删1除</a></td>
-						</tr>
-						</tr>
-						
+						<tbody id="tabBody"></tbody>
 					</table>
 				</div>
-				<div class="ui_tb_h30">
-					<div class="ui_flt" style="height: 30px; line-height: 30px;">
-						共有 <span class="ui_txt_bold04" v-text=Applys.total></span> 条记录，当前第 <span
-							class="ui_txt_bold04">1 / 5</span> 页
-					</div>
-					<div class="ui_frt">
-						 <!--   如果是第一页，则只显示下一页、尾页 -->
-
-						<input type="button" value="首页" class="ui_input_btn01" /> <input
-							type="button" value="上一页" class="ui_input_btn01" /> <input
-							type="button" value="下一页" class="ui_input_btn01"
-							onclick="jumpNormalPage(2);" /> <input type="button" value="尾页"
-							class="ui_input_btn01" onclick="jumpNormalPage(9);" />
-
-
-
-						   <!--  如果是最后一页，则只显示首页、上一页 -->
-
-						转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
-						<input type="button" class="ui_input_btn01" value="跳转"
-							onclick="jumpInputPage(9);" />
-					</div>
+				<div class="ui_tb_h30" id="pagination-on">
+					<ul id="pagination" class="pagination"></ul>
 				</div>
-				
-				
-				
-				
 			</div>
 		</div>
 	</form>
 	
-<script> 
-    new Vue({ 
-   	el: "#size",
-   	data: { 
-   		Applys:  [] ,
-   		  },
-   	 created: function () {
-   	//为了在内部函数能使用外部函数的this对象，要给它赋值了一个名叫self的变量。
-   	 var self = this; 
-   	 $.ajax({ 
-   		 url: '/ApplyPage.action', 
-   		 type: 'get', 
-   		 data: {}, 
-   		 dataType: 'json' ,
-   		 }).then(function (res) 
-   		 { console.log(res);  	　
-   		//把从json获取的数据赋值给数组 
-   		 self.Applys = res.list;
-   		console.log(res.list);
-   		  }).fail(function () { 
-   			  console.log('失败'); }) } }) 
-   			  </script>
-   			  
-   	<script> 
-    new Vue({ 
-   	el: "#ui_tb_h30",
-   	data: { 
-   		Applys:  [] ,
-   		  },
-   	 created: function () {
-   	//为了在内部函数能使用外部函数的this对象，要给它赋值了一个名叫self的变量。
-   	 var self = this; 
-   	 $.ajax({ 
-   		 url: '/ApplyPage.action', 
-   		 type: 'get', 
-   		 data: {}, 
-   		 dataType: 'json' ,
-   		 }).then(function (res) 
-   		 { console.log(res);  	　
-   		//把从json获取的数据赋值给数组 
-   		 self.Applys = res;
-   		console.log(res.list);
-   		  }).fail(function () { 
-   			  console.log('失败'); }) } }) 
-   			  </script>		  
-   			  
-   			  
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h5 class="modal-title" id="myModalLabel">
+						当前位置：贷款管理&nbsp;>&nbsp;<span style="color: #1A5CC6;">个人贷审核</span>
+					</h5>
+				</div>
+				<div class="modal-body">
+				<table>
+				<tr>
+					<td class="ui_text_rt">贷款单号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanId" name="loanId" value=""  class="ui_input_txt02" readonly="readonly"/>
+					</td>
+					<td class="ui_text_rt">贷款金额</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanMoney" name="loanMoney" value=""  class="ui_input_txt02" readonly="readonly"/>
+					</td>
+					<td>&emsp;</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="customerType" name="customerType" value=""  class="ui_input_txt02" readonly="readonly"/>
+					</td>
+					<td class="ui_text_rt">分期类型</td>
+					<td class="ui_text_lt">
+						<input type="text" id="fenQiType" name="fenQiType" value=""  class="ui_input_txt02" readonly="readonly"/>
+					</td>
+					<td>&emsp;</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款用途</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanPurpose" name="loanPurpose" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">银行卡号</td>
+					<td class="ui_text_lt">
+						<input type="text" id="bankCard" name="bankCard" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td>&emsp;</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贷款人姓名</td>
+					<td class="ui_text_lt">
+						<input type="text" id="loanName" name="loanName" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">出生日期</td>
+					<td class="ui_text_lt">
+						<input type="text" id="birthday" name="birthday" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td>&emsp;</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">身份证正面</td>
+					<td class="ui_text_lt">
+						<div class="idCardItem">
+							<img alt="身份证正面"  class="uploadImg" id="uploadImg1" style="width: 50px; height: 50px;"/>
+					        <input type="hidden" name="image1" id="uploadImage2" />
+					    </div>
+					</td>
+					<td class="ui_text_rt">身份证反面</td>
+					<td class="ui_text_lt">
+						<div class="idCardItem">
+							<img alt="身份证反面"  class="uploadImg" id="uploadImg3" style="width: 50px; height: 50px;"/>
+					        <input type="hidden" name="image2" id="uploadImage4" />
+					    </div>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">现居住地址</td>
+					<td class="ui_text_lt">
+						<input type="text" id="nowAddr" name="nowAddr" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">户口所在地</td>
+					<td class="ui_text_lt">
+						<input type="text" id="huKouAddr" name="huKouAddr" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td>&emsp;</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">手机号码</td>
+					<td class="ui_text_lt">
+						<input type="text" id="phone" name="phone" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">职位</td>
+					<td class="ui_text_lt">
+						<input type="text" id="occ" name="occ" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td>&emsp;</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">紧急联系人</td>
+					<td class="ui_text_lt">
+						<input type="text" id="emergencyContact" name="emergencyContact" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">婚姻状态</td>
+					<td class="ui_text_lt">
+						<input type="text" id="marryState" name="marryState" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td>&emsp;</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">公司名称</td>
+					<td class="ui_text_lt">
+						<input type="text" id="company" name="company" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">公司地址</td>
+					<td class="ui_text_lt">
+						<input type="text" id="companyAddr" name="companyAddr" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td>&emsp;</td>
+				</tr>
+				<tr>
+				<td class="ui_text_rt">征信记录</td>
+					<td class="ui_text_lt">
+						<input type="text" id="creditRecord" name="creditRecord" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">反欺诈</td>
+					<td class="ui_text_lt">
+						<input type="text" id="antiFraud" name="antiFraud" value="" readonly="readonly" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr><td colspan="5"><hr/></td></tr>
+					<form id="submitForm" name="submitForm" action="/submitData" method="post">
+				<tr>
+					<td class="ui_text_rt">审核评分</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeScore1" name="shenHeScore1" value=""  class="ui_input_txt02"/>
+					</td>
+					<td class="ui_text_rt">审核意见</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenheyijian" name="shenheyijian" value=""  class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">审查结果</td>
+					<td class="ui_text_lt">&nbsp;
+						<input type="radio" name="shenHeResult3" value="0" />不通过&nbsp;
+						<input type="radio" name="shenHeResult3" value="1" checked/>通过
+					</td>
+					<td class="ui_text_rt">审查日期</td>
+					<td class="ui_text_lt">
+						<input type="text" id="shenHeDate3" name="shenHeDate3" value="" class="ui_input_txt02"/>
+					</td>
+				</tr>
+					</form>
+				<tr><td>&emsp;</td></tr>
+			</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" onclick="sendLoan()">审核</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

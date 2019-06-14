@@ -49,7 +49,7 @@ public class Apply implements Serializable{
 	private Integer auditor2_msg;
 	/**审计3意见  0: 不予批准（否决延期）, 1: 批准通过（通过延期）*/
 	private Integer auditor3_msg;
-	/**审核状态  0: 未审核,1:审计审核中,2:业务经理审核中,3:审核失败,5:还款中,6:该贷款已结束*/
+	/**审核状态  0: 未审核,1:审计审核中,2:业务经理审核中,3:审核失败,4:审核成功5:还款中,6:该贷款已结束*/
 	private Integer audit_status = 0;
 	/**业务经理 4: 业务经理*/
 	private Integer manager;
@@ -61,6 +61,8 @@ public class Apply implements Serializable{
 	private Integer isDelete;
 	/** 放款按钮状态 */
 	private Integer loanBtn_status;
+	/** 审核按钮状态*/
+	private Integer shenHe_status;
 
 	/**一个贷款申请对应一个用户*/
 	private Userinfo userinfo;

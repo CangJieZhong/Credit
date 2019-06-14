@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.zl.credit.creditcore.pojo.Apply;
 
-import com.zl.credit.creditcore.pojo.ApplyCondition;
 
 import com.zl.credit.creditcore.pojo.ApplyConditions;
 import com.zl.credit.creditcore.pojo.ApplyData;
@@ -34,7 +33,6 @@ public interface ApplyMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	List<Apply> queryApplyAndUserinfo(ApplyCondition applyCondition) throws Exception;
 
 	List<Apply> queryApplyAndUserinfo(Map<String,Object> map) throws Exception;
 
@@ -60,9 +58,37 @@ public interface ApplyMapper {
 	int loanDelete(String loanOrder);
 
 	/**
-	 * 更新放款按钮状态
+	 *  更新放款按钮状态
 	 * @param loanId
 	 * @return
 	 */
 	int updateApplyStatus(String loanId);
+
+	/**
+	 *  更新审核按钮状态
+	 * @param loanId
+	 * @return
+	 */
+	int updateShenHeStatus(String loanId);
+
+	/**
+	 * (审核)查询所有Apply信息
+	 * @param applyConditions
+	 * @return
+	 */
+	List<Apply> queryAllApplyInfo(ApplyConditions applyConditions);
+
+	/**
+	 * (审核)更新审核状态
+	 * @param loanId
+	 * @return
+	 */
+	int updateAuditStatus(String loanId);
+
+	/**
+	 * 审核  查询一条记录
+	 * @param loanOrder
+	 * @return
+	 */
+	Apply queryALoanRecords(String loanOrder);
 }

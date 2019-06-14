@@ -30,7 +30,6 @@ public class LoanBtnController {
 	@ResponseBody
 	public JsonResult sendLoan(BigDecimal loanMoney,String repayType,String bankCard,String loanId) {
 		JsonResult json=new JsonResult();
-		System.out.println(loanId);
 		try {
 			loadMoneyService.cutMoney(loanMoney, "1234123412341234123");
 			loadMoneyService.addMoney(loanMoney, bankCard);

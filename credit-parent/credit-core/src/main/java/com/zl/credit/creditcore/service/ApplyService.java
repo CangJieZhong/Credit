@@ -6,16 +6,13 @@ import com.zl.credit.creditcore.pojo.Apply;
 import com.zl.credit.creditcore.pojo.ApplyConditions;
 
 public interface ApplyService {
-
-	List<Apply> queryApplyAndUserinfo(Integer currentPage, Integer pageSize, 
-			String loan_type,String realname,String startTime,String endTime,Integer auditor3_msg) throws Exception;
-
 	/**
 	 *  （发放）查询贷款所有信息
 	 * @param applyCondition
 	 * @return
+	 * @throws Exception 
 	 */
-	List<Apply> queryAllApplysInfo(ApplyConditions applyConditions);
+	List<Apply> queryAllApplysInfo(ApplyConditions applyConditions) throws Exception;
 
 	/**
 	 * 查询一条贷款记录（模态框）
@@ -37,5 +34,34 @@ public interface ApplyService {
 	 * @return
 	 */
 	int updateApplyStatus(String loanId);
+	
+	/**
+	 * 更新审核按钮状态
+	 * @param loanId
+	 * @return
+	 */
+	int updateShenHeStatus(String loanId);
+
+	/**
+	 * 审核查询贷款信息
+	 * @param applyConditions
+	 * @return
+	 * @throws Exception 
+	 */
+	List<Apply> queryAllApplyInfo(ApplyConditions applyConditions) throws Exception;
+
+	/**
+	 *  点击审核按钮后,同时更新审核状态 
+	 * @param loanId
+	 * @return
+	 */
+	int updateAuditStatus(String loanId);
+
+	/**
+	 * 审核  查询一条记录
+	 * @param loanOrder
+	 * @return
+	 */
+	Apply queryALoanRecords(String loanOrder);
 	
 }
